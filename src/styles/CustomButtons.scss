@@ -1,0 +1,46 @@
+@import './theme.scss';
+
+.primary-button{
+  background-color: $color-primary;
+  border-radius: $radius-circle;
+  color: $color-light;
+  padding: 0.8rem 3rem;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.secondary-button{
+  fill: $color-primary;
+  color: $color-primary;
+  background-color: $color-light;
+  padding: 15px 25px;
+  border-radius: $radius-primary;
+}
+
+
+
+.white-button{
+  fill: $color-primary;
+  color: $color-primary;
+  background-color: $color-light;
+  transition: 0.3s;
+}
+
+.white-button:hover{
+  box-shadow: inset 0 0 20px rgba(0, 24, 90, 0.3);
+  outline-color: rgba(255, 255, 255, 0);
+  outline-offset: 15px;
+}
+
+.blue-button{
+  fill: $color-primary;
+  color: $color-light;
+  background-color: $color-primary;
+  transition: 0.3s;
+}
+
+.blue-button:hover{
+  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.3);
+  outline-color: rgba(255, 255, 255, 0);
+  outline-offset: 15px;
+}

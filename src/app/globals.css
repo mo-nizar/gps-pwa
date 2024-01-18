@@ -16,6 +16,22 @@
   }
 }
 
+@layer base {
+  @font-face {
+    font-family: 'DMSans';
+    src: url('/fonts/DMSans_18pt-Black.ttf') format('truetype');
+    font-weight: 900; /* Adjust the weight as needed */
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'DMSans';
+    src: url('/fonts/DMSans_18pt-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+  }
+}
+
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(

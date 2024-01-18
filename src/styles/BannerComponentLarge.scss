@@ -1,0 +1,9 @@
+/* ImageBanner.scss */
+@import './theme.scss';
+
+.image-banner {
+  width: 100%;
+  height: 100%; /* 100% of the viewport height */
+  background-size: cover; /* Adjust the image to cover the entire container */
+  background-position: center; /* Center the image */
+}

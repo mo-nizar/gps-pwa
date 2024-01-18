@@ -1,0 +1,494 @@
+
+$color-primary: #0b253c;
+$color-secondary: #6c757d;
+$color-success: #28a745;
+$color-info: #17a2b8;
+$color-warning: #ffc107;
+$color-danger: #dc3545;
+$color-light: #f8f9fc;
+$color-dark: #03001c;
+
+
+$overlay-primary: rgba(0, 0, 0, 0.5);
+$overlay-secondary: #6c757d;
+$overlay-success: #28a745;
+$overlay-info: #17a2b8;
+$overlay-warning: #ffc107;
+$overlay-danger: #dc3545;
+$overlay-light: #f8f9fc;
+$overlay-dark: rgba(11, 37, 60, 0.5);
+
+$shadow-primary: 0 10px 10px -10px rgba(0, 0, 0, 0.3);
+$shadow-secondary: 6px 6px 6px -6px rgba(0, 0, 0, 0.3);
+$shadow-success: 0 10px 10px -10px rgba(0, 0, 0, 0.3);
+$shadow-info: 0 10px 10px -10px rgba(0, 0, 0, 0.3);
+$shadow-warning: 0 10px 10px -10px rgba(0, 0, 0, 0.3);
+$shadow-danger: 0 10px 10px -10px rgba(0, 0, 0, 0.3);
+$shadow-card: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+$shadow-button: 0px 8px 15px rgba(0, 0, 0, 0.1);
+
+
+$radius-card: 0.5rem;
+$radius-button: 0.5rem;
+$radius-circle: 25rem;
+$radius-primary: 4px;
+
+
+
+
+
+/* src/styles/style.css */
+
+/* DMSans_18pt styles */
+// @font-face {
+//   font-family: 'DMSans_18pt_Black';
+//   src: url('/fonts/DMSans_18pt-Black.ttf') format('truetype');
+//   font-weight: normal;
+//   font-style: normal;
+// }
+
+// @font-face {
+//   font-family: 'DMSans_18pt_Black_Italic';
+//   src: url('/fonts/DMSans_18pt-Blackltalic.ttf') format('truetype');
+//   font-weight: normal;
+//   font-style: italic;
+// }
+
+// @font-face {
+//   font-family: 'DMSans_18pt_Bold';
+//   src: url('/fonts/DMSans_18pt-Bold.ttf') format('truetype');
+//   font-weight: bold;
+//   font-style: normal;
+// }
+
+// @font-face {
+//   font-family: 'DMSans_18pt_Bold_Italic';
+//   src: url('/fonts/DMSans_18pt-BoldItalic.ttf') format('truetype');
+//   font-weight: bold;
+//   font-style: italic;
+// }
+
+// @font-face {
+//   font-family: 'DMSans_18pt_ExtraBold';
+//   src: url('/fonts/DMSans_18pt-ExtraBold.ttf') format('truetype');
+//   font-weight: 800;
+//   font-style: normal;
+// }
+
+// @font-face {
+//   font-family: 'DMSans_18pt_ExtraBold_Italic';
+//   src: url('/fonts/DMSans_18pt-ExtraBoldItalic.ttf') format('truetype');
+//   font-weight: 800;
+//   font-style: italic;
+// }
+
+// @font-face {
+//   font-family: 'DMSans_18pt_ExtraLight';
+//   src: url('/fonts/DMSans_18pt-ExtraLight.ttf') format('truetype');
+//   font-weight: 200;
+//   font-style: normal;
+// }
+
+// @font-face {
+//   font-family: 'DMSans_18pt_ExtraLight_Italic';
+//   src: url('/fonts/DMSans_18pt-ExtraLightItalic.ttf') format('truetype');
+//   font-weight: 200;
+//   font-style: italic;
+// }
+
+// @font-face {
+//   font-family: 'DMSans_18pt_Italic';
+//   src: url('/fonts/DMSans_18pt-Italic.ttf') format('truetype');
+//   font-weight: normal;
+//   font-style: italic;
+// }
+
+// @font-face {
+//   font-family: 'DMSans_18pt_Light';
+//   src: url('/fonts/DMSans_18pt-Light.ttf') format('truetype');
+//   font-weight: 300;
+//   font-style: normal;
+// }
+
+// @font-face {
+//   font-family: 'DMSans_18pt_Light_Italic';
+//   src: url('/fonts/DMSans_18pt-LightItalic.ttf') format('truetype');
+//   font-weight: 300;
+//   font-style: italic;
+// }
+
+// @font-face {
+//   font-family: 'DMSans_18pt_Medium';
+//   src: url('/fonts/DMSans_18pt-Medium.ttf') format('truetype');
+//   font-weight: 500;
+//   font-style: normal;
+// }
+
+// @font-face {
+//   font-family: 'DMSans_18pt_Medium_Italic';
+//   src: url('/fonts/DMSans_18pt-MediumItalic.ttf') format('truetype');
+//   font-weight: 500;
+//   font-style: italic;
+// }
+
+// @font-face {
+//   font-family: 'DMSans_18pt_Regular';
+//   src: url('/fonts/DMSans_18pt-Regular.ttf') format('truetype');
+//   font-weight: normal;
+//   font-style: normal;
+// }
+
+// @font-face {
+//   font-family: 'DMSans_18pt_SemiBold';
+//   src: url('/fonts/DMSans_18pt-SemiBold.ttf') format('truetype');
+//   font-weight: 600;
+//   font-style: normal;
+// }
+
+// @font-face {
+//   font-family: 'DMSans_18pt_SemiBold_Italic';
+//   src: url('/fonts/DMSans_18pt-SemiBoldItalic.ttf') format('truetype');
+//   font-weight: 600;
+//   font-style: italic;
+// }
+
+// @font-face {
+//   font-family: 'DMSans_18pt_Thin';
+//   src: url('/fonts/DMSans_18pt-Thin.ttf') format('truetype');
+//   font-weight: 100;
+//   font-style: normal;
+// }
+
+// /* DMSans_24pt styles */
+// @font-face {
+//   font-family: 'DMSans_24pt_Black_Italic';
+//   src: url('/fonts/DMSans_24pt-Blackltalic.ttf') format('truetype');
+//   font-weight: normal;
+//   font-style: italic;
+// }
+
+// @font-face {
+//   font-family: 'DMSans_24pt_Bold';
+//   src: url('/fonts/DMSans_24pt-Bold.ttf') format('truetype');
+//   font-weight: bold;
+//   font-style: normal;
+// }
+
+// @font-face {
+//   font-family: 'DMSans_24pt_Bold_Italic';
+//   src: url('/fonts/DMSans_24pt-BoldItalic.ttf') format('truetype');
+//   font-weight: bold;
+//   font-style: italic;
+// }
+
+// @font-face {
+//   font-family: 'DMSans_24pt_ExtraBold';
+//   src: url('/fonts/DMSans_24pt-ExtraBold.ttf') format('truetype');
+//   font-weight: 800;
+//   font-style: normal;
+// }
+
+// @font-face {
+//   font-family: 'DMSans_24pt_ExtraBold_Italic';
+//   src: url('/fonts/DMSans_24pt-ExtraBoldItalic.ttf') format('truetype');
+//   font-weight: 800;
+//   font-style: italic;
+// }
+
+// @font-face {
+//   font-family: 'DMSans_24pt_ExtraLight';
+//   src: url('/fonts/DMSans_24pt-ExtraLight.ttf') format('truetype');
+//   font-weight: 200;
+//   font-style: normal;
+// }
+
+// @font-face {
+//   font-family: 'DMSans_24pt_ExtraLight_Italic';
+//   src: url('/fonts/DMSans_24pt-ExtraLightItalic.ttf') format('truetype');
+//   font-weight: 200;
+//   font-style: italic;
+// }
+
+// @font-face {
+//   font-family: 'DMSans_24pt_Italic';
+//   src: url('/fonts/DMSans_24pt-Italic.ttf') format('truetype');
+//   font-weight: normal;
+//   font-style: italic;
+// }
+
+// @font-face {
+//   font-family: 'DMSans_24pt_Light';
+//   src: url('/fonts/DMSans_24pt-Light.ttf') format('truetype');
+//   font-weight: 300;
+//   font-style: normal;
+// }
+
+// @font-face {
+//   font-family: 'DMSans_24pt_Medium_Italic';
+//   src: url('/fonts/DMSans_24pt-MediumItalic.ttf') format('truetype');
+//   font-weight: 500;
+//   font-style: italic;
+// }
+
+// @font-face {
+//   font-family: 'DMSans_24pt_Regular';
+//   src: url('/fonts/DMSans_24pt-Regular.ttf') format('truetype');
+//   font-weight: normal;
+//   font-style: normal;
+// }
+
+// @font-face {
+//   font-family: 'DMSans_24pt_SemiBold';
+//   src: url('/fonts/DMSans_24pt-SemiBold.ttf') format('truetype');
+//   font-weight: 600;
+//   font-style: normal;
+// }
+
+// @font-face {
+//   font-family: 'DMSans_24pt_SemiBold_Italic';
+//   src: url('/fonts/DMSans_24pt-SemiBoldItalic.ttf') format('truetype');
+//   font-weight: 600;
+//   font-style: italic;
+// }
+
+// @font-face {
+//   font-family: 'DMSans_24pt_Thin';
+//   src: url('/fonts/DMSans_24pt-Thin.ttf') format('truetype');
+//   font-weight: 100;
+//   font-style: normal;
+// }
+
+// /* DMSans_36pt styles */
+// @font-face {
+//   font-family: 'DMSans_36pt_Black';
+//   src: url('/fonts/DMSans_36pt-Black.ttf') format('truetype');
+//   font-weight: normal;
+//   font-style: normal;
+// }
+
+// @font-face {
+//   font-family: 'DMSans_36pt_Black_Italic';
+//   src: url('/fonts/DMSans_36pt-BlackItalic.ttf') format('truetype');
+//   font-weight: normal;
+//   font-style: italic;
+// }
+
+// @font-face {
+//   font-family: 'DMSans_36pt_Bold';
+//   src: url('/fonts/DMSans_36pt-Bold.ttf') format('truetype');
+//   font-weight: bold;
+//   font-style: normal;
+// }
+
+// @font-face {
+//   font-family: 'DMSans_36pt_Bold_Italic';
+//   src: url('/fonts/DMSans_36pt-BoldItalic.ttf') format('truetype');
+//   font-weight: bold;
+//   font-style: italic;
+// }
+
+// @font-face {
+//   font-family: 'DMSans_36pt_ExtraBold';
+//   src: url('/fonts/DMSans_36pt-ExtraBold.ttf') format('truetype');
+//   font-weight: 800;
+//   font-style: normal;
+// }
+
+// /* Additional styles for DMSans_18pt-Thinltalic.ttf and DMSans_24pt-LightItalic.ttf */
+// @font-face {
+//   font-family: 'DMSans_18pt_Thin_Italic';
+//   src: url('/fonts/DMSans_18pt-Thinltalic.ttf') format('truetype');
+//   font-weight: 100;
+//   font-style: italic;
+// }
+
+// @font-face {
+//   font-family: 'DMSans_24pt_Light_Italic';
+//   src: url('/fonts/DMSans_24pt-LightItalic.ttf') format('truetype');
+//   font-weight: 300;
+//   font-style: italic;
+// }
+
+/* src/styles/style.css */
+
+@font-face {
+  font-family: 'DMSans-Black';
+  src: url('/fonts/DMSans-Black.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'DMSans-Black_Italic';
+  src: url('/fonts/DMSans-Blackltalic.ttf') format('truetype');
+  font-weight: 900;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'DMSans-Bold';
+  src: url('/fonts/DMSans-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'DMSans-Bold_Italic';
+  src: url('/fonts/DMSans-BoldItalic.ttf') format('truetype');
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'DMSans-ExtraBold';
+  src: url('/fonts/DMSans-ExtraBold.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'DMSans-ExtraBold_Italic';
+  src: url('/fonts/DMSans-ExtraBoldItalic.ttf') format('truetype');
+  font-weight: 800;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'DMSans-ExtraLight';
+  src: url('/fonts/DMSans-ExtraLight.ttf') format('truetype');
+  font-weight: 200;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'DMSans-ExtraLight_Italic';
+  src: url('/fonts/DMSans-ExtraLightItalic.ttf') format('truetype');
+  font-weight: 200;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'DMSans-Italic';
+  src: url('/fonts/DMSans-Italic.ttf') format('truetype');
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'DMSans-Light';
+  src: url('/fonts/DMSans-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'DMSans-Light_Italic';
+  src: url('/fonts/DMSans-LightItalic.ttf') format('truetype');
+  font-weight: 300;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'DMSans-Medium';
+  src: url('/fonts/DMSans-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'DMSans-Medium_Italic';
+  src: url('/fonts/DMSans-MediumItalic.ttf') format('truetype');
+  font-weight: 500;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'DMSans-Regular';
+  src: url('/fonts/DMSans-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'DMSans-SemiBold';
+  src: url('/fonts/DMSans-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'DMSans-SemiBold_Italic';
+  src: url('/fonts/DMSans-SemiBoldItalic.ttf') format('truetype');
+  font-weight: 600;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'DMSans-Thin';
+  src: url('/fonts/DMSans-Thin.ttf') format('truetype');
+  font-weight: 100;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'DMSans-Thin_Italic';
+  src: url('/fonts/DMSans-Thinltalic.ttf') format('truetype');
+  font-weight: 100;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Sharp-Sans-Medium';
+  src: url('/fonts/Sharp Sans Medium.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Usage example */
+main {
+  font-family: 'DMSans-Regular', sans-serif;
+  font-size: 16px;
+  /* Additional styles as needed */
+}
+
+
+header{
+  font-family: 'Sharp-Sans-Medium', sans-serif;
+}
+
+span{
+  font-family: 'Sharp-Sans-Medium', sans-serif;
+}
+
+h1{
+  font-size: 1.6rem;
+  font-family: 'Sharp-Sans-Medium', sans-serif;
+}
+
+h2{
+  font-size: 1.4rem;
+  font-family: 'Sharp-Sans-Medium', sans-serif;
+}
+h3{
+  font-size: 1.2rem;
+  font-family: 'Sharp-Sans-Medium', sans-serif;
+}
+
+h4{
+  font-size: 1rem;
+  font-family: 'Sharp-Sans-Medium', sans-serif;
+}
+
+h5{
+  font-size: 0.8rem;
+  font-family: 'Sharp-Sans-Medium', sans-serif;
+}
+
+h6{
+  font-size: 0.6rem;
+  font-family: 'Sharp-Sans-Medium', sans-serif;
+}
+
+button {
+  font-family: 'Sharp-Sans-Medium', sans-serif;
+}
