@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from '../layouts/Header';
-import '../styles/booking.scss';
+// import '../styles/booking.scss';
 import BannerComponentLarge from '../components/BannerComponentLarge';
 import SearchFormLarge from '../components/SearchFormLarge';
 

@@ -1,5 +1,5 @@
 
-$color-primary: #0b253c;
+$color-primary: #272635;
 $color-secondary: #6c757d;
 $color-success: #28a745;
 $color-info: #17a2b8;
@@ -7,9 +7,10 @@ $color-warning: #ffc107;
 $color-danger: #dc3545;
 $color-light: #f8f9fc;
 $color-dark: #03001c;
+$color-hash:#E9E9E9;
 
 
-$overlay-primary: rgba(0, 0, 0, 0.5);
+$overlay-primary: rgba(39, 38, 53, 0.5);
 $overlay-secondary: #6c757d;
 $overlay-success: #28a745;
 $overlay-info: #17a2b8;
@@ -460,6 +461,10 @@ span{
   font-family: 'Sharp-Sans-Medium', sans-serif;
 }
 
+p{
+  font-family: 'Sharp-Sans-Medium', sans-serif;
+}
+
 h1{
   font-size: 1.6rem;
   font-family: 'Sharp-Sans-Medium', sans-serif;
@@ -491,4 +496,8 @@ h6{
 
 button {
   font-family: 'Sharp-Sans-Medium', sans-serif;
+}
+
+a{
+  cursor: pointer;
 }

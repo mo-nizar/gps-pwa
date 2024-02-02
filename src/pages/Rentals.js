@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from '../layouts/Header';
-import '../styles/rentals.scss';
+// import '../styles/rentals.scss';
 import BannerComponentLarge from '../components/BannerComponentLarge';
 import SearchFormLarge from '../components/SearchFormLarge';
 

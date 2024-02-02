@@ -3,6 +3,7 @@ import '../styles/header.scss';
 import Image from 'next/image'
 import Logo from '@images/logo.png';
 import CustomDropdown from '@components/CustomDropdown';
+import { PrimaryButton } from "@/components/CustomButtons";
 
 
 const Header = () =>{
@@ -76,8 +77,15 @@ const Header = () =>{
 
     },
     {
-      type: 'button',
+      type: 'link',
       label: 'Support',
+      link:'#',
+      optionsList: null,
+    },
+
+    {
+      type: 'button',
+      label: 'Request a Call',
       link:'#',
       optionsList: null,
     },
@@ -95,9 +103,16 @@ const Header = () =>{
       <nav>
         <ul>
         {headerOptions.map((obj)=> {
-          return obj.type=='button'
-          ? <li><a href={obj.link}>{obj.label}</a></li>
-          : <li><CustomDropdown title={obj.label} optionsList={obj.optionsList}/></li>})
+
+          switch(obj.type){
+          
+            case 'link': return <li><a href={obj.link}>{obj.label}</a></li>
+            case 'dropdown': return <li><CustomDropdown title={obj.label} optionsList={obj.optionsList}/></li>
+            case 'button': return <li><PrimaryButton label={obj.label} /></li>
+            default: return null;
+
+          }        
+        })
         }
         </ul>
       </nav>

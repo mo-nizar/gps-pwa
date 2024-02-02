@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from '../layouts/Header';
-import '../styles/services.scss';
+// import '../styles/services.scss';
 import BannerComponentLarge from '../components/BannerComponentLarge';
 import SearchFormLarge from '../components/SearchFormLarge';
 

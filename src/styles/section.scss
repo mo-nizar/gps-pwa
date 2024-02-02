@@ -7,6 +7,15 @@
   display: flex;
   flex-direction: column;
 
+  @media (max-width: 768px) {
+    height: max-content;
+  }
+  
+  /* Media query for screens smaller than 480px (adjust breakpoint as needed) */
+  @media (max-width: 480px) {
+    height: max-content;
+  }
+
   .section-title{
     align-self: center;
     font-size: 40px;

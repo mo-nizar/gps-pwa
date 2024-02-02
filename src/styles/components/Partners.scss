@@ -1,0 +1,38 @@
+.container{
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between;
+    scroll-behavior: smooth;
+    align-items: center;
+    align-self: center;
+    img{
+        height: 70px;
+        width: auto;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .container{
+        display: flex;
+        flex-direction: column;
+        justify-content:space-between;
+        scroll-behavior: smooth;
+        align-items: center;
+        align-self: center;
+        img{
+            margin: 20px 0px;
+            height: auto;
+            width: 130px;
+        }
+    }
+    
+  }
+  
+  /* Media query for screens smaller than 480px (adjust breakpoint as needed) */
+//   @media (max-width: 480px) {
+//     .partnerSection{
+//       padding: 20px;
+
+//     }
+//   }

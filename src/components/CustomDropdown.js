@@ -21,6 +21,13 @@ export default function CustomDropdown({
         </a>
         )
       )}
+
+        <a key={2222} href="#" className="viewAll">
+          <span>
+          {'View all'}
+            <img src='/icons/long-arrow-right.svg' />
+          </span>
+        </a>
       </div>
   </div>
   );
