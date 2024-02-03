@@ -1,0 +1,62 @@
+@import '../theme.scss';
+
+.form{
+    display: flex;
+    flex-direction: column;
+    max-width: 390px;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: $overlay-light;
+    border-radius: $radius-card;
+
+    .titleWrapper{
+        display: flex;
+        justify-content: flex-start;
+        flex-direction: column;
+        align-self: flex-start;
+    }
+
+    .title{
+        color: $color-primary;
+        font-size: 24px;
+        font-family: 'DMSans-semibold';
+    }
+    .desc{
+        font-size: 10px;
+    }
+    .label{
+        font-family: 'DMsans-regular';
+    }
+    .input{
+        font-family: 'DMsans-regular';
+    }
+    .inputWrapper{
+        border-radius: $radius-card;
+        width: 100%;
+        height: 50px;
+        box-shadow: 0 5px 16px rgba(0, 0, 0, 0.1);
+    }
+    .textLabel{
+        font-family: 'DMsans-regular';
+    }
+    .textBoxWrapper{
+        border-radius: $radius-card;
+        width: 100%;
+        // height: 200px;
+        box-shadow: 0 5px 16px rgba(0, 0, 0, 0.1);
+    }
+    .inner-wrapper{
+        justify-content: flex-start;
+    }
+    .button{
+        height: 40px;
+        padding: 0px;
+        width: 100%;
+        align-self: flex-start;
+
+    }
+    
+}
+

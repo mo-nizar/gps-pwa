@@ -4,7 +4,8 @@
   background-color: $color-primary;
   border-radius: $radius-primary;
   color: $color-light;
-  padding: 0.8rem 1.5rem;
+  padding: 25px 1.5rem;
+  font-family: 'dmsans-semiBold';
   font-size: 14px;
   font-weight: 600;
 }
@@ -13,8 +14,9 @@
   fill: $color-primary;
   color: $color-primary;
   background-color: $color-light;
-  padding: 15px 25px;
+  padding: 25px 25px;
   border-radius: $radius-primary;
+  font-family: 'DMsans-bold';
 }
 
 
@@ -27,9 +29,9 @@
 }
 
 .white-button:hover{
-  box-shadow: inset 0 0 20px rgba(0, 24, 90, 0.3);
-  outline-color: rgba(255, 255, 255, 0);
-  outline-offset: 15px;
+  // box-shadow: inset 0 0 20px rgba(0, 24, 90, 0.3);
+  // outline-color: rgba(255, 255, 255, 0);
+  // outline-offset: 15px;
 }
 
 .blue-button{
@@ -40,7 +42,7 @@
 }
 
 .blue-button:hover{
-  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.3);
-  outline-color: rgba(255, 255, 255, 0);
-  outline-offset: 15px;
+  // box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.3);
+  // outline-color: rgba(255, 255, 255, 0);
+  // outline-offset: 15px;
 }

@@ -1,13 +1,11 @@
-"use client";
-import React, { useState} from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import '../styles/SearchFormLarge.scss';
 
-const SearchFormLarge = () => {
+const SearchFormLarge: React.FC = () => {
+  const [selectedProduct, setSelectedProduct] = useState<string>('');
+  const products: string[] = ['Product 1', 'Product 2', 'Product 3', 'Product 4'];
 
-  const [selectedProduct, setSelectedProduct] = useState('');
-  const products = ['Product 1', 'Product 2', 'Product 3', 'Product 4'];
-
-  const handleProductChange = (event) => {
+  const handleProductChange = (event: ChangeEvent<HTMLSelectElement>) => {
     setSelectedProduct(event.target.value);
   };
 
@@ -31,7 +29,7 @@ const SearchFormLarge = () => {
         Search
       </button>
     </div>
-  )
+  );
 };
 
 export default SearchFormLarge;
