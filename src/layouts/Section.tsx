@@ -1,5 +1,5 @@
 import React, { ReactNode, CSSProperties } from "react";
-import '../styles/section.scss';
+import '@styles/layouts/section.scss';
 
 interface SectionProps {
   children?: ReactNode;
@@ -7,9 +7,10 @@ interface SectionProps {
   backgroundOverlay?: boolean;
   title?: string;
   className?: string;
+  maxContent?: boolean;
 }
 
-const Section: React.FC<SectionProps> = ({ children, imageUrl = '', backgroundOverlay = false, title = '', className = '' }) => {
+const Section: React.FC<SectionProps> = ({ children, imageUrl = '', backgroundOverlay = false, title = '', className = '', maxContent = false }) => {
 
   const sectionStyle: CSSProperties = {
     backgroundImage: `url(${imageUrl})`,
@@ -24,7 +25,7 @@ const Section: React.FC<SectionProps> = ({ children, imageUrl = '', backgroundOv
   };
 
   return (
-    <section className={`section-container ${className}`} style={sectionStyle}>
+    <section className={`section-container ${className} ${maxContent ? 'h-max' : 'h-screen'}`} style={sectionStyle}>
       <span className="section-title">{title}</span>
       {
         backgroundOverlay ?

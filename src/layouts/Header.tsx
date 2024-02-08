@@ -1,9 +1,9 @@
 import React from 'react';
 import Image from 'next/image';
-import Logo from '@images/logo.png';
+import Logo from '@images/gps-logo-white.png';
 import CustomDropdown from '@components/CustomDropdown';
 import { PrimaryButton } from '@/components/CustomButtons';
-import '../styles/header.scss';
+import '@styles/layouts/header.scss';
 
 interface HeaderOption {
   type: 'link' | 'dropdown' | 'button';
@@ -17,66 +17,66 @@ const Header: React.FC = () => {
     {
       type: 'dropdown',
       label: 'Rent',
-      link: '#',
+      link: '/rentals',
       optionsList: [
         {
           label: 'OPTION 1',
           key: 'OPTION1',
-          link: '#',
+          link: '/rentals',
         },
         {
           label: 'OPTION 2',
           key: 'OPTION2',
-          link: '#',
+          link: '/rentals',
         },
         {
           label: 'OPTION 3',
           key: 'OPTION3',
-          link: '#',
+          link: '/rentals',
         },
       ],
     },
     {
       type: 'dropdown',
       label: 'Shop',
-      link: '#',
+      link: '/shop',
       optionsList: [
         {
           label: 'OPTION 1',
           key: 'OPTION1',
-          link: '#',
+          link: '/shop',
         },
         {
           label: 'OPTION 2',
           key: 'OPTION2',
-          link: '#',
+          link: '/shop',
         },
         {
           label: 'OPTION 3',
           key: 'OPTION3',
-          link: '#',
+          link: '/shop',
         },
       ],
     },
     {
       type: 'dropdown',
       label: 'Services',
-      link: '#',
+      link: '/services',
       optionsList: [
         {
           label: 'OPTION 1',
           key: 'OPTION1',
-          link: '#',
+          link: '/services',
         },
         {
           label: 'OPTION 2',
           key: 'OPTION2',
-          link: '#',
+          link: '/services',
         },
         {
           label: 'OPTION 3',
           key: 'OPTION3',
-          link: '#',
+          link: '/services',
         },
       ],
     },
@@ -96,7 +96,7 @@ const Header: React.FC = () => {
 
   return (
     <header>
-      <Image src={Logo} width={150} alt={''} />
+      <a href={'/'}><Image src={Logo} width={150} alt={''} /></a>
       <nav>
         <ul>
           {headerOptions.map((obj, index) => {

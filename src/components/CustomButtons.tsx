@@ -1,6 +1,6 @@
 // Import React and styles
 import React, { ReactNode, CSSProperties, MouseEvent } from "react";
-import '@styles/CustomButtons.scss';
+import '@styles/components/CustomButtons.scss';
 import { Button } from "@nextui-org/react";
 
 // Define prop types
@@ -8,15 +8,15 @@ interface PrimaryButtonProps {
   children?: ReactNode;
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
   label?: string;
-  className?: CSSProperties;
+  className?: CSSProperties | string;
 }
 
 interface SecondaryButtonProps {
   children?: ReactNode;
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
   label?: string;
-  className?: CSSProperties;
-  color?: 'blue' | 'white'; // Optional color prop with specific values
+  className?: CSSProperties | string;
+  coloured?: boolean; // Optional color prop with specific values
 }
 
 // PrimaryButton component
@@ -29,9 +29,9 @@ const PrimaryButton: React.FC<PrimaryButtonProps> = ({ children, onClick, label,
 };
 
 // SecondaryButton component
-const SecondaryButton: React.FC<SecondaryButtonProps> = ({ children, onClick, label, className, color }) => {
+const SecondaryButton: React.FC<SecondaryButtonProps> = ({ children, onClick, label, className, coloured }) => {
   return (
-    <Button className={`secondary-button ${color === 'blue' ? 'blue-button' : 'white-button'} ${className}`} onClick={onClick}>
+    <Button className={`secondary-button ${coloured ? 'blue-button' : 'white-button'} ${className}`} onClick={onClick}>
       {label}{children}
     </Button>
   );

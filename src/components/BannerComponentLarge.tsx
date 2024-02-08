@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import '../styles/BannerComponentLarge.scss';
+import '@styles/components/BannerComponentLarge.scss';
 
 interface BannerComponentLargeProps {
   imageUrl: string;

@@ -1,9 +1,10 @@
 import React from 'react';
-import '@styles/CustomDropdown.scss';
+import '@styles/components/CustomDropdown.scss';
 
 interface Option {
   key: number;
   label: string;
+  link?: string;
 }
 
 interface CustomDropdownProps {
@@ -20,7 +21,7 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({ title, optionsList }) =
       </button>
       <div className="dropdown-content">
         {optionsList.map((obj) => (
-          <a key={obj.key} href="#">
+          <a key={obj.key} href={obj.link}>
             <span>{obj.label}</span>
           </a>
         ))}

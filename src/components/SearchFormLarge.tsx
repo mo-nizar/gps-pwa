@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent } from 'react';
-import '../styles/SearchFormLarge.scss';
+import '@styles/components/SearchFormLarge.scss';
 
 const SearchFormLarge: React.FC = () => {
   const [selectedProduct, setSelectedProduct] = useState<string>('');

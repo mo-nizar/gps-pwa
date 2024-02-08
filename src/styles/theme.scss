@@ -8,6 +8,8 @@ $color-danger: #dc3545;
 $color-light: #f8f9fc;
 $color-dark: #03001c;
 $color-hash:#E9E9E9;
+$color-grey:#6E6E6E;
+
 
 
 $overlay-primary: rgba(39, 38, 53, 0.5);
@@ -29,7 +31,7 @@ $shadow-card: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 $shadow-button: 0px 8px 15px rgba(0, 0, 0, 0.1);
 
 
-$radius-card: 0.5rem;
+$radius-card: 8px;
 $radius-button: 0.5rem;
 $radius-circle: 25rem;
 $radius-primary: 4px;
@@ -468,7 +470,7 @@ p{
 h1{
   font-size: 1.6rem;
   font-family: 'Sharp-Sans-Medium', sans-serif;
-}
+} 
 
 h2{
   font-size: 1.4rem;
@@ -500,4 +502,5 @@ button {
 
 a{
   cursor: pointer;
+  color: $color-primary;
 }

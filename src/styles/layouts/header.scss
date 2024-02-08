@@ -1,10 +1,10 @@
-@import './theme.scss';
+@import '../theme.scss';
 
 header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 5px 10vw;
+  padding: 5px 100px;
   background: $overlay-dark;
   color: $color-light;
   position: fixed;
@@ -14,6 +14,9 @@ header {
   -moz-box-shadow: 0 8px 6px -6px black; */
   box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.3);
   z-index: 10;
+  a {
+    color: $color-light;
+  }
 
   .logo {
     font-size: 24px;
@@ -26,7 +29,7 @@ header {
   }
   
   nav li {
-    margin-right: 20px;
+    margin-left: 20px;
   }
   
   .cart {

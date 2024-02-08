@@ -1,0 +1,80 @@
+    //----------------------------footer----------------------------------
+    @import '../theme.scss';
+
+    .footer{
+        background-color: $color-primary;
+        display: flex;
+        flex:1;
+        flex-direction: row;
+
+        @media (max-width: 768px) {
+          flex-direction: column-reverse;
+        }
+  
+        .details-container{
+          flex:1;
+          padding: 100px;
+          display: flex;
+          flex-direction: column;
+          position: relative;
+  
+  
+          @media (max-width: 768px) {
+            padding: 20px;
+          }
+  
+  
+          .title{
+            color: $color-light;
+            font-size: 24px;
+            font-family: 'DMSans-semibold';
+          }
+  
+          .desc{
+            color: $color-light;
+            font-size: 12px;
+            font-family: 'DMSans-regular';
+          }
+  
+  
+          .about-conatiner{
+            margin-top: 50px;
+  
+  
+            .title{
+              color: $color-light;
+              font-size: 20px;
+              font-family: 'DMSans-semibold';
+            }
+            .image{
+              height: 50px;
+            }
+            .desc{
+            font-size: 12px;
+  
+            }
+          }
+          
+        }
+  
+  
+        .form-container{
+          flex:1;
+          display: flex;
+          flex-direction: column;
+          padding: 100px;
+          align-items: flex-end;
+  
+          @media (max-width: 768px) {
+            padding: 20px;
+          }
+  
+  
+          @media (max-width: 768px) {
+            align-items: center;
+          }
+      
+  
+        }
+  
+      }

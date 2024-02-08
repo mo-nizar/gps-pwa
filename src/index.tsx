@@ -1,15 +1,13 @@
 "use client";
-import React, { useState } from 'react';
-import Header from '@layouts/Header';
+import React, { createContext, useState } from 'react';
 import Section from '@layouts/Section';
-import Logo from '@images/logo.png';
-import Link from 'next/link';
+import {Link} from "@nextui-org/react";
 import Image from 'next/image';
 import { Poppins } from 'next/font/google';
 import { SecondaryButton } from '@components/CustomButtons';
 import '@styles/home.scss';
 import Partners from '@/components/Partners';
-import { SubscribeForm } from './components/SubscribeForm';
+import { Footer } from './layouts/Footer';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -33,6 +31,8 @@ interface Card {
   title: string;
   desc: string;
   link: string;
+  imageUrl?: string;
+  buttonText?: string;
 }
 
 interface SectionData {
@@ -46,7 +46,7 @@ interface SectionData {
 }
 
 interface ResponseData {
-  sections: SectionData[];
+  sections?: SectionData[] | [];
   productsList: Product[];
 }
 
@@ -97,7 +97,24 @@ const response: ResponseData = {
       description:'',
       background:'',
       link:'',
-      banners:[]
+      banners:[],
+      cards:[
+        {
+          title:'Equipment Images ',
+          desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+          link:'/',
+          imageUrl:'/images/sec_3_img_1.png',
+          buttonText:'LEARN MORE'
+        },
+        {
+          title:'Consumable',
+          desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+          link:'/',
+          imageUrl:'/images/sec_3_img_2.png',
+          buttonText:'LEARN MORE'
+        },
+      ],
+      
     },
     {
       id:'4',
@@ -224,7 +241,7 @@ const RenderDemoProd: React.FC = () => {
         <div className='imageContainer'>
           <div className='imageBackground'>
             <Image
-              src={sections[4]?.banners[0].imageUrl ?? '/icons/arrow-right.svg'}
+              src={sections && sections[4]?.banners[0].imageUrl || '/icons/arrow-right.svg'}
               alt={''}
               width={150}
               height={150}
@@ -233,35 +250,39 @@ const RenderDemoProd: React.FC = () => {
         </div>
 
         <div className='textContainer'>
-          <h6>Lorem Ipsum is simply dummy </h6>
+          <h6>{`Lorem Ipsum is simply dummy`}</h6>
           <h1>
-            Lorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet,
+            {`Lorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet,
             consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor
-            sit amet
+            sit amet`}
           </h1>
 
           <span>
-            BOOK DEMO <img src='/icons/arrow-right.svg' />
+            {`BOOK DEMO`} <img src='/icons/arrow-right.svg' />
           </span>
         </div>
-      </div>    </Link>
+      </div>
+    </Link>
   );
 };
 
 const App: React.FC = () => {
   const [hovered, setIsHovered] = useState<number | null>(null);
 
-  return (
-    <main className={`main ${poppins.className}`}>
-      <Header />
+  const UserContext = createContext(0);
+  const [user, setUser] = useState("Jesse Hall");
 
+
+  return (
+    <UserContext.Provider value={user}>
+    <main className={`main ${poppins.className}`}>
       <Section backgroundOverlay={true} imageUrl={'../images/landing-page-banner.jpeg'}>
         <div className='landing'>
           <h1 className='tagline'>RENT NOW.</h1>
             <span className='description'>
-              An intuitive self-service platform that combines proprietary
+              {`An intuitive self-service platform that combines proprietary
               first party retail data with wholesale depletions in order to
-              generate valuable insights and business intelligence.
+              generate valuable insights and business intelligence.`}
             </span>
           <SecondaryButton>
             <div className='buttonContents'>
@@ -282,48 +303,42 @@ const App: React.FC = () => {
 
                   <div className='cards-div'>
 
-                    <a className={`card ${hovered==1 ? 'active-card' : ''}`}>
+                    <Link className={`card ${hovered==1 ? 'active-card' : ''}`}>
                       <span className='title'>{'NHS Details'}</span>
                       <span className='desc'>{'Lorem ipsum dolur sit'}</span>
-                    </a>
+                    </Link>
 
-                    <a className={`card ${hovered==2 ? 'active-card' : ''}`}>
+                    <Link className={`card ${hovered==2 ? 'active-card' : ''}`}>
                       <span className='title'>{'NHS Details'}</span>
                       <span className='desc'>{'Lorem ipsum dolur sit'}</span>
-                    </a>
-
+                    </Link>
                   </div>        
-
-
 
                   <div className='images-div mob-div'>
                     <img className='nhs-trio' src='/images/nhs-trio.svg' />
 
-                    
                     <div className='logo-container'>                      
-                      <a className='link-text link-one' onMouseEnter={() => setIsHovered(1)} onMouseLeave={() => setIsHovered(null)}>
-                        {'NHS\nDetails 1'}</a>
-                      <a className='link-text link-two' onMouseEnter={() => setIsHovered(2)} onMouseLeave={() => setIsHovered(null)}>
-                        {'NHS\nDetails 2'}</a>
-                      <a className='link-text link-three' onMouseEnter={() => setIsHovered(3)} onMouseLeave={() => setIsHovered(null)}>
-                        {'NHS\nDetails 3'}</a>
-                      <a className='link-four' onMouseEnter={() => setIsHovered(4)} onMouseLeave={() => setIsHovered(null)}/>
-                        {/* <img className='white-logo' src='/images/white-logo.svg' /></a> */}
-
+                      <Link className='link-text link-one' onMouseEnter={() => setIsHovered(1)} onMouseLeave={() => setIsHovered(null)}>
+                        {'NHS\nDetails 1'}</Link>
+                      <Link className='link-text link-two' onMouseEnter={() => setIsHovered(2)} onMouseLeave={() => setIsHovered(null)}>
+                        {'NHS\nDetails 2'}</Link>
+                      <Link className='link-text link-three' onMouseEnter={() => setIsHovered(3)} onMouseLeave={() => setIsHovered(null)}>
+                        {'NHS\nDetails 3'}</Link>
+                      <Link className='link-four' onMouseEnter={() => setIsHovered(4)} onMouseLeave={() => setIsHovered(null)}/>
+                        {/* <img className='white-logo' src='/images/white-logo.svg' /></Link> */}
                     </div>
                   </div>
 
-
                   <div className='cards-div'>
-                    <a className={`card ${hovered==3 ? 'active-card' : ''}`}>
+                    <Link className={`card ${hovered==3 ? 'active-card' : ''}`}>
                       <span className='title'>{'NHS Details'}</span>
                       <span className='desc'>{'Lorem ipsum dolur sit'}</span>
-                    </a>
+                    </Link>
 
-                    <a className={`card ${hovered==4 ? 'active-card' : ''}`}>
+                    <Link className={`card ${hovered==4 ? 'active-card' : ''}`}>
                       <span className='title'>{'NHS Details'}</span>
                       <span className='desc'>{'Lorem ipsum dolur sit'}</span>
-                    </a>
+                    </Link>
                   </div>
                 </div>
 
@@ -347,97 +362,40 @@ const App: React.FC = () => {
                 </span>
               </>
               <div className='button-container'>
-                <SecondaryButton>
+                <SecondaryButton coloured>
                   <div className='buttonContents'>
                     <p>{'BOOK DEMO'}</p>
-                    <img src='/icons/long-arrow-right.svg' />
+                    <img src='/icons/arrow-white.svg' />
                   </div>
                 </SecondaryButton>
               </div>
             </div>
 
             <div className='imagesWrapper'>
-              <div className='imageContainer'>
-                <div className='textContainer'>
-                  <p className='typography'>test text</p>
-                  <p>test text</p>
-                  <p>test text</p>
+            {sections && sections[2].cards?.map((item,idx)=>(
+                <div key={idx} className='imageContainer'>
+                  <div className='textContainer'>
+                    <p className='typography'>{item?.title || ''}</p>
+                    <p className='desc'>{item?.desc || ''}</p>
+                    <Link className='link'>{item?.buttonText || ''} <img src='/icons/link-arrow.svg' /></Link>
+                  </div>
+                  <img src={item.imageUrl} alt={''} />
                 </div>
-                <img src={'/images/sec_3_img_1.png'} alt={''} />
-              </div>
-
-              <div className='imageContainer'>
-                <img src={'/images/sec_3_img_2.png'} alt={''} />
-                <div className='textContainer'>
-                  <p className='typography'>test text</p>
-                  <p>test text</p>
-                  <p>test text</p>
-                </div>
-              </div>
-
+              ))}
             </div>
 
           </div>
         </div>
       </Section>
 
-      <Section title={''} className='partnerSection'>
-        <Partners partners={sections[4]?.banners || []}/>
+      <Section title={''} className='partnerSection' maxContent>
+        <Partners partners={sections && sections[4]?.banners || []}/>
       </Section>
 
-      <Section title={''}>
-        <div className='footer'>
+      <Footer/>
 
-          <div className='details-container'>
-            {/* <span className='title'>
-              {'Get In Touch!'}
-            </span>
-            <span className='desc'>
-              {'Fill up the form and our Team will get back to you within 24 hours.'}
-            </span> */}
-
-            <div className='about-conatiner'>
-
-            <span className='title'>
-              {'About us'}
-            </span>
-
-            <Image
-              src={Logo}
-              width={150}
-              alt={''}
-            />
-            <span className='desc'>
-              {`Backhoe is diversified construction company,
-              made up of team of people who are proven in
-              their industries. All working to desing build,
-              transport, operate, and maintain project all over
-              the USA
-              `}
-            </span>
-
-            </div>
-
-          </div>
-
-          <div className='form-container'>
-
-            <SubscribeForm/>
-
-          </div>
-
-        </div>
-      </Section>
-
-      {/* <Section title={'Equipments'}>
-        <div className='demo'>
-          <div className='productsSection'>
-            <ProductCardRow items={productsList} />
-          </div>
-          <div className='demoSection'>{renderDemoProd()}</div>
-        </div>
-      </Section> */}
     </main>
+    </UserContext.Provider>
   );
 };
 

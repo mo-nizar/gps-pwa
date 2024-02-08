@@ -1,5 +1,5 @@
 import Section from '@/layouts/Section';
-import React, { FC, useContext } from 'react';
+import React, { FC } from 'react';
 import '@styles/services.scss';
 import Image from 'next/image';
 import { SecondaryButton } from '@/components/CustomButtons';
@@ -19,7 +19,6 @@ interface Services{
   desc: string,
   images: string[],
   info: string,
-  id: string,
 }
 
 interface Data{
@@ -34,7 +33,7 @@ const Page: FC<PageProps> = () => {
 
   const data: Data ={
     hint: 'Services page',
-    title: 'Our Rentals',
+    title: 'Explore Store',
     desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod',
     additionalInfo:[
       {
@@ -54,49 +53,42 @@ const Page: FC<PageProps> = () => {
         desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
         images:['/images/services/bed.png'],
         info:'Lorem ipsum dolor sit , some dummy text and other informations',
-        id:'1',
       },
       {
         title: 'Product Name 2',
         desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
         images:['/images/services/bed.png'],
         info:'Lorem ipsum dolor sit , some dummy text and other informations',
-        id:'2',
       },
       {
         title: 'Product Name 3',
         desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
         images:['/images/services/bed.png'],
         info:'Lorem ipsum dolor sit , some dummy text and other informations',
-        id:'3',
       },
       {
         title: 'Product Name 3',
         desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
         images:['/images/services/bed.png'],
         info:'Lorem ipsum dolor sit , some dummy text and other informations',
-        id:'4',
       },
       {
         title: 'Product Name 3',
         desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
         images:['/images/services/bed.png'],
         info:'Lorem ipsum dolor sit , some dummy text and other informations',
-        id:'5',
       },
       {
         title: 'Product Name 3',
         desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
         images:['/images/services/bed.png'],
         info:'Lorem ipsum dolor sit , some dummy text and other informations',
-        id:'6',
       },
       {
         title: 'Product Name 3',
         desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
         images:['/images/services/bed.png'],
         info:'Lorem ipsum dolor sit , some dummy text and other informations',
-        id:'7',
       }
     ]
   }
@@ -115,12 +107,6 @@ const Page: FC<PageProps> = () => {
 
   const renderServices = (item: Services, idx: number): JSX.Element => {
     let evenItem = idx%2===0;
-
-    // const user = useContext(UserContext);
-
-    // console.log(user);
-    
-
     return (
         <div key={idx}>
           <div className={`service-container flex flex-col ${evenItem ? 'md:flex-row' : 'md:flex-row-reverse' } justify-between md:my-24 my-6`}>
