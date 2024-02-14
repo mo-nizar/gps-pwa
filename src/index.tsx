@@ -8,6 +8,7 @@ import { SecondaryButton } from '@components/CustomButtons';
 import '@styles/home.scss';
 import Partners from '@/components/Partners';
 import { Footer } from './layouts/Footer';
+import { useRouter } from 'next/navigation';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -220,61 +221,18 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
   );
 };
 
-interface RenderPartnersProps {
-  items: Product[];
-}
 
-const RenderPartners: React.FC<RenderPartnersProps> = ({ items }) => {
-  return (
-    <div className='productsRow'>
-      {items.map((element, index) => (
-        <ProductCard key={index} item={element} />
-      ))}
-    </div>
-  );
-};
-
-const RenderDemoProd: React.FC = () => {
-  return (
-    <Link href='/'>
-      <div className='demoContainer'>
-        <div className='imageContainer'>
-          <div className='imageBackground'>
-            <Image
-              src={sections && sections[4]?.banners[0].imageUrl || '/icons/arrow-right.svg'}
-              alt={''}
-              width={150}
-              height={150}
-            />
-          </div>
-        </div>
-
-        <div className='textContainer'>
-          <h6>{`Lorem Ipsum is simply dummy`}</h6>
-          <h1>
-            {`Lorem ipsum dolor sit amet, consecteturLorem ipsum dolor sit amet,
-            consecteturLorem ipsum dolor sit amet, consecteturLorem ipsum dolor
-            sit amet`}
-          </h1>
-
-          <span>
-            {`BOOK DEMO`} <img src='/icons/arrow-right.svg' />
-          </span>
-        </div>
-      </div>
-    </Link>
-  );
-};
 
 const App: React.FC = () => {
   const [hovered, setIsHovered] = useState<number | null>(null);
 
-  const UserContext = createContext(0);
-  const [user, setUser] = useState("Jesse Hall");
+  const router = useRouter();
 
+  const handleButtonClick = () => {
+    router.push('/summary?type=request');
+  };
 
   return (
-    <UserContext.Provider value={user}>
     <main className={`main ${poppins.className}`}>
       <Section backgroundOverlay={true} imageUrl={'../images/landing-page-banner.jpeg'}>
         <div className='landing'>
@@ -284,7 +242,7 @@ const App: React.FC = () => {
               first party retail data with wholesale depletions in order to
               generate valuable insights and business intelligence.`}
             </span>
-          <SecondaryButton>
+          <SecondaryButton onClick={handleButtonClick}>
             <div className='buttonContents'>
               <p>{'BOOK NOW'}</p>
               <img src='/icons/long-arrow-right.svg' />
@@ -395,7 +353,6 @@ const App: React.FC = () => {
       <Footer/>
 
     </main>
-    </UserContext.Provider>
   );
 };
 

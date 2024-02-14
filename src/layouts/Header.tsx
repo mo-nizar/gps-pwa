@@ -110,7 +110,7 @@ const Header: React.FC = () => {
               case 'dropdown':
                 return (
                   <li key={index}>
-                    <CustomDropdown title={obj.label} optionsList={obj.optionsList as any} />
+                    <CustomDropdown title={obj.label} viewMore={true} link={obj?.link || '#'} optionsList={obj.optionsList as any} />
                   </li>
                 );
               case 'button':

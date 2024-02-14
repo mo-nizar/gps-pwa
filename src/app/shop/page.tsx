@@ -1,9 +1,12 @@
+"use client"
 import Section from '@/layouts/Section';
-import React, { FC } from 'react';
-import '@styles/services.scss';
+import React, { FC, useContext } from 'react';
+import '@styles/rentals.scss';
 import Image from 'next/image';
 import { SecondaryButton } from '@/components/CustomButtons';
 import { Footer } from '@/layouts/Footer';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 interface PageProps {
 }
@@ -19,6 +22,9 @@ interface Services{
   desc: string,
   images: string[],
   info: string,
+  id: string,
+  linkEnabled: boolean,
+  buttonEnabled: boolean,
 }
 
 interface Data{
@@ -31,9 +37,12 @@ interface Data{
 
 const Page: FC<PageProps> = () => {
 
+  const router = useRouter()
+
+
   const data: Data ={
     hint: 'Services page',
-    title: 'Explore Store',
+    title: 'Our Rentals',
     desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod',
     additionalInfo:[
       {
@@ -53,42 +62,63 @@ const Page: FC<PageProps> = () => {
         desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
         images:['/images/services/bed.png'],
         info:'Lorem ipsum dolor sit , some dummy text and other informations',
+        id:'1',
+        linkEnabled: false,
+        buttonEnabled: true,
       },
       {
         title: 'Product Name 2',
         desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
         images:['/images/services/bed.png'],
         info:'Lorem ipsum dolor sit , some dummy text and other informations',
+        id:'2',
+        linkEnabled: false,
+        buttonEnabled: true,
       },
       {
         title: 'Product Name 3',
         desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
         images:['/images/services/bed.png'],
         info:'Lorem ipsum dolor sit , some dummy text and other informations',
+        id:'3',
+        linkEnabled: false,
+        buttonEnabled: true,
       },
       {
         title: 'Product Name 3',
         desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
         images:['/images/services/bed.png'],
         info:'Lorem ipsum dolor sit , some dummy text and other informations',
+        id:'4',
+        linkEnabled: false,
+        buttonEnabled: true,
       },
       {
         title: 'Product Name 3',
         desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
         images:['/images/services/bed.png'],
         info:'Lorem ipsum dolor sit , some dummy text and other informations',
+        id:'5',
+        linkEnabled: false,
+        buttonEnabled: true,
       },
       {
         title: 'Product Name 3',
         desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
         images:['/images/services/bed.png'],
         info:'Lorem ipsum dolor sit , some dummy text and other informations',
+        id:'6',
+        linkEnabled: false,
+        buttonEnabled: true,
       },
       {
         title: 'Product Name 3',
         desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
         images:['/images/services/bed.png'],
         info:'Lorem ipsum dolor sit , some dummy text and other informations',
+        id:'7',
+        linkEnabled: false,
+        buttonEnabled: true,
       }
     ]
   }
@@ -107,6 +137,12 @@ const Page: FC<PageProps> = () => {
 
   const renderServices = (item: Services, idx: number): JSX.Element => {
     let evenItem = idx%2===0;
+
+    // const user = useContext(UserContext);
+
+    // console.log(user);
+    
+
     return (
         <div key={idx}>
           <div className={`service-container flex flex-col ${evenItem ? 'md:flex-row' : 'md:flex-row-reverse' } justify-between md:my-24 my-6`}>
@@ -114,7 +150,7 @@ const Page: FC<PageProps> = () => {
               <Image src={item.images[0]} alt='' width={100} height={100} className='w-auto h-full'/>
             </div>
 
-            <div className={`desc-container flex flex-col h-full ml-0 ${evenItem ? 'md:ml-22' : 'md:mr-22'} md:w-3/6 w-full md:pl-6 relative`}>
+            <div className={`desc-container flex flex-col h-full ml-0 ${evenItem ? 'md:ml-6' : 'md:mr-6'} md:w-3/6 w-full relative`}>
               {/* <span className='section-hint self-start'>{data.hint || ''}</span> */}
 
               <span className='service-title'>
@@ -132,7 +168,7 @@ const Page: FC<PageProps> = () => {
                 
 
                 {additionalInfo && additionalInfo?.map((info,_idx)=>(
-                  <div className='additional-info'>
+                  <div className='additional-info' key={_idx}>
                     <div className='w-full flex flex-row mb-2'>
                       <img src={info?.imageUrl} alt='shippiong icon' className='w-6 mr-4'/>
                       <div className='w-full flex flex-col mb-2'>
@@ -151,9 +187,19 @@ const Page: FC<PageProps> = () => {
                 {item?.info || ''}
               </span>
 
-              <SecondaryButton coloured className='self-end mt-8 w-full md:w-auto md:absolute md:right-0 md:bottom-0'>
-                {`BOOK NOW`} <img src='/icons/arrow-white.svg' />
-              </SecondaryButton>
+              <div className={`flex flex-row ${item.linkEnabled && item?.buttonEnabled ?  'justify-between' : 'justify-end'} relative items-end w-full mt-8`}>
+                {item?.linkEnabled && (
+                <Link href={`/summary?id=${item?.id}`}>
+                  <span className='learn-more'>{'Learn More'}<img src='/icons/arrow-gray.svg' /></span>
+                </Link>)}
+
+
+                {item?.buttonEnabled && (
+                <SecondaryButton onClick={()=>router.push(`/summary?id=${item?.id}`)} coloured className='w-full md:w-auto self-end'>
+                  {`BOOK NOW`} <img src='/icons/arrow-white.svg' />
+                </SecondaryButton>)}
+               
+              </div>
             </div>
           </div>
 

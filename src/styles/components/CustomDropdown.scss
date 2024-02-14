@@ -8,7 +8,7 @@
   // Dropdown button styling
   .dropdown-button {
     padding: 10px;
-    color: #fff;
+    color: #ffffff;
     border: none;
     cursor: pointer;
     display: flex;
@@ -34,7 +34,7 @@
 
     // Style the dropdown links
     a {
-      background-color: $overlay-light;
+      background-color: $color-light;
       color: $color-primary ;
       padding: 12px 16px;
       display: block;

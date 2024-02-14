@@ -14,6 +14,7 @@
         .details-container{
           flex:1;
           padding: 100px;
+          padding-right: 30px;
           display: flex;
           flex-direction: column;
           position: relative;
@@ -21,6 +22,8 @@
   
           @media (max-width: 768px) {
             padding: 20px;
+            padding-right: 20px;
+
           }
   
   
@@ -34,6 +37,7 @@
             color: $color-light;
             font-size: 12px;
             font-family: 'DMSans-regular';
+            text-align: left;
           }
   
   
@@ -63,10 +67,12 @@
           display: flex;
           flex-direction: column;
           padding: 100px;
+          padding-left: 20px;
           align-items: flex-end;
   
           @media (max-width: 768px) {
             padding: 20px;
+            padding-left: 20px;
           }
   
   
