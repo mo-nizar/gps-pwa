@@ -13,7 +13,6 @@ module.exports = {
       '@images': path.resolve(__dirname, 'public/images'),
       '@icons': path.resolve(__dirname, 'public/icons'),
       '@layouts': path.resolve(__dirname, 'src/layouts'),
-
     },
   },
 };

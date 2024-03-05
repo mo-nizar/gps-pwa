@@ -1,357 +1,222 @@
 "use client";
-import React, { createContext, useState } from 'react';
-import Section from '@layouts/Section';
-import {Link} from "@nextui-org/react";
-import Image from 'next/image';
-import { Poppins } from 'next/font/google';
-import { SecondaryButton } from '@components/CustomButtons';
-import '@styles/home.scss';
-import Partners from '@/components/Partners';
-import { Footer } from './layouts/Footer';
-import { useRouter } from 'next/navigation';
+import React, { useEffect, useState } from "react";
+import Section from "@layouts/Section";
+import { Link } from "@nextui-org/react";
+import { Poppins } from "next/font/google";
+import { SecondaryButton } from "@components/CustomButtons";
+import "@styles/home.scss";
+import Partners from "@/components/Partners";
+import { useRouter } from "next/navigation";
+import api from "@/api";
 
 const poppins = Poppins({
-  subsets: ['latin'],
-  weight: '100',
+  subsets: ["latin"],
+  weight: "100",
 });
 
-interface Banner {
-  position?: null | string;
-  title?: null | string;
-  desc?: null | string;
-  imageUrl?: string;
-}
-
-interface Product {
-  name: string;
-  desc: string;
-  imageUrl: string;
-}
-
-interface Card {
-  title: string;
-  desc: string;
-  link: string;
-  imageUrl?: string;
-  buttonText?: string;
-}
-
-interface SectionData {
-  id: string;
-  title: string;
-  description: string;
-  background: string;
-  link: string;
-  banners: Banner[];
-  cards?: Card[];
-}
-
-interface ResponseData {
-  sections?: SectionData[] | [];
-  productsList: Product[];
-}
-
-const response: ResponseData = {
-  sections:[
-    {
-      id:'1',
-      title:'Rent Now',
-      description:'',
-      background:'',
-      link:'',
-      banners:[]
-    },
-    {
-      id:'2',
-      title:'Rent Now',
-      description:'',
-      background:'',
-      link:'',
-      banners:[],
-
-      cards:[
-        {
-          title:'NHS Details',
-          desc:'Lorem ipsum dolor sit amet consectetur',
-          link:'1'
-        },
-        {
-          title:'NHS Details',
-          desc:'Lorem ipsum dolor sit amet consectetur',
-          link:'2'
-        },
-        {
-          title:'NHS Details',
-          desc:'Lorem ipsum dolor sit amet consectetur',
-          link:'3'
-        },
-        {
-          title:'NHS Details',
-          desc:'Lorem ipsum dolor sit amet consectetur',
-          link:'4'
-        }
-      ]
-    },
-    {
-      id:'3',
-      title:'Rent Now',
-      description:'',
-      background:'',
-      link:'',
-      banners:[],
-      cards:[
-        {
-          title:'Equipment Images ',
-          desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-          link:'/',
-          imageUrl:'/images/sec_3_img_1.png',
-          buttonText:'LEARN MORE'
-        },
-        {
-          title:'Consumable',
-          desc:'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-          link:'/',
-          imageUrl:'/images/sec_3_img_2.png',
-          buttonText:'LEARN MORE'
-        },
-      ],
-      
-    },
-    {
-      id:'4',
-      title:'Partners',
-      description:'',
-      background:'',
-      link:'',
-      banners:[
-        {
-          imageUrl: '/images/nhs-logo.png',
-        },
-        {
-          imageUrl: '/images/nhs-logo.png',
-        }
-      ]
-    },
-    {
-      id:'5',
-      title:'Partners',
-      description:'',
-      background:'',
-      link:'',
-      banners: [
-        {
-          position: null,
-          title: null,
-          desc: null,
-          imageUrl: '/images/partners/NHealth-logo.png',
-        },
-        {
-          position: null,
-          title: null,
-          desc: null,
-          imageUrl: '/images/partners/nhs-logo.png',
-        },
-        {
-          position: null,
-          title: null,
-          desc: null,
-          imageUrl: '/images/partners/spire-logo.png',
-        },
-      ],
-    },
-  ],
-
-
-  productsList: [
-    {
-      name: 'prod 1',
-      desc: 'snake prod-1',
-      imageUrl: '../images/prod-1.png',
-    },
-    {
-      name: 'prod 2',
-      desc: 'snake prod-1',
-      imageUrl: '../images/prod-2.png',
-    },
-    {
-      name: 'prod 4',
-      desc: 'snake prod-4',
-      imageUrl: '../images/prod-2.png',
-    },
-  ],
-};
-
-const { productsList, sections } = response;
-
-interface ProductCardRowProps {
-  items: Product[];
-}
-
-const ProductCardRow: React.FC<ProductCardRowProps> = ({ items }) => {
-  return (
-    <div className='productsRow'>
-      {items.map((element, index) => (
-        <ProductCard key={index} item={element} />
-      ))}
-    </div>
-  );
-};
-
-interface ProductCardProps {
-  item: Product;
-}
-
-const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
-  return (
-    <Link href='/'>
-      <div
-        className='productCard'
-        style={{
-          backgroundImage: `url(${item.imageUrl})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      >
-        <div className='overlay'>
-          <h4 className='productTitle'>{item.name}</h4>
-          <h5 className='productTitle'>{item.desc}</h5>
-        </div>
-      </div>
-    </Link>
-  );
-};
-
-
-
 const App: React.FC = () => {
-  const [hovered, setIsHovered] = useState<number | null>(null);
+  const [hovered, setIsHovered] = useState<null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const [state, setState] = useState({
+    productsList: [],
+    sections: [],
+  });
+
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const res = await api.get("/home", {
+        params: {},
+      });
+      const { data } = res;
+      setState(data?.data);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const { sections } = state;
 
   const router = useRouter();
 
   const handleButtonClick = () => {
-    router.push('/summary?type=request');
+    router.push("/summary?type=request");
   };
 
-  return (
-    <main className={`main ${poppins.className}`}>
-      <Section backgroundOverlay={true} imageUrl={'../images/landing-page-banner.jpeg'}>
-        <div className='landing'>
-          <h1 className='tagline'>RENT NOW.</h1>
-            <span className='description'>
-              {`An intuitive self-service platform that combines proprietary
-              first party retail data with wholesale depletions in order to
-              generate valuable insights and business intelligence.`}
-            </span>
+  const renderSections = () => (
+    <>
+      <Section backgroundOverlay={true} imageUrl={sections[0]?.background}>
+        <div className="landing">
+          <h1 className="tagline">{sections[0]?.title}</h1>
+          <span className="description">{sections[0]?.description}</span>
           <SecondaryButton onClick={handleButtonClick}>
-            <div className='buttonContents'>
-              <p>{'BOOK NOW'}</p>
-              <img src='/icons/long-arrow-right.svg' />
+            <div className="buttonContents">
+              <p>{"BOOK NOW"}</p>
+              <img src="/icons/long-arrow-right.svg" />
             </div>
           </SecondaryButton>
         </div>
       </Section>
 
-      <Section backgroundOverlay={true} imageUrl={'../images/landing-page-banner-1.jpeg'}>
-        <div className='service'>
-          <div className='content-container'>
-                <span className='title'>
-                  {'Connection with NHS and Details'}
-                </span>
-                <div className='cards-container'>
+      <Section backgroundOverlay={true}>
+        <div className="service">
+          <div className="content-container">
+            <span className="title">{"NHS Connect"}</span>
+            <div className="cards-container">
+              <div className="cards-div">
+                <Link className={`card ${hovered == 1 ? "active-card" : ""}`}>
+                  <span className="title">{"NHS"}</span>
+                  <span className="desc">
+                    {
+                      "By leveraging our 12-patient list, NHS can slash lengthy biopsy wait times, ensuring swifter diagnosis and treatment."
+                    }
+                  </span>
+                </Link>
 
-                  <div className='cards-div'>
+                <Link className={`card ${hovered == 2 ? "active-card" : ""}`}>
+                  <span className="title">{"Private Healthcare"}</span>
+                  <span className="desc">
+                    {
+                      "Private hospitals can fill their schedules with consistent NHS referrals through NHS Connect, putting their expertise to work for a larger population and finding fulfilment in tackling backlogs while boosting their bottom line."
+                    }
+                  </span>
+                </Link>
+              </div>
 
-                    <Link className={`card ${hovered==1 ? 'active-card' : ''}`}>
-                      <span className='title'>{'NHS Details'}</span>
-                      <span className='desc'>{'Lorem ipsum dolur sit'}</span>
-                    </Link>
+              <div className="images-div mob-div">
+                <img className="nhs-trio" src="/images/nhs-trio.svg" />
 
-                    <Link className={`card ${hovered==2 ? 'active-card' : ''}`}>
-                      <span className='title'>{'NHS Details'}</span>
-                      <span className='desc'>{'Lorem ipsum dolur sit'}</span>
-                    </Link>
-                  </div>        
+                <div className="logo-container">
+                  <Link
+                    className="link-text link-one"
+                    onMouseEnter={() => setIsHovered(1)}
+                    onMouseLeave={() => setIsHovered(null)}
+                  >
+                    <img
+                      className="nhs-logo"
+                      src="/images/partners/nhs-logo.png"
+                    />
 
-                  <div className='images-div mob-div'>
-                    <img className='nhs-trio' src='/images/nhs-trio.svg' />
-
-                    <div className='logo-container'>                      
-                      <Link className='link-text link-one' onMouseEnter={() => setIsHovered(1)} onMouseLeave={() => setIsHovered(null)}>
-                        {'NHS\nDetails 1'}</Link>
-                      <Link className='link-text link-two' onMouseEnter={() => setIsHovered(2)} onMouseLeave={() => setIsHovered(null)}>
-                        {'NHS\nDetails 2'}</Link>
-                      <Link className='link-text link-three' onMouseEnter={() => setIsHovered(3)} onMouseLeave={() => setIsHovered(null)}>
-                        {'NHS\nDetails 3'}</Link>
-                      <Link className='link-four' onMouseEnter={() => setIsHovered(4)} onMouseLeave={() => setIsHovered(null)}/>
-                        {/* <img className='white-logo' src='/images/white-logo.svg' /></Link> */}
-                    </div>
-                  </div>
-
-                  <div className='cards-div'>
-                    <Link className={`card ${hovered==3 ? 'active-card' : ''}`}>
-                      <span className='title'>{'NHS Details'}</span>
-                      <span className='desc'>{'Lorem ipsum dolur sit'}</span>
-                    </Link>
-
-                    <Link className={`card ${hovered==4 ? 'active-card' : ''}`}>
-                      <span className='title'>{'NHS Details'}</span>
-                      <span className='desc'>{'Lorem ipsum dolur sit'}</span>
-                    </Link>
-                  </div>
+                    {/* {"NHS"} */}
+                  </Link>
+                  <Link
+                    className="link-text link-two"
+                    onMouseEnter={() => setIsHovered(2)}
+                    onMouseLeave={() => setIsHovered(null)}
+                  >
+                    {/* {"NHS\nDetails 2"} */}
+                    <img
+                      className="nhs-logo"
+                      src="/images/partners/nhs-logo.png"
+                    />
+                  </Link>
+                  <Link
+                    className="link-text link-three"
+                    onMouseEnter={() => setIsHovered(3)}
+                    onMouseLeave={() => setIsHovered(null)}
+                  >
+                    {/* {"NHS\nDetails 3"} */}
+                    <img
+                      className="nhs-logo"
+                      src="/images/partners/nhs-logo.png"
+                    />
+                  </Link>
+                  <Link
+                    className="link-four"
+                    onMouseEnter={() => setIsHovered(4)}
+                    onMouseLeave={() => setIsHovered(null)}
+                  />
+                  {/* <img className='white-logo' src='/images/white-logo.svg' /></Link> */}
                 </div>
+              </div>
 
+              <div className="cards-div">
+                <Link className={`card ${hovered == 4 ? "active-card" : ""}`}>
+                  <span className="title">{"GPS"}</span>
+                  <span className="desc">
+                    {
+                      "We bridge the gap between NHS and private care hospitals, expediting prostate biopsies and slashing waiting lists for faster diagnoses and healthier futures."
+                    }
+                  </span>
+                </Link>
+
+                <Link className={`card ${hovered == 3 ? "active-card" : ""}`}>
+                  <span className="title">{"Patients"}</span>
+                  <span className="desc">
+                    {
+                      "NHS Connect guides the patient to faster prostate biopsy and diagnosis in private hospitals, all while easing your mind with streamlined support."
+                    }
+                  </span>
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </Section>
 
-      <Section backgroundOverlay={true} imageUrl={'../images/landing-page-banner-1.jpeg'}>
-        <div className='nhs'>
-          <div className='content-container'>
-            <div className='textWrapper'>
+      <Section backgroundOverlay={true}>
+        <div className="nhs">
+          <div className="content-container">
+            <div className="textWrapper">
               <>
-                <span className='title'>
-                  {'Grow your business with Global Prostate Solutions'}
-                </span>
+                <span className="title">{sections[2]?.title}</span>
 
-                <span className='description'>
-                  {`An intuitive self-service platform that combines proprietary
-                  first party retail data with wholesale depletions in order to
-                  generate valuable insights and business intelligence.`}
-                </span>
+                <span className="description">{sections[2]?.description}</span>
               </>
-              <div className='button-container'>
+              <div className="button-container">
                 <SecondaryButton coloured>
-                  <div className='buttonContents'>
-                    <p>{'BOOK DEMO'}</p>
-                    <img src='/icons/arrow-white.svg' />
+                  <div className="buttonContents">
+                    <p>{"BOOK DEMO"}</p>
+                    <img src="/icons/arrow-white.svg" />
                   </div>
                 </SecondaryButton>
               </div>
             </div>
 
-            <div className='imagesWrapper'>
-            {sections && sections[2].cards?.map((item,idx)=>(
-                <div key={idx} className='imageContainer'>
-                  <div className='textContainer'>
-                    <p className='typography'>{item?.title || ''}</p>
-                    <p className='desc'>{item?.desc || ''}</p>
-                    <Link className='link'>{item?.buttonText || ''} <img src='/icons/link-arrow.svg' /></Link>
+            <div className="imagesWrapper">
+              {sections &&
+                sections[2]?.cards?.map((item, idx) => (
+                  <div key={idx} className="imageContainer">
+                    <div className="textContainer">
+                      <p className="typography">{item?.title || ""}</p>
+                      <p className="desc">{item?.desc || ""}</p>
+                      <Link className="link">
+                        {item?.buttonText || ""}{" "}
+                        <img src="/icons/link-arrow.svg" />
+                      </Link>
+                    </div>
+                    <img src={item.imageUrl} alt={""} />
                   </div>
-                  <img src={item.imageUrl} alt={''} />
-                </div>
-              ))}
+                ))}
             </div>
-
           </div>
         </div>
       </Section>
 
-      <Section title={''} className='partnerSection' maxContent>
-        <Partners partners={sections && sections[4]?.banners || []}/>
+      <Section
+        title={"Join Our Growing Hospital List"}
+        className="partnerSection border-1"
+        maxContent
+      >
+        <Partners partners={(sections && sections[4]?.banners) || []} />
       </Section>
+    </>
+  );
 
-      <Footer/>
-
+  return (
+    <main className={`main home ${poppins.className}`}>
+      {loading && sections?.length == 0 ? (
+        <div className="flex absolute self-center">Loding.... </div>
+      ) : (
+        renderSections()
+      )}
     </main>
   );
 };

@@ -2,6 +2,7 @@
   "name": "gps-pwa",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:3001",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -9,7 +10,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@adminjs/upload": "^4.0.2",
     "@nextui-org/react": "^2.2.9",
+    "axios": "^1.6.7",
     "framer-motion": "^11.0.3",
     "next": "^14.0.1",
     "react": "^18.2.0",

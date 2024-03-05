@@ -1,8 +1,7 @@
 "use client";
 import Section from "@/layouts/Section";
-import React, { FC, useContext, useEffect, useState } from "react";
-import "@styles/services.scss";
-import Image from "next/image";
+import React, { FC, useEffect, useState } from "react";
+import "@styles/sales.scss";
 import { SecondaryButton } from "@/components/CustomButtons";
 import { Footer } from "@/layouts/Footer";
 import Link from "next/link";
@@ -10,12 +9,6 @@ import { useRouter } from "next/navigation";
 import api from "@/api";
 
 interface PageProps {}
-
-interface additionalInfo {
-  title: string;
-  desc: string;
-  imageUrl: string;
-}
 
 interface Services {
   title: string;
@@ -27,22 +20,14 @@ interface Services {
   buttonEnabled: boolean;
 }
 
-interface Data {
-  hint?: string;
-  title: string;
-  desc?: string;
-  services: Services[];
-  additionalInfo: additionalInfo[];
-}
-
 const Page: FC<PageProps> = () => {
   const router = useRouter();
 
   const [loading, setLoading] = useState(true);
 
   const [data, setData] = useState({
-    hint: "Services page",
-    title: "Our Services",
+    hint: "Sales page",
+    title: "Our Sales",
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod",
     additionalInfo: [],
     services: [],
@@ -55,7 +40,7 @@ const Page: FC<PageProps> = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const res = await api.get("/services", {
+      const res = await api.get("/sales", {
         params: {},
       });
       const { data } = res;

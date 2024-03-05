@@ -1,7 +1,7 @@
 "use client";
 import Section from "@/layouts/Section";
 import React, { FC, useContext, useEffect, useState } from "react";
-import "@styles/services.scss";
+import "@styles/rentals.scss";
 import Image from "next/image";
 import { SecondaryButton } from "@/components/CustomButtons";
 import { Footer } from "@/layouts/Footer";
@@ -38,15 +38,16 @@ interface Data {
 const Page: FC<PageProps> = () => {
   const router = useRouter();
 
-  const [loading, setLoading] = useState(true);
+  const { additionalInfo, services } = data;
 
-  const [data, setData] = useState({
-    hint: "Services page",
-    title: "Our Services",
-    desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod",
-    additionalInfo: [],
-    services: [],
-  });
+  const style = {
+    descContainer: (evenItem: boolean) => ({
+      marginRight: evenItem ? 0 : 50,
+      marginLeft: evenItem ? 50 : 0,
+    }),
+  };
+
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchData();
@@ -67,13 +68,20 @@ const Page: FC<PageProps> = () => {
     }
   };
 
-  const { services } = data;
+  const [data, setData] = useState({
+    hint: "Services page",
+    title: "Our Rentals",
+    desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod",
+    additionalInfo: [],
+    services: [],
+  });
 
   const renderServices = (item: Services, idx: number): JSX.Element => {
     let evenItem = idx % 2 === 0;
-    if (loading) {
-      return <></>;
-    }
+
+    // const user = useContext(UserContext);
+
+    // console.log(user);
 
     return (
       <div key={idx}>
@@ -87,7 +95,13 @@ const Page: FC<PageProps> = () => {
               evenItem ? "md:justify-start" : "md:justify-end"
             }`}
           >
-            <img src={item.image} alt="" className="prodImage" />
+            <Image
+              src={item.image}
+              alt=""
+              width={100}
+              height={100}
+              className="w-auto h-full"
+            />
           </div>
 
           <div
@@ -98,24 +112,11 @@ const Page: FC<PageProps> = () => {
             {/* <span className='section-hint self-start'>{data.hint || ''}</span> */}
 
             <span className="service-title">{item?.title || ""}</span>
+            <span className="service-desc ">{item?.desc || ""}</span>
 
-            <div className="desc-wrapper">
-              {item?.description?.map((obj: any, idx: number) => (
-                <div key={idx} className="desc-sec flex flex-row mt-8">
-                  <img src="/icons/checkpoint.svg" className="mr-2" />
-                  <div className="desc-sec flex flex-col">
-                    <span className="desc-title">{obj?.title || ""}</span>
-                    <span className="desc-info">{obj?.info || ""}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <div className="line border-1 w-full lg:my-10 my-8 " />
 
-            {/* <span className="service-desc ">{item?.description || ""}</span> */}
-
-            {/* <div className="line border-1 w-full lg:my-10 my-8 " /> */}
-
-            {/* <div className="border-1 w-full flex flex-col rounded-2xl	p-4">
+            <div className="border-1 w-full flex flex-col rounded-2xl	p-4">
               {additionalInfo &&
                 additionalInfo?.map((info, _idx) => (
                   <div className="additional-info" key={_idx}>
@@ -131,7 +132,7 @@ const Page: FC<PageProps> = () => {
                           {info?.title || ""}
                         </span>
                         <span className="section-hint self-start">
-                          {info?.desc || ""}
+                          {info?.description || ""}
                         </span>
                       </div>
                     </div>
@@ -140,11 +141,11 @@ const Page: FC<PageProps> = () => {
                     )}
                   </div>
                 ))}
-            </div> */}
+            </div>
 
-            {/* <div className="line border-1 w-full my-10 " /> */}
+            <div className="line border-1 w-full my-10 " />
 
-            {/* <span className="service-info">{item?.info || ""}</span> */}
+            <span className="service-info">{item?.info || ""}</span>
 
             <div
               className={`flex flex-row ${
