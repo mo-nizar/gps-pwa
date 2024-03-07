@@ -17,6 +17,7 @@ interface SecondaryButtonProps {
   label?: string;
   className?: CSSProperties | string;
   coloured?: boolean; // Optional color prop with specific values
+  disabled?: boolean;
 }
 
 // PrimaryButton component
@@ -29,9 +30,9 @@ const PrimaryButton: React.FC<PrimaryButtonProps> = ({ children, onClick, label,
 };
 
 // SecondaryButton component
-const SecondaryButton: React.FC<SecondaryButtonProps> = ({ children, onClick, label, className, coloured }) => {
+const SecondaryButton: React.FC<SecondaryButtonProps> = ({ children, onClick, label, className, coloured, disabled }) => {
   return (
-    <Button className={`secondary-button ${coloured ? 'blue-button' : 'white-button'} ${className}`} onClick={onClick}>
+    <Button className={`secondary-button ${coloured ? 'blue-button' : 'white-button'} ${className}`} onClick={onClick} disabled={disabled}>
       {label}{children}
     </Button>
   );

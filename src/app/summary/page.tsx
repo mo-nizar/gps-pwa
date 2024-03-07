@@ -11,6 +11,10 @@ import Section from "@/layouts/Section";
 import SearchableDropdown from "@/components/SearchableDropdown";
 import { Input, Tab, Tabs } from "@nextui-org/react";
 import { Loader } from "@/components/Loader";
+import { DesktopDateTimePicker } from '@mui/x-date-pickers/DesktopDateTimePicker';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import dayjs from 'dayjs';
 
 interface PageProps {
   params: { id: string; type?: string };
@@ -150,6 +154,13 @@ const Page: FC<PageProps> = () => {
     );
   };
 
+  const inputClassNames = {
+    label: "label",
+    input: ["input", "placeholder:text-default-700/30"],
+    inputWrapper: "inputWrapper",
+  };
+
+
   return (
     <main>
       <Section className="intro" maxContent={true}>
@@ -206,11 +217,7 @@ const Page: FC<PageProps> = () => {
                         onChange={handleInputChange}
                         value={values["surgeon"] as string}
                         labelPlacement="outside"
-                        classNames={{
-                          label: "label",
-                          input: "input",
-                          inputWrapper: "inputWrapper",
-                        }}
+                        classNames={{...inputClassNames}}
                         name={"surgeon"}
                         placeholder="E.g. Ben"
                         label="Name of surgeon"
@@ -222,11 +229,7 @@ const Page: FC<PageProps> = () => {
                         onChange={handleInputChange}
                         value={values["email"] as string}
                         labelPlacement="outside"
-                        classNames={{
-                          label: "label",
-                          input: "input",
-                          inputWrapper: "inputWrapper",
-                        }}
+                        classNames={{...inputClassNames}}
                         name={"email"}
                         type="email"
                         label="Email"
@@ -237,11 +240,7 @@ const Page: FC<PageProps> = () => {
                         onChange={handleInputChange}
                         value={values["phone"] as string}
                         labelPlacement="outside"
-                        classNames={{
-                          label: "label",
-                          input: "input",
-                          inputWrapper: "inputWrapper",
-                        }}
+                        classNames={{...inputClassNames}}
                         name={"phone"}
                         type="tel"
                         placeholder="+44 1234567890"
@@ -254,14 +253,23 @@ const Page: FC<PageProps> = () => {
                         onChange={handleInputChange}
                         value={values["pateintsCount"] as string}
                         labelPlacement="outside"
-                        classNames={{
-                          label: "label",
-                          input: "input",
-                          inputWrapper: "inputWrapper",
-                        }}
+                        classNames={{...inputClassNames}}
                         name={"pateintsCount"}
                         type="number"
                         label="No. of patients"
+                        placeholder="1"
+                      />
+                    </div>
+
+                    <div className="flex flex-row mb-3">
+                      <Input
+                        onChange={handleInputChange}
+                        value={values["time"] as string}
+                        labelPlacement="outside"
+                        classNames={{...inputClassNames}}
+                        name={"time"}
+                        type="time"
+                        label="Time"
                         placeholder="1"
                       />
 
@@ -269,16 +277,14 @@ const Page: FC<PageProps> = () => {
 
                       <Input
                         onChange={handleInputChange}
-                        classNames={{
-                          label: "label",
-                          input: "input",
+                        classNames={{...inputClassNames,
                           inputWrapper: "inputWrapper mb-2",
                         }}
-                        name={"date"}
                         type="date"
                         label="Date"
+                        name={"date"}
                         labelPlacement="outside"
-                        placeholder="dd/mm/yyyy"
+                        placeholder="dd-mm-yyyy"
                       />
                     </div>
                   </div>
@@ -297,11 +303,7 @@ const Page: FC<PageProps> = () => {
                         onChange={handleInputChange}
                         value={values["surgeon"] as string}
                         labelPlacement="outside"
-                        classNames={{
-                          label: "label",
-                          input: "input",
-                          inputWrapper: "inputWrapper",
-                        }}
+                        classNames={{...inputClassNames}}
                         name={"surgeon"}
                         placeholder="E.g. Ben"
                         label="Name of surgeon"
@@ -313,11 +315,7 @@ const Page: FC<PageProps> = () => {
                         onChange={handleInputChange}
                         value={values["email"] as string}
                         labelPlacement="outside"
-                        classNames={{
-                          label: "label",
-                          input: "input",
-                          inputWrapper: "inputWrapper",
-                        }}
+                        classNames={{...inputClassNames}}
                         name={"email"}
                         type="email"
                         label="Email"
@@ -328,11 +326,7 @@ const Page: FC<PageProps> = () => {
                         onChange={handleInputChange}
                         value={values["phone"] as string}
                         labelPlacement="outside"
-                        classNames={{
-                          label: "label",
-                          input: "input",
-                          inputWrapper: "inputWrapper",
-                        }}
+                        classNames={{...inputClassNames}}
                         name={"phone"}
                         type="tel"
                         placeholder="+44 1234567890"
@@ -345,14 +339,23 @@ const Page: FC<PageProps> = () => {
                         onChange={handleInputChange}
                         value={values["pateintsCount"] as string}
                         labelPlacement="outside"
-                        classNames={{
-                          label: "label",
-                          input: "input",
-                          inputWrapper: "inputWrapper",
-                        }}
+                        classNames={{...inputClassNames}}
                         name={"pateintsCount"}
                         type="number"
                         label="No. of patients"
+                        placeholder="1"
+                      />
+                    </div>
+
+                    <div className="flex flex-row mb-3">
+                      <Input
+                        onChange={handleInputChange}
+                        value={values["time"] as string}
+                        labelPlacement="outside"
+                        classNames={{...inputClassNames}}
+                        name={"time"}
+                        type="time"
+                        label="Time"
                         placeholder="1"
                       />
 
@@ -360,16 +363,14 @@ const Page: FC<PageProps> = () => {
 
                       <Input
                         onChange={handleInputChange}
-                        classNames={{
-                          label: "label",
-                          input: "input",
+                        classNames={{...inputClassNames,
                           inputWrapper: "inputWrapper mb-2",
                         }}
                         type="date"
                         label="Date"
                         name={"date"}
                         labelPlacement="outside"
-                        placeholder="dd/mm/yyyy"
+                        placeholder="dd-mm-yyyy"
                       />
                     </div>
 
@@ -389,7 +390,7 @@ const Page: FC<PageProps> = () => {
               </Tabs>
 
               <div
-                className={`flex flex-row items-end w-full mt-8 flex-end absolute bottom-4`}
+                className={`flex flex-row items-end w-full mt-8`}
               >
                 <SecondaryButton
                   onClick={handleSubmit}

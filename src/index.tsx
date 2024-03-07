@@ -72,7 +72,92 @@ const App: React.FC = () => {
           <div className="content-container">
             <span className="title">{"NHS Connect"}</span>
             <div className="cards-container">
-              {/* ... (rest of the code) */}
+              <div className="cards-div">
+                <Link className={`card ${hovered == 1 ? "active-card" : ""}`}>
+                  <span className="title">{"NHS"}</span>
+                  <span className="desc">
+                    {
+                      "By leveraging our 12-patient list, NHS can slash lengthy biopsy wait times, ensuring swifter diagnosis and treatment."
+                    }
+                  </span>
+                </Link>
+
+                <Link className={`card ${hovered == 2 ? "active-card" : ""}`}>
+                  <span className="title">{"Private Healthcare"}</span>
+                  <span className="desc">
+                    {
+                      "Private hospitals can fill their schedules with consistent NHS referrals through NHS Connect, putting their expertise to work for a larger population and finding fulfilment in tackling backlogs while boosting their bottom line."
+                    }
+                  </span>
+                </Link>
+              </div>
+
+              <div className="images-div mob-div">
+                <img className="nhs-trio" src="/images/nhs-trio.svg" />
+
+                <div className="logo-container">
+                  <Link
+                    className="link-text link-one"
+                    onMouseEnter={() => setIsHovered(1)}
+                    onMouseLeave={() => setIsHovered(null)}
+                  >
+                    <img
+                      className="nhs-logo"
+                      src="/images/partners/nhs-logo.png"
+                    />
+
+                    {/* {"NHS"} */}
+                  </Link>
+                  <Link
+                    className="link-text link-two"
+                    onMouseEnter={() => setIsHovered(2)}
+                    onMouseLeave={() => setIsHovered(null)}
+                  >
+                    {/* {"NHS\nDetails 2"} */}
+                    <img
+                      className="nhs-logo"
+                      src="/images/partners/nhs-logo.png"
+                    />
+                  </Link>
+                  <Link
+                    className="link-text link-three"
+                    onMouseEnter={() => setIsHovered(3)}
+                    onMouseLeave={() => setIsHovered(null)}
+                  >
+                    {/* {"NHS\nDetails 3"} */}
+                    <img
+                      className="nhs-logo"
+                      src="/images/partners/nhs-logo.png"
+                    />
+                  </Link>
+                  <Link
+                    className="link-four"
+                    onMouseEnter={() => setIsHovered(4)}
+                    onMouseLeave={() => setIsHovered(null)}
+                  />
+                  {/* <img className='white-logo' src='/images/white-logo.svg' /></Link> */}
+                </div>
+              </div>
+
+              <div className="cards-div">
+                <Link className={`card ${hovered == 4 ? "active-card" : ""}`}>
+                  <span className="title">{"GPS"}</span>
+                  <span className="desc">
+                    {
+                      "We bridge the gap between NHS and private care hospitals, expediting prostate biopsies and slashing waiting lists for faster diagnoses and healthier futures."
+                    }
+                  </span>
+                </Link>
+
+                <Link className={`card ${hovered == 3 ? "active-card" : ""}`}>
+                  <span className="title">{"Patients"}</span>
+                  <span className="desc">
+                    {
+                      "NHS Connect guides the patient to faster prostate biopsy and diagnosis in private hospitals, all while easing your mind with streamlined support."
+                    }
+                  </span>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
@@ -87,7 +172,7 @@ const App: React.FC = () => {
                 <span className="description">{sections[2]?.description}</span>
               </>
               <div className="button-container">
-                <SecondaryButton coloured>
+                <SecondaryButton coloured onClick={() => router.push(`/demo`)}>
                   <div className="buttonContents">
                     <p>{"BOOK DEMO"}</p>
                     <img src="/icons/arrow-white.svg" alt="arrow" />
@@ -103,7 +188,7 @@ const App: React.FC = () => {
                     <div className="textContainer">
                       <p className="typography">{item?.title || ""}</p>
                       <p className="desc">{item?.desc || ""}</p>
-                      <Link className="link">
+                      <Link className="link" onClick={() => router.push(`/sales`)}>
                         {item?.buttonText || ""}{" "}
                         <img src="/icons/link-arrow.svg" />
                       </Link>

@@ -1,20 +1,16 @@
+// Please note: The ServiceRefItem type may need to be adjusted based on your exact use case.
 "use client";
+
+import { useRef, useEffect, FC, useState } from 'react';
 import Section from "@/layouts/Section";
-import React, { FC, useEffect, useState } from "react";
 import "@styles/services.scss";
-import Image from "next/image";
 import { SecondaryButton } from "@/components/CustomButtons";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { useRouter, useSearchParams } from "next/navigation";
 import api from "@/api";
+import { Loader } from '@/components/Loader';
 
 interface PageProps {}
-
-interface AdditionalInfo {
-  title: string;
-  desc: string;
-  imageUrl: string;
-}
 
 interface Services {
   title: string;
@@ -24,36 +20,60 @@ interface Services {
   id: string;
   linkEnabled: boolean;
   buttonEnabled: boolean;
+  description?: { title: string; info: string }[];
 }
 
-interface Data {
-  hint?: string;
-  title: string;
-  desc?: string;
-  services: Services[];
-  additionalInfo: AdditionalInfo[];
+interface ServiceRefItem {
+  [key: string]: HTMLDivElement | null;
 }
 
 const Page: FC<PageProps> = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
 
-  const [data, setData] = useState<Data>({
+  const id = searchParams?.get("id") || null;
+
+  const [loading, setLoading] = useState(true);
+
+  const [data, setData] = useState({
     hint: "Services page",
-    title: "Our Rentals",
+    title: "Our Services",
     desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod",
     additionalInfo: [],
-    services: [],
+    services: [
+      {
+        "id": 1,
+        "title": "Stepper-grid guided transperineal biopsy",
+        "description": [
+            {
+                "title": "Ultrasound machine",
+                "info": "Latest ultrasound for accurate imaging"
+            },
+            {
+                "title": "Stepper stabiliser",
+                "info": "Our in-house device suitable for all template guided procedures"
+            },
+            {
+                "title": "Grids and consumables",
+                "info": "Enter your Postal code for Delivery Availability"
+            },
+            {
+                "title": "System specialist",
+                "info": "Free 30 days Delivery Return"
+            },
+            {
+                "title": "One-patient list available",
+                "info": "Flexible rental options available from 1 patient list to 12 patients morning list"
+            }
+        ],
+        "info": "[   \"Latest ultrasound for accurate imaging\",   \"Our in-house device suitable for all template guided procedures\",   \"Enter your Postal code for Delivery Availability\",   \"Free 30 days Delivery Return\",   \"Flexible rental options available from 1 patient list to 12 patients morning list\" ]",
+        "isEnabled": 1,
+        "image": "http://localhost:3001/1/service_3.png",
+        "linkEnabled": false,
+        "buttonEnabled": true
+    }
+    ],
   });
-  const { additionalInfo, services } = data;
-
-  const style = {
-    descContainer: (evenItem: boolean): React.CSSProperties => ({
-      marginRight: evenItem ? 0 : 50,
-      marginLeft: evenItem ? 50 : 0,
-    }),
-  };
-
-  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     fetchData();
@@ -62,11 +82,11 @@ const Page: FC<PageProps> = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const res = await api.get("/services", {
-        params: {},
+      const res = await api.get("/sales", {
+        params: {id},
       });
       const { data } = res;
-      setData(data?.data || {});
+      setData(data?.data);
     } catch (err) {
       console.error(err);
     } finally {
@@ -74,8 +94,11 @@ const Page: FC<PageProps> = () => {
     }
   };
 
+  const { services } = data;
+
+
   const renderServices = (item: Services, idx: number): JSX.Element => {
-    const evenItem = idx % 2 === 0;
+    let evenItem = idx % 2 === 0;
 
     return (
       <div key={idx}>
@@ -89,13 +112,7 @@ const Page: FC<PageProps> = () => {
               evenItem ? "md:justify-start" : "md:justify-end"
             }`}
           >
-            <Image
-              src={item.image}
-              alt=""
-              width={100}
-              height={100}
-              className="w-auto h-full"
-            />
+            <img src={item.image} alt="" className="prodImage" />
           </div>
 
           <div
@@ -104,43 +121,21 @@ const Page: FC<PageProps> = () => {
             } md:w-3/6 w-full relative`}
           >
             <span className="service-title">{item?.title || ""}</span>
-            <span className="service-desc ">{item?.desc || ""}</span>
 
-            <div className="line border-1 w-full lg:my-10 my-8 " />
-
-            <div className="border-1 w-full flex flex-col rounded-2xl p-4">
-              {additionalInfo &&
-                additionalInfo?.map((info, _idx) => (
-                  <div className="additional-info" key={_idx}>
-                    <div className="w-full flex flex-row mb-2">
-                      <Image
-                        src={info?.imageUrl}
-                        alt="shipping icon"
-                        width={6}
-                        height={6}
-                        className="w-6 mr-4"
-                      />
-                      <div className="w-full flex flex-col mb-2">
-                        <span className="title">
-                          {"Free Delivery"}
-                          {info?.title || ""}
-                        </span>
-                        <span className="section-hint self-start">
-                          {info?.desc || ""}
-                        </span>
-                      </div>
-                    </div>
-                    {_idx + 1 !== additionalInfo?.length && (
-                      <div className="border-1 w-full my-4 " />
-                    )}
+            <div className="desc-wrapper">
+              {item?.description?.map((obj: any, idx: number) => (
+                <div key={idx} className="desc-sec flex flex-row mt-8">
+                  <img
+                    src="/icons/checkpoint.svg"
+                    className="mr-2 markIcon"
+                  />
+                  <div className="desc-sec flex flex-col">
+                    <span className="desc-title">{obj?.title || ""}</span>
+                    <span className="desc-info">{obj?.info || ""}</span>
                   </div>
-                ))}
+                </div>
+              ))}
             </div>
-
-            <div className="line border-1 w-full my-10 " />
-
-            <span className="service-info">{item?.info || ""}</span>
-
             <div
               className={`flex flex-row ${
                 item.linkEnabled && item?.buttonEnabled
@@ -183,6 +178,7 @@ const Page: FC<PageProps> = () => {
         <span className="desc self-center">{data.desc}</span>
         {services && services?.map(renderServices)}
       </Section>
+      {loading && (<Loader/>)}
     </main>
   );
 };

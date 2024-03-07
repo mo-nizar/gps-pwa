@@ -25,12 +25,17 @@
     }
     .desc{
         font-size: 10px;
+        color: $color-primary;
     }
     .label{
         font-family: 'DMsans-regular';
     }
     .input{
         font-family: 'DMsans-regular';
+        caret-color: $color-primary;
+        ::placeholder {
+            // color: $color-primary;
+        }
     }
     .inputWrapper{
         border-radius: $radius-card;
@@ -40,6 +45,8 @@
     }
     .textLabel{
         font-family: 'DMsans-regular';
+        color: $color-primary;
+
     }
     .textBoxWrapper{
         border-radius: $radius-card;
@@ -55,7 +62,9 @@
         padding: 0px;
         width: 100%;
         align-self: flex-start;
-
+    }
+    .errored{
+        border: 2px solid $color-danger;
     }
     
 }

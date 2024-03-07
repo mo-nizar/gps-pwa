@@ -6,6 +6,10 @@ main {
   .intro {
     padding: 100px;
 
+    @media (max-width: 870px) {
+      padding: 50px;
+    }
+
     @media (max-width: 768px) {
       padding: 100px 20px;
     }
@@ -20,6 +24,10 @@ main {
   .title {
     font-size: 46px;
     font-family: "dmsans-bold";
+
+    @media (max-width: 870px) {
+      font-size: 38px;
+    }
   }
   .desc {
     font-size: 12px;

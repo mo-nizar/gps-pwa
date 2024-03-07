@@ -1,37 +1,29 @@
 "use client";
 import { SubscribeForm } from "@/components/SubscribeForm";
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import "@styles/layouts/footer.scss";
 import Logo from "@images/gps-logo-white.png";
 import Link from "next/link";
+import Section from "./Section";
 
 export const Footer = () => {
 
-
-
   return (
-    // <Section title={""} maxContent className="footer">
+    <Section title={""} maxContent className="footer">
     <div className="footer">
       <div className="details-container">
-        {/* <span className='title'>
-          {'Get In Touch!'}
-        </span>
-        <span className='desc'>
-          {'Fill up the form and our Team will get back to you within 24 hours.'}
-        </span> */}
-
         <div className="about-conatiner">
           <span className="title">{"About us"}</span>
 
           <Image src={Logo} width={150} alt={""} />
           <span className="desc">
             {`Backhoe is diversified construction company,
-          made up of team of people who are proven in
-          their industries. All working to desing build,
-          transport, operate, and maintain project all over
-          the USA
-          `}
+              made up of team of people who are proven in
+              their industries. All working to desing build,
+              transport, operate, and maintain project all over
+              the USA
+            `}
           </span>
 
           <div className="mt-6" />
@@ -71,6 +63,6 @@ export const Footer = () => {
         <SubscribeForm />
       </div>
     </div>
-    // </Section>
+    </Section>
   );
 };
