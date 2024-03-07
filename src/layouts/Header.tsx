@@ -16,6 +16,7 @@ interface HeaderOption {
 
 const Header: React.FC = () => {
   const [loading, setLoading] = useState(true);
+  const [count, setCount] = useState(0);
 
   const [data, setData] = useState([
     {
@@ -46,7 +47,7 @@ const Header: React.FC = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [count]);
 
   const fetchData = async () => {
     setLoading(true);
@@ -54,7 +55,6 @@ const Header: React.FC = () => {
       const res = await api.get("/header");
       const { data } = res;
       setData(data?.data);
-      console.log(data?.data);
     } catch (err) {
       console.error(err);
     } finally {

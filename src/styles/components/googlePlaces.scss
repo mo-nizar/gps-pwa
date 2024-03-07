@@ -1,0 +1,19 @@
+
+@import '../theme.scss';
+
+.search-location-input{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  label{
+    font-family: 'DMsans-regular';
+    font-size: 16px;
+  }
+  input{
+    margin-top: 10px;
+    background-color: $color-light-grey;
+    height: 50px;
+    border-radius: $radius-card;
+    padding: 20px;
+  }
+}

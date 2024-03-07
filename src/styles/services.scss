@@ -59,6 +59,8 @@ main {
     }
 
     .image-container {
+      .prodImage {
+      }
     }
 
     .desc-container {
@@ -79,6 +81,10 @@ main {
           font-size: 14px;
           font-family: "dmsans-light";
           color: $color-grey;
+        }
+        .markIcon {
+          width: 20px;
+          margin-right: 10px;
         }
       }
       .service-desc {

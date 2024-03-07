@@ -34,6 +34,6 @@
     ".next/types/**/*.ts",
     "src/app/page.tsx",
     "src/mockAPI.js"
-  ],
+, "src/components/GooglePlaces.tsx"  ],
   "exclude": ["node_modules"]
 }

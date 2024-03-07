@@ -1,0 +1,19 @@
+@import '../theme.scss';
+
+.full-screen-loader{
+  height: 100vh;
+  position: relative;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.section-loader{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}

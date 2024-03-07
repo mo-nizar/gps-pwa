@@ -1,27 +1,55 @@
 "use client";
 import Section from "@/layouts/Section";
-import React, { FC, useEffect, useState } from "react";
-import "@styles/sales.scss";
+import React, { FC, useEffect, useRef, useState } from "react";
+import "@styles/services.scss";
 import { SecondaryButton } from "@/components/CustomButtons";
-import { Footer } from "@/layouts/Footer";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import api from "@/api";
+import { Loader } from "@/components/Loader";
 
 interface PageProps {}
 
 interface Services {
   title: string;
   desc: string;
-  images: string[];
+  image: string;
   info: string;
   id: string;
   linkEnabled: boolean;
   buttonEnabled: boolean;
+  description?: { title: string; info: string }[];
 }
+
+
+interface ServiceRefItem {
+  [key: string]: HTMLDivElement | null;
+}
+
 
 const Page: FC<PageProps> = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const key: number = Number(searchParams?.get("key"));
+
+  const servicesRef = useRef<ServiceRefItem>({});
+
+  useEffect(() => {
+    if (key !== null && servicesRef?.current[key]) {
+      executeScroll();
+    }
+  }, [servicesRef?.current[key]]);
+
+  const executeScroll = () => {
+    if (key !== null && servicesRef?.current && servicesRef.current[key]) {
+      const targetElement = servicesRef.current[key];
+
+      if (targetElement) {
+        targetElement.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  };
 
   const [loading, setLoading] = useState(true);
 
@@ -61,7 +89,7 @@ const Page: FC<PageProps> = () => {
     }
 
     return (
-      <div key={idx}>
+      <div key={idx} ref={(el) => (servicesRef.current[item.id] = el)}>
         <div
           className={`service-container flex flex-col ${
             evenItem ? "md:flex-row" : "md:flex-row-reverse"
@@ -95,41 +123,6 @@ const Page: FC<PageProps> = () => {
                 </div>
               ))}
             </div>
-
-            {/* <span className="service-desc ">{item?.description || ""}</span> */}
-
-            {/* <div className="line border-1 w-full lg:my-10 my-8 " /> */}
-
-            {/* <div className="border-1 w-full flex flex-col rounded-2xl	p-4">
-              {additionalInfo &&
-                additionalInfo?.map((info, _idx) => (
-                  <div className="additional-info" key={_idx}>
-                    <div className="w-full flex flex-row mb-2">
-                      <img
-                        src={info?.imageUrl}
-                        alt="shippiong icon"
-                        className="w-6 mr-4"
-                      />
-                      <div className="w-full flex flex-col mb-2">
-                        <span className="title">
-                          {"Free Delivery"}
-                          {info?.title || ""}
-                        </span>
-                        <span className="section-hint self-start">
-                          {info?.desc || ""}
-                        </span>
-                      </div>
-                    </div>
-                    {_idx + 1 !== additionalInfo?.length && (
-                      <div className="border-1 w-full my-4 " />
-                    )}
-                  </div>
-                ))}
-            </div> */}
-
-            {/* <div className="line border-1 w-full my-10 " /> */}
-
-            {/* <span className="service-info">{item?.info || ""}</span> */}
 
             <div
               className={`flex flex-row ${
@@ -173,6 +166,8 @@ const Page: FC<PageProps> = () => {
         <span className="desc self-center">{data.desc}</span>
         {services && services?.map(renderServices)}
       </Section>
+      {loading && (<Loader/>)}
+
     </main>
   );
 };

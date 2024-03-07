@@ -1,46 +1,25 @@
+
 "use client";
-import Section from "@/layouts/Section";
-import React, { FC, useEffect, useState } from "react";
+
+import React, { FC, memo, useEffect, useState } from "react";
 import "@styles/summary.scss";
-import Image from "next/image";
 import { SecondaryButton } from "@/components/CustomButtons";
-import { Footer } from "@/layouts/Footer";
-import { Input, Tab, Tabs } from "@nextui-org/react";
-import SearchableDropdown from "@/components/SearchableDropdown";
 import { useRouter, useSearchParams } from "next/navigation";
 import api from "@/api";
+import GooglePlaces from "@/components/GooglePlaces";
+import Section from "@/layouts/Section";
+import SearchableDropdown from "@/components/SearchableDropdown";
+import { Input, Tab, Tabs } from "@nextui-org/react";
+import { Loader } from "@/components/Loader";
 
 interface PageProps {
   params: { id: string; type?: string };
 }
 
-interface additionalInfo {
-  title: string;
-  desc: string;
-  imageUrl: string;
-}
-
-interface Services {
-  title: string;
-  desc: string;
-  images: string[];
-  info: string;
-  id: string;
-  linkEnabled: boolean;
-  buttonEnabled: boolean;
-}
-
-interface Data {
-  hint?: string;
-  title: string;
-  desc?: string;
-  services: Services[];
-  additionalInfo: additionalInfo[];
-}
-
 interface Option {
   [key: string]: string;
 }
+
 
 interface DropDownProps {
   label: string;
@@ -49,13 +28,6 @@ interface DropDownProps {
   options: Option[];
   placeholder: string;
 }
-
-const serviceOptions = [
-  { id: "1", name: "Service One" },
-  { id: "2", name: "Service Two" },
-  { id: "3", name: "Service Three" },
-  { id: "4", name: "Service four" },
-];
 
 const hospitalList = [
   { id: "1", name: "Graspus graspus" },
@@ -89,63 +61,58 @@ const hospitalList = [
   { id: "29", name: "Cereopsis novaehollandiae" },
 ];
 
-interface Product {
-  title: string;
-  desc: string;
-  image: string;
-  info: string;
-  id: string;
-  linkEnabled: boolean;
-  buttonEnabled: boolean;
-}
-
-const Page: FC<PageProps> = ({
-  params,
-}: {
-  params: { id: string; type?: string };
-}) => {
+const Page: FC<PageProps> = () => {
   const searchParams = useSearchParams();
+  const router = useRouter();
 
   const type = searchParams?.get("type") || "booking";
   const id = searchParams?.get("id") || null;
 
   const [loading, setLoading] = useState(true);
-
-  const [data, setData] = useState({});
+  const [data, setData] = useState<any>({});
+  const [selected, setSelected] = useState<string | null>(type || "booking");
+  const [values, setValues] = useState<{ [key: string]: number | string}>({ id: Number(id) });
+  const [isSuccess, setBookingSuccess] = useState<boolean | undefined>(undefined);
+  const [activeServices, setActiveServices] = useState<Option[]>([]);
 
   useEffect(() => {
     fetchData();
-  }, [id]);
+  }, [id, selected]);
 
   const fetchData = async () => {
     setLoading(true);
     try {
-      const res = await api.get("/services/summary", {
-        params: { id },
-      });
-      const { data } = res;
-      setData(data?.data);
+      if (selected === 'booking' && Object.keys(data).length === 0) {
+        const res = await api.get("/services/summary", {
+          params: { id },
+        });
+        const { data } = res;
+        setData(data?.data);
+      } else if (activeServices.length === 0) {
+        const res = await api.get("/services/list", {
+          params: { id },
+        });
+        const { data } = res;
+        setActiveServices(data?.data);
+      }
     } catch (err) {
       console.error(err);
     } finally {
       setLoading(false);
     }
-  };
-
-  const [selected, setSelected] = useState<string | null>(type || "booking");
-  const [values, setValues] = useState({});
+  };  
 
   const handleSubmit = async () => {
     setLoading(true);
     try {
-      const res = await api.post("/services/summary", {
+      const res = await api.post("/services/summary", null, {
         params: {
           id,
           ...values,
         },
       });
       const { data } = res;
-      setData(data?.data);
+      setBookingSuccess(data?.data?.success);
     } catch (err) {
       console.error(err);
     } finally {
@@ -153,35 +120,15 @@ const Page: FC<PageProps> = ({
     }
   };
 
-  interface InputProps {
-    label: string;
-    valueKey: string;
-    placeholder: string;
-    type?: string;
-  }
-
-  const TextInput: FC<InputProps> = ({
-    placeholder,
-    type = "text",
-    valueKey,
-    label,
-  }) => {
-    return (
-      <Input
-        onChange={(val) => setValues({ ...values, [valueKey]: val })}
-        classNames={{
-          label: "label",
-          input: "input",
-          inputWrapper: "inputWrapper",
-        }}
-        placeholder={placeholder}
-        labelPlacement="outside"
-        type={type}
-        label={label}
-      />
-    );
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setValues({ ...values, [name]: value });
   };
 
+  const setDropownValues = (val: string, valueKey: string): void => {
+    setValues({ ...values, [valueKey]: val });
+  };
+  
   const DropDownComponent: FC<DropDownProps> = ({
     label,
     valueKey,
@@ -193,273 +140,273 @@ const Page: FC<PageProps> = ({
       <SearchableDropdown
         options={options}
         labelText={label}
-        label={"name"}
+        label={"label"}
         id={"id"}
-        selectedVal={values[valueKey as keyof typeof values]}
-        handleChange={(val) => setValues({ ...values, [valueKey]: val })}
+        selectedVal={values[valueKey]}
+        handleInputChange={(val) => setDropownValues(val ?? "" , valueKey)}
         searchable={searchable}
         placeholder={placeholder}
       />
     );
   };
 
-  const renderSummaryCard = (): JSX.Element => {
-    return (
-      <div className="summary-container shadow-md flex flex-col md:flex-row  px-10 py-8 mt-8">
-        <div className={`image-container flex-1 flex flex-col h-full`}>
-          {selected != "request" ? (
-            <div className="title-section mb-4 flex flex-col">
-              <span className="service-title">{data?.title || ""}</span>
-              <span className="service-desc ">{data?.desc || ""}</span>
-            </div>
-          ) : (
-            <div className="title-section mb-4 flex flex-col">
-              <span className="service-title">{`Request Booking`}</span>
-            </div>
-          )}
-
-          <img src={data.image} alt="" className="w-5/6 h-auto self-center" />
-        </div>
-
-        <div
-          className={`desc-container flex flex-2 flex-col h-full ml-0 md:ml-6 ml-0 mt-6 md:mt-0 md:w-3/6 w-full relative`}
-        >
-          {/* <div className='service-container mb-4 flex flex-col'>
-                <span className='service-title'>
-                  {data?.title || ''}
-                </span>
-                <span className='service-desc '>
-                  {data?.desc || ''}
-                </span>
-              </div> */}
-
-          <div className="tabs-container">
-            <Tabs
-              // aria-label="Options"
-              fullWidth
-              size="md"
-              aria-label="Tabs form"
-              selectedKey={selected}
-              onSelectionChange={(val) => setSelected(val as string | null)}
-              className="tabs"
-            >
-              <Tab
-                key="booking"
-                title="Booking"
-                className="tab"
-                isDisabled={type == "request"}
-              >
-                <div
-                  className={`form-container flex flex-col h-full ml-0 ml-0 mt-6 md:mt-0 w-full`}
-                >
-                  <div className="flex flex-row mb-3">
-                    <TextInput
-                      valueKey={"firstName"}
-                      placeholder="E.g. Ben"
-                      label="First Name"
-                    />
-                    <div className="md:ml-2" />
-
-                    <TextInput
-                      valueKey={"lastName"}
-                      label="Last Name"
-                      placeholder="E.g. Bob"
-                    />
-                  </div>
-
-                  <div className="flex flex-row mb-3">
-                    <TextInput
-                      valueKey={"email"}
-                      type="email"
-                      label="Email"
-                      placeholder="you@example.com"
-                    />
-                    <div className="md:ml-2" />
-                    <TextInput
-                      valueKey={"phone"}
-                      type="tel"
-                      placeholder="+44 1234567890"
-                      label="Phone"
-                    />
-                  </div>
-
-                  <div className="mb-2 relative">
-                    <DropDownComponent
-                      label="Hospital"
-                      valueKey="hospital"
-                      searchable={true}
-                      options={hospitalList}
-                      placeholder={"Select hospital"}
-                    />
-                  </div>
-
-                  <div className="flex flex-row mb-3">
-                    <TextInput
-                      valueKey="company"
-                      type="text"
-                      label="Company"
-                      placeholder="Eg: Global prostate solution"
-                    />
-
-                    <div className="md:ml-2" />
-
-                    <Input
-                      onChange={(val) =>
-                        setValues({ ...values, firstName: val })
-                      }
-                      classNames={{
-                        label: "label",
-                        input: "input",
-                        inputWrapper: "inputWrapper mb-2",
-                      }}
-                      type="date"
-                      label="Date"
-                      labelPlacement="outside"
-                      placeholder="dd/mm/yyyy"
-                    />
-                  </div>
-
-                  <div className="flex flex-row mb-3">
-                    <TextInput
-                      valueKey="pateintsCount"
-                      type="number"
-                      label="No. of patients"
-                      placeholder="1"
-                    />
-                  </div>
-
-                  <div
-                    className={`flex flex-row relative items-end w-full mt-8`}
-                  >
-                    <SecondaryButton
-                      onClick={handleSubmit}
-                      coloured
-                      className="w-full self-end"
-                    >
-                      {`Confirm`}
-                    </SecondaryButton>
-                  </div>
-                </div>
-              </Tab>
-
-              <Tab key="request" title="Request Booking" className="tab">
-                <div
-                  className={`form-container flex flex-col h-full ml-0 ml-0 mt-6 md:mt-0 w-full`}
-                >
-                  <div className="flex flex-row mb-3">
-                    <TextInput
-                      valueKey={"firstName"}
-                      placeholder="E.g. Ben"
-                      label="First Name"
-                    />
-                    <div className="md:ml-2" />
-
-                    <TextInput
-                      valueKey={"lastName"}
-                      label="Last Name"
-                      placeholder="E.g. Bob"
-                    />
-                  </div>
-
-                  <div className="flex flex-row mb-3">
-                    <TextInput
-                      valueKey={"email"}
-                      type="email"
-                      label="Email"
-                      placeholder="you@example.com"
-                    />
-                    <div className="md:ml-2" />
-                    <TextInput
-                      valueKey={"phone"}
-                      type="tel"
-                      placeholder="+44 1234567890"
-                      label="Phone"
-                    />
-                  </div>
-
-                  <div className="mb-2 relative">
-                    <DropDownComponent
-                      label="Hospital"
-                      valueKey="hospital"
-                      searchable={true}
-                      options={hospitalList}
-                      placeholder={"Select hospital"}
-                    />
-                  </div>
-
-                  <div className="flex flex-row mb-3">
-                    <TextInput
-                      valueKey="company"
-                      type="text"
-                      label="Company"
-                      placeholder="Eg: Global prostate solution"
-                    />
-
-                    <div className="md:ml-2" />
-
-                    <Input
-                      onChange={(val) =>
-                        setValues({ ...values, firstName: val })
-                      }
-                      classNames={{
-                        label: "label",
-                        input: "input",
-                        inputWrapper: "inputWrapper mb-2",
-                      }}
-                      type="date"
-                      label="Date"
-                      labelPlacement="outside"
-                      placeholder="dd/mm/yyyy"
-                    />
-                  </div>
-
-                  <div className="flex flex-row mb-3">
-                    <TextInput
-                      valueKey="pateintsCount"
-                      type="number"
-                      label="No. of patients"
-                      placeholder="1"
-                    />
-                  </div>
-
-                  <div className="mb-2 relative">
-                    <DropDownComponent
-                      label="Services"
-                      valueKey="service"
-                      searchable={true}
-                      options={serviceOptions}
-                      placeholder={"Select service"}
-                    />
-                  </div>
-
-                  <div
-                    className={`flex flex-row relative items-end w-full mt-8`}
-                  >
-                    <SecondaryButton
-                      onClick={handleSubmit}
-                      coloured
-                      className="w-full self-end"
-                    >
-                      {`Confirm`}
-                      {/* <img src='/icons/arrow-white.svg' /> */}
-                    </SecondaryButton>
-                  </div>
-                </div>
-              </Tab>
-            </Tabs>
-          </div>
-        </div>
-      </div>
-    );
-  };
-
   return (
     <main>
       <Section className="intro" maxContent={true}>
-        {data.title && renderSummaryCard()}
+        <div className="summary-container shadow-md flex flex-col md:flex-row  px-10 py-8 mt-8">
+          <div className={`image-container flex-1 flex flex-col h-full`}>
+            {selected === "booking" ? (
+              <div className="title-section mb-4 flex flex-col">
+                <span className="service-title">{data?.title || ""}</span>
+                <span className="service-desc ">{data?.desc || ""}</span>
+              </div>
+            ) : (
+              <div className="title-section mb-4 flex flex-col">
+                <span className="service-title">{`Request Booking`}</span>
+              </div>
+            )}
+
+            {selected === "booking" ? (
+              <img src={data.image} alt="" className="w-5/6 h-auto self-center" />
+            ) : (
+              <img
+                src={"/images/first-aid.jpeg"}
+                alt=""
+                className="requestBookingImg w-5/6 h-auto self-center"
+              />
+            )}
+          </div>
+
+          <div
+            className={`desc-container flex flex-2 flex-col h-full ml-0 md:ml-6 ml-0 mt-6 md:mt-0 md:w-3/6 w-full relative`}
+          >
+            <div className="tabs-container flex flex-column">
+              <Tabs
+                fullWidth
+                size="md"
+                selectedKey={selected}
+                onSelectionChange={(val) => setSelected(val as string | null)}
+                className="tabs"
+              >
+                <Tab
+                  key="booking"
+                  title="Booking"
+                  className="tab"
+                  isDisabled={!id}
+                >
+                  <div
+                    className={`form-container flex flex-col h-full ml-0 ml-0 mt-6 md:mt-0 w-full`}
+                  >
+                    <div className="mb-2 relative">
+                      <GooglePlaces />
+                    </div>
+
+                    <div className="flex flex-row mb-3">
+                      <Input
+                        onChange={handleInputChange}
+                        value={values["surgeon"] as string}
+                        labelPlacement="outside"
+                        classNames={{
+                          label: "label",
+                          input: "input",
+                          inputWrapper: "inputWrapper",
+                        }}
+                        name={"surgeon"}
+                        placeholder="E.g. Ben"
+                        label="Name of surgeon"
+                      />
+                    </div>
+
+                    <div className="flex flex-row mb-3">
+                      <Input
+                        onChange={handleInputChange}
+                        value={values["email"] as string}
+                        labelPlacement="outside"
+                        classNames={{
+                          label: "label",
+                          input: "input",
+                          inputWrapper: "inputWrapper",
+                        }}
+                        name={"email"}
+                        type="email"
+                        label="Email"
+                        placeholder="you@example.com"
+                      />
+                      <div className="md:ml-2" />
+                      <Input
+                        onChange={handleInputChange}
+                        value={values["phone"] as string}
+                        labelPlacement="outside"
+                        classNames={{
+                          label: "label",
+                          input: "input",
+                          inputWrapper: "inputWrapper",
+                        }}
+                        name={"phone"}
+                        type="tel"
+                        placeholder="+44 1234567890"
+                        label="Phone"
+                      />
+                    </div>
+
+                    <div className="flex flex-row mb-3">
+                      <Input
+                        onChange={handleInputChange}
+                        value={values["pateintsCount"] as string}
+                        labelPlacement="outside"
+                        classNames={{
+                          label: "label",
+                          input: "input",
+                          inputWrapper: "inputWrapper",
+                        }}
+                        name={"pateintsCount"}
+                        type="number"
+                        label="No. of patients"
+                        placeholder="1"
+                      />
+
+                      <div className="md:ml-2" />
+
+                      <Input
+                        onChange={handleInputChange}
+                        classNames={{
+                          label: "label",
+                          input: "input",
+                          inputWrapper: "inputWrapper mb-2",
+                        }}
+                        name={"date"}
+                        type="date"
+                        label="Date"
+                        labelPlacement="outside"
+                        placeholder="dd/mm/yyyy"
+                      />
+                    </div>
+                  </div>
+                </Tab>
+
+                <Tab key="request" title="Request Booking" className="tab">
+                  <div
+                    className={`form-container flex flex-col h-full ml-0 ml-0 mt-6 md:mt-0 w-full`}
+                  >
+                    <div className="mb-2 relative">
+                      <GooglePlaces />
+                    </div>
+
+                    <div className="flex flex-row mb-3">
+                      <Input
+                        onChange={handleInputChange}
+                        value={values["surgeon"] as string}
+                        labelPlacement="outside"
+                        classNames={{
+                          label: "label",
+                          input: "input",
+                          inputWrapper: "inputWrapper",
+                        }}
+                        name={"surgeon"}
+                        placeholder="E.g. Ben"
+                        label="Name of surgeon"
+                      />
+                    </div>
+
+                    <div className="flex flex-row mb-3">
+                      <Input
+                        onChange={handleInputChange}
+                        value={values["email"] as string}
+                        labelPlacement="outside"
+                        classNames={{
+                          label: "label",
+                          input: "input",
+                          inputWrapper: "inputWrapper",
+                        }}
+                        name={"email"}
+                        type="email"
+                        label="Email"
+                        placeholder="you@example.com"
+                      />
+                      <div className="md:ml-2" />
+                      <Input
+                        onChange={handleInputChange}
+                        value={values["phone"] as string}
+                        labelPlacement="outside"
+                        classNames={{
+                          label: "label",
+                          input: "input",
+                          inputWrapper: "inputWrapper",
+                        }}
+                        name={"phone"}
+                        type="tel"
+                        placeholder="+44 1234567890"
+                        label="Phone"
+                      />
+                    </div>
+
+                    <div className="flex flex-row mb-3">
+                      <Input
+                        onChange={handleInputChange}
+                        value={values["pateintsCount"] as string}
+                        labelPlacement="outside"
+                        classNames={{
+                          label: "label",
+                          input: "input",
+                          inputWrapper: "inputWrapper",
+                        }}
+                        name={"pateintsCount"}
+                        type="number"
+                        label="No. of patients"
+                        placeholder="1"
+                      />
+
+                      <div className="md:ml-2" />
+
+                      <Input
+                        onChange={handleInputChange}
+                        classNames={{
+                          label: "label",
+                          input: "input",
+                          inputWrapper: "inputWrapper mb-2",
+                        }}
+                        type="date"
+                        label="Date"
+                        name={"date"}
+                        labelPlacement="outside"
+                        placeholder="dd/mm/yyyy"
+                      />
+                    </div>
+
+                    {selected === "request" && activeServices.length ? (
+                      <div className="mb-2 relative">
+                        <DropDownComponent
+                          label="Services"
+                          valueKey="service"
+                          searchable={true}
+                          options={activeServices}
+                          placeholder={"Select a service"}
+                        />
+                      </div>
+                    ) : null}
+                  </div>
+                </Tab>
+              </Tabs>
+
+              <div
+                className={`flex flex-row items-end w-full mt-8 flex-end absolute bottom-4`}
+              >
+                <SecondaryButton
+                  onClick={handleSubmit}
+                  coloured
+                  className="w-full self-end"
+                >
+                  {`Confirm`}
+                </SecondaryButton>
+              </div>
+            </div>
+          </div>
+        </div>
       </Section>
+      {loading && (<Loader/>)}
+
     </main>
   );
 };
 
-export default Page;
+export default memo(Page);

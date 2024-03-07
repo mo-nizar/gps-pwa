@@ -1,8 +1,8 @@
-import React from 'react';
-import '@styles/components/CustomDropdown.scss';
+import React from "react";
+import "@styles/components/CustomDropdown.scss";
 
 interface Option {
-  key: number | string;
+  id: number | string;
   label: string;
   link?: string;
 }
@@ -10,31 +10,41 @@ interface Option {
 interface CustomDropdownProps {
   title: string;
   viewMore?: boolean;
-  link?: string,
+  link?: string;
   optionsList: Option[];
 }
 
-const CustomDropdown: React.FC<CustomDropdownProps> = ({ title,viewMore, link, optionsList }) => {
+const CustomDropdown: React.FC<CustomDropdownProps> = ({
+  title,
+  viewMore,
+  link,
+  optionsList,
+}) => {
   return (
     <div className="dropdown">
       <button className="dropdown-button">
         {title}
-        <img src="/icons/caret-down.svg" style={{ color: 'white' }} alt="caret-down" />
+        <img
+          src="/icons/caret-down.svg"
+          style={{ color: "white" }}
+          alt="caret-down"
+        />
       </button>
       <div className="dropdown-content">
         {optionsList.map((obj) => (
-          <a key={obj.key} href={obj.link}>
+          <a key={obj.id} href={`${obj.link}/?key=${obj.id}`}>
             <span>{obj.label}</span>
           </a>
         ))}
 
-        {viewMore &&
+        {viewMore && (
           <a key={2222} href={link} className="viewAll">
             <span>
-              {'View all'}
+              {"View all"}
               <img src="/icons/long-arrow-right.svg" alt="long-arrow-right" />
             </span>
-          </a>}
+          </a>
+        )}
       </div>
     </div>
   );

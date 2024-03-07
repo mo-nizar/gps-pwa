@@ -1,17 +1,16 @@
 "use client";
 import Section from "@/layouts/Section";
-import React, { FC, useContext, useEffect, useState } from "react";
-import "@styles/rentals.scss";
+import React, { FC, useEffect, useState } from "react";
+import "@styles/services.scss";
 import Image from "next/image";
 import { SecondaryButton } from "@/components/CustomButtons";
-import { Footer } from "@/layouts/Footer";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import api from "@/api";
 
 interface PageProps {}
 
-interface additionalInfo {
+interface AdditionalInfo {
   title: string;
   desc: string;
   imageUrl: string;
@@ -20,7 +19,7 @@ interface additionalInfo {
 interface Services {
   title: string;
   desc: string;
-  images: string[];
+  image: string;
   info: string;
   id: string;
   linkEnabled: boolean;
@@ -32,22 +31,29 @@ interface Data {
   title: string;
   desc?: string;
   services: Services[];
-  additionalInfo: additionalInfo[];
+  additionalInfo: AdditionalInfo[];
 }
 
 const Page: FC<PageProps> = () => {
   const router = useRouter();
 
+  const [data, setData] = useState<Data>({
+    hint: "Services page",
+    title: "Our Rentals",
+    desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod",
+    additionalInfo: [],
+    services: [],
+  });
   const { additionalInfo, services } = data;
 
   const style = {
-    descContainer: (evenItem: boolean) => ({
+    descContainer: (evenItem: boolean): React.CSSProperties => ({
       marginRight: evenItem ? 0 : 50,
       marginLeft: evenItem ? 50 : 0,
     }),
   };
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     fetchData();
@@ -60,7 +66,7 @@ const Page: FC<PageProps> = () => {
         params: {},
       });
       const { data } = res;
-      setData(data?.data);
+      setData(data?.data || {});
     } catch (err) {
       console.error(err);
     } finally {
@@ -68,20 +74,8 @@ const Page: FC<PageProps> = () => {
     }
   };
 
-  const [data, setData] = useState({
-    hint: "Services page",
-    title: "Our Rentals",
-    desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod",
-    additionalInfo: [],
-    services: [],
-  });
-
   const renderServices = (item: Services, idx: number): JSX.Element => {
-    let evenItem = idx % 2 === 0;
-
-    // const user = useContext(UserContext);
-
-    // console.log(user);
+    const evenItem = idx % 2 === 0;
 
     return (
       <div key={idx}>
@@ -109,21 +103,21 @@ const Page: FC<PageProps> = () => {
               evenItem ? "md:ml-6" : "md:mr-6"
             } md:w-3/6 w-full relative`}
           >
-            {/* <span className='section-hint self-start'>{data.hint || ''}</span> */}
-
             <span className="service-title">{item?.title || ""}</span>
             <span className="service-desc ">{item?.desc || ""}</span>
 
             <div className="line border-1 w-full lg:my-10 my-8 " />
 
-            <div className="border-1 w-full flex flex-col rounded-2xl	p-4">
+            <div className="border-1 w-full flex flex-col rounded-2xl p-4">
               {additionalInfo &&
                 additionalInfo?.map((info, _idx) => (
                   <div className="additional-info" key={_idx}>
                     <div className="w-full flex flex-row mb-2">
-                      <img
+                      <Image
                         src={info?.imageUrl}
-                        alt="shippiong icon"
+                        alt="shipping icon"
+                        width={6}
+                        height={6}
                         className="w-6 mr-4"
                       />
                       <div className="w-full flex flex-col mb-2">
@@ -132,7 +126,7 @@ const Page: FC<PageProps> = () => {
                           {info?.title || ""}
                         </span>
                         <span className="section-hint self-start">
-                          {info?.description || ""}
+                          {info?.desc || ""}
                         </span>
                       </div>
                     </div>

@@ -1,42 +1,38 @@
+// Please note: The ServiceRefItem type may need to be adjusted based on your exact use case.
 "use client";
+
+import { useRef, useEffect, FC, useState } from 'react';
 import Section from "@/layouts/Section";
-import React, { FC, useContext, useEffect, useState } from "react";
 import "@styles/services.scss";
-import Image from "next/image";
 import { SecondaryButton } from "@/components/CustomButtons";
-import { Footer } from "@/layouts/Footer";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import api from "@/api";
+import { Loader } from '@/components/Loader';
 
 interface PageProps {}
-
-interface additionalInfo {
-  title: string;
-  desc: string;
-  imageUrl: string;
-}
 
 interface Services {
   title: string;
   desc: string;
-  images: string[];
+  image: string;
   info: string;
   id: string;
   linkEnabled: boolean;
   buttonEnabled: boolean;
+  description?: { title: string; info: string }[];
 }
 
-interface Data {
-  hint?: string;
-  title: string;
-  desc?: string;
-  services: Services[];
-  additionalInfo: additionalInfo[];
+interface ServiceRefItem {
+  [key: string]: HTMLDivElement | null;
 }
 
 const Page: FC<PageProps> = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const key: number = Number(searchParams?.get("key"));
+  const servicesRef = useRef<ServiceRefItem>({});
 
   const [loading, setLoading] = useState(true);
 
@@ -69,14 +65,27 @@ const Page: FC<PageProps> = () => {
 
   const { services } = data;
 
+  useEffect(() => {
+    if (key !== null && servicesRef?.current[key]) {
+      executeScroll();
+    }
+  }, [servicesRef?.current[key]]);
+
+  const executeScroll = () => {
+    if (key !== null && servicesRef?.current && servicesRef.current[key]) {
+      const targetElement = servicesRef.current[key];
+
+      if (targetElement) {
+        targetElement.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  };
+
   const renderServices = (item: Services, idx: number): JSX.Element => {
     let evenItem = idx % 2 === 0;
-    if (loading) {
-      return <></>;
-    }
 
     return (
-      <div key={idx}>
+      <div key={idx} ref={(el) => (servicesRef.current[item.id] = el)}>
         <div
           className={`service-container flex flex-col ${
             evenItem ? "md:flex-row" : "md:flex-row-reverse"
@@ -95,14 +104,15 @@ const Page: FC<PageProps> = () => {
               evenItem ? "md:ml-6" : "md:mr-6"
             } md:w-3/6 w-full relative`}
           >
-            {/* <span className='section-hint self-start'>{data.hint || ''}</span> */}
-
             <span className="service-title">{item?.title || ""}</span>
 
             <div className="desc-wrapper">
               {item?.description?.map((obj: any, idx: number) => (
                 <div key={idx} className="desc-sec flex flex-row mt-8">
-                  <img src="/icons/checkpoint.svg" className="mr-2" />
+                  <img
+                    src="/icons/checkpoint.svg"
+                    className="mr-2 markIcon"
+                  />
                   <div className="desc-sec flex flex-col">
                     <span className="desc-title">{obj?.title || ""}</span>
                     <span className="desc-info">{obj?.info || ""}</span>
@@ -110,42 +120,6 @@ const Page: FC<PageProps> = () => {
                 </div>
               ))}
             </div>
-
-            {/* <span className="service-desc ">{item?.description || ""}</span> */}
-
-            {/* <div className="line border-1 w-full lg:my-10 my-8 " /> */}
-
-            {/* <div className="border-1 w-full flex flex-col rounded-2xl	p-4">
-              {additionalInfo &&
-                additionalInfo?.map((info, _idx) => (
-                  <div className="additional-info" key={_idx}>
-                    <div className="w-full flex flex-row mb-2">
-                      <img
-                        src={info?.imageUrl}
-                        alt="shippiong icon"
-                        className="w-6 mr-4"
-                      />
-                      <div className="w-full flex flex-col mb-2">
-                        <span className="title">
-                          {"Free Delivery"}
-                          {info?.title || ""}
-                        </span>
-                        <span className="section-hint self-start">
-                          {info?.desc || ""}
-                        </span>
-                      </div>
-                    </div>
-                    {_idx + 1 !== additionalInfo?.length && (
-                      <div className="border-1 w-full my-4 " />
-                    )}
-                  </div>
-                ))}
-            </div> */}
-
-            {/* <div className="line border-1 w-full my-10 " /> */}
-
-            {/* <span className="service-info">{item?.info || ""}</span> */}
-
             <div
               className={`flex flex-row ${
                 item.linkEnabled && item?.buttonEnabled
@@ -188,6 +162,7 @@ const Page: FC<PageProps> = () => {
         <span className="desc self-center">{data.desc}</span>
         {services && services?.map(renderServices)}
       </Section>
+      {loading && (<Loader/>)}
     </main>
   );
 };

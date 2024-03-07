@@ -9,11 +9,12 @@ interface SearchableDropdownProps {
   options: Option[];
   label: string;
   id: string;
-  selectedVal: string;
+  selectedVal: string | number;
   searchable: boolean;
   labelText: string;
   placeholder: string,
-  handleChange: (value: string | null) => void;
+  
+  handleInputChange: (value: string | null) => void;
 }
 
 const SearchableDropdown: React.FC<SearchableDropdownProps> = ({
@@ -24,7 +25,7 @@ const SearchableDropdown: React.FC<SearchableDropdownProps> = ({
   searchable,
   labelText,
   placeholder,
-  handleChange,
+  handleInputChange,
 }) => {
   const [query, setQuery] = useState<string>("");
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -38,7 +39,7 @@ const SearchableDropdown: React.FC<SearchableDropdownProps> = ({
 
   const selectOption = (option: Option) => {
     setQuery(() => "");
-    handleChange(option[label]);
+    handleInputChange(option[label]);
     setIsOpen((prevIsOpen) => !prevIsOpen);
   };
 
@@ -48,7 +49,7 @@ const SearchableDropdown: React.FC<SearchableDropdownProps> = ({
   
   const getDisplayValue = (): string => {
     if (query) return query;
-    if (selectedVal) return selectedVal;
+    if (selectedVal) return selectedVal as string;
     if (!isOpen) return placeholder;
     return "";
   };
@@ -65,7 +66,7 @@ const SearchableDropdown: React.FC<SearchableDropdownProps> = ({
     <span className='label'>{labelText}</span>
     <div className="dropdown w-full">
       <div className="control">
-        <div className="selected-value">
+        <div className={`selected-value ${getDisplayValue() == placeholder ? 'placeholder' : ''}`}>
           {searchable &&(<input
             ref={inputRef}
             type="text"
@@ -73,7 +74,7 @@ const SearchableDropdown: React.FC<SearchableDropdownProps> = ({
             name="searchTerm"
             onChange={(e: ChangeEvent<HTMLInputElement>) => {
               setQuery(e.target.value);
-              handleChange(null);
+              handleInputChange(null);
             }}
             onClick={toggle}
           />)}

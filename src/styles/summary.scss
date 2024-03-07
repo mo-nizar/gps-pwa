@@ -86,6 +86,8 @@ main{
         background-color: white;
         border-radius: $radius-card;
         padding: 20px;
+        height: 100%;
+
       }
 
       .tabs{
@@ -93,6 +95,18 @@ main{
       }
 
       .tab{
+        
+      }
+
+      .tabs-container{
+        min-height: 80vh;
+        display: flex;
+        flex-direction: column;
+
+        .form-container{
+            height: 100%;
+
+        }
       }
       
 }

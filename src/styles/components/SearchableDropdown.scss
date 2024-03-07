@@ -39,7 +39,7 @@
   
   .dropdown .selected-value input {
     line-height: 1.5;
-    font-size: 1rem;
+    font-family: 'DMsans-regular';
     background-color: #f3f3f3;
     height: 50px;
     // border: 1px solid #ccc;
@@ -67,6 +67,10 @@
     width: 100%;
     z-index: 1000;
     -webkit-overflow-scrolling: touch;
+  }
+  
+  .placeholder{
+    color: $color-grey;
   }
   
   .dropdown .options.open {

@@ -28,7 +28,7 @@ instance.interceptors.request.use(
     // Modify the logic to include parameters in the request body for specific methods
     if (method === "post" || method === "put" || method === "patch") {
       // Assuming you want to include parameters in the body for POST, PUT, and PATCH requests
-      config.data = params;
+      config.data = params;      
     } else {
       // For other methods like GET, include parameters in the URL
       config.params = params;
