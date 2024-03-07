@@ -1,3 +1,4 @@
+// "use client";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -6,6 +7,8 @@ import Header from "@/layouts/Header";
 import Head from "next/head";
 import { Footer } from "@/layouts/Footer";
 import { memo } from "react";
+import 'dotenv/config';
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,6 +26,9 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+
+  console.log(process.env.API_BASE_URL) // remove this after you've confirmed it is working
+
   return (
     <html lang="en">
       <Head>

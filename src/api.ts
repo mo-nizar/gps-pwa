@@ -1,9 +1,9 @@
+"use client";
 import axios from "axios";
-
-const API_BASE_URL = "http://localhost:3001";
+import { ENVS } from "./constants";
 
 const instance = axios.create({
-  baseURL: API_BASE_URL,
+  baseURL: ENVS.API_BASE_URL,
   headers: {
     DEVICE: "web",
     "API-VERSION": "0.0.1",
@@ -12,6 +12,9 @@ const instance = axios.create({
     "Cache-Control": "no-cache",
   },
 });
+
+console.log('API_BASE_URL',process.env.API_BASE_URL ) // remove this after you've confirmed it is working
+
 
 // Add a request interceptor
 instance.interceptors.request.use(

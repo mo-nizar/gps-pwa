@@ -1,13 +1,15 @@
 "use client";
 import { SubscribeForm } from "@/components/SubscribeForm";
 import React from "react";
-import Section from "./Section";
 import Image from "next/image";
 import "@styles/layouts/footer.scss";
 import Logo from "@images/gps-logo-white.png";
 import Link from "next/link";
 
 export const Footer = () => {
+
+
+
   return (
     // <Section title={""} maxContent className="footer">
     <div className="footer">

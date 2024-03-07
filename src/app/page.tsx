@@ -2,7 +2,7 @@
 import React, {FC} from 'react'
 import App from '..';
 import {NextUIProvider} from "@nextui-org/react";
-import Header from '@/layouts/Header';
+import 'dotenv/config';
 
 
 const Home: FC = () => {

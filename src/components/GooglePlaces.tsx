@@ -1,8 +1,9 @@
 /* eslint no-use-before-define: 0 */  // --> OFF
 
 import { useEffect, useRef, useState } from "react";
-import { GOOGLE_MAPS_KEY } from "@/constants";
 import "@styles/components/googlePlaces.scss";
+import 'dotenv/config';
+import { ENVS } from "@/constants";
 
 interface GooglePlacesProps {}
 
@@ -71,7 +72,7 @@ const GooglePlaces: React.FC<GooglePlacesProps> = () => {
 
   useEffect(() => {
     loadScript(
-      `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_KEY}&libraries=places`,
+      `https://maps.googleapis.com/maps/api/js?key=${ENVS.GOOGLE_MAPS_KEY}&libraries=places`,
       () => handleScriptLoad(setQuery, autoCompleteRef)
     );
   }, []);

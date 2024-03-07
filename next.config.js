@@ -3,6 +3,9 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
 },
+  env: {
+    customKey: 'my-value',
+  },
 }
 
 module.exports = nextConfig
