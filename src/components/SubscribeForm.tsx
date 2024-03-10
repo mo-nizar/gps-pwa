@@ -16,9 +16,13 @@ interface Errors {
 
 interface SubscribeFormProps {
   isDemo?: boolean;
+  title?: string,
+   desc?: string,
+   transparent?: boolean,
+   fullWidth?: boolean
 }
 
-export const SubscribeForm: FC<SubscribeFormProps> = ({ isDemo = false, title, desc }) => {
+export const SubscribeForm: FC<SubscribeFormProps> = ({ isDemo = false, title, desc, transparent, fullWidth }) => {
   const [inputs, setInputs] = useState<Inputs>({ email: null, name: null, message: null });
   const [errors, setErrors] = useState<Errors>({ email: false, name: false, message: false });
 

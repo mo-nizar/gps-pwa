@@ -208,7 +208,7 @@ const Page: FC<PageProps> = () => {
   
                 </div>
                 <div className='image-container flex justify-center items-center flex-1'>
-                  <Image src={product.image} className='prod-image' width={300} height={300}/>
+                  <Image src={product.image} alt='prod-image' className='prod-image' width={300} height={300}/>
                 </div>
               </div>
   
@@ -246,7 +246,7 @@ const Page: FC<PageProps> = () => {
   
   
             <div className='image-container flex flex-row  my-12'>
-              <Image src={product?.package.image} className='package-image' width={300} height={300}/>
+              <Image src={product?.package.image} alt='package-image' className='package-image' width={300} height={300}/>
   
               <div className="grid grid-container sm:grid-cols-1 md:grid-cols-5 gap-6 absolute self-center">
   

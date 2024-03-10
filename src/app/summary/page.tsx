@@ -51,7 +51,7 @@ const Page: FC<PageProps> = () => {
   const [values, setValues] = useState<{ [key: string]: number | string | Address | null}>({ id: id ? Number(id) : null });
   const [successData, setSuccessData] = useState<Address>({});
   const [activeServices, setActiveServices] = useState<Option[]>([]);
-  const [errored, setError] = useState<Errors[]>([]);
+  const [errored, setError] = useState<Errors>({});
 
 
   useEffect(() => {
