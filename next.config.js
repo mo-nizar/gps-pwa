@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'export',
+  distDir: 'dist',
+  
   eslint: {
     ignoreDuringBuilds: true,
   },
@@ -7,6 +10,7 @@ const nextConfig = {
     customKey: 'my-value',
   },
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: "http",
@@ -18,7 +22,6 @@ const nextConfig = {
   },
 }
 
-module.exports = nextConfig
 
 
 const path = require('path');
@@ -33,3 +36,6 @@ module.exports = {
     },
   },
 };
+
+module.exports = nextConfig
+

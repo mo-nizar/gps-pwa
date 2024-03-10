@@ -239,9 +239,9 @@ const Page: FC<PageProps> = () => {
               <div className='flex justify-center items-center flex-1'>
                 <span className='prod-desc'>{product?.package.info}</span>
               </div>
-  
-  
-  
+
+
+
             </div>
   
   

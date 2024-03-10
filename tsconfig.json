@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -19,12 +23,24 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"],
-      "@components/*": ["./src/components/*"],
-      "@images/*": ["./public/images/*"],
-      "@icons/*": ["./public/icons/*"],
-      "@styles/*": ["./src/styles/*"],
-      "@layouts/*": ["./src/layouts/*"]
+      "@/*": [
+        "./src/*"
+      ],
+      "@components/*": [
+        "./src/components/*"
+      ],
+      "@images/*": [
+        "./public/images/*"
+      ],
+      "@icons/*": [
+        "./public/icons/*"
+      ],
+      "@styles/*": [
+        "./src/styles/*"
+      ],
+      "@layouts/*": [
+        "./src/layouts/*"
+      ]
     }
   },
   "include": [
@@ -33,7 +49,11 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/app/page.tsx",
-    "src/mockAPI.js"
-, "src/components/GooglePlaces.tsx"  ],
-  "exclude": ["node_modules"]
+    "src/mockAPI.js",
+    "src/components/GooglePlaces.tsx",
+    "dist/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
