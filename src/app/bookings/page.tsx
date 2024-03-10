@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { FC, useEffect, useState } from "react";
 import api from "@/api";
 import "@styles/bookings.scss";
@@ -6,18 +6,13 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Section from "@/layouts/Section";
 import { toast } from "react-toastify";
 import { SecondaryButton } from "@/components/CustomButtons";
+import { Loader } from "@/components/Loader";
 
-interface BookingDetailsProps {
-  bookingId: string;
-  key: string;
-}
-
-const Page: FC<BookingDetailsProps> = () => {
+const Page: FC = () => {
   const [bookingDetails, setBookingDetails] = useState<any>(null);
   const searchParams = useSearchParams();
 
   const router = useRouter();
-
 
   const bookingId = searchParams?.get("bookingId") || null;
   const key = searchParams?.get("key") || null;
@@ -36,24 +31,20 @@ const Page: FC<BookingDetailsProps> = () => {
 
   const confirmCancelBooking = async () => {
     setCancelModalOpen(false);
-      try {
-        const {data} = await api.post(`/services/cancel`, null, {
-          params: { bookingId, key },
-        });
-        
-        if(data.status=='200'){
+    try {
+      const { data } = await api.post(`/services/cancel`, null, {
+        params: { bookingId, key },
+      });
 
-          setBookingDetails({...bookingDetails, status: 'Cancelled'})
-          toast(data.message)
-
-        }else{
-          toast.error(data.message)
-
-        }
-        // Redirect or perform additional actions as needed
-      } catch (error) {
-        console.error("Error cancelling booking:", error);
+      if (data.status === 200) {
+        setBookingDetails({ ...bookingDetails, status: 'Cancelled' });
+        toast(data.message);
+      } else {
+        toast.error(data.message);
       }
+    } catch (error) {
+      console.error("Error cancelling booking:", error);
+    }
   };
 
   // Fetch booking details on component mount
@@ -62,11 +53,10 @@ const Page: FC<BookingDetailsProps> = () => {
   }, []);
 
   if (!bookingDetails) {
-    return <div className={'loading'}>Loading...</div>;
+    return <Loader/>;
   }
 
-
-  const BookingDetails = ({booking}) => {
+  const BookingDetails: FC<{ booking: any }> = ({ booking }) => {
     const details = [
       { label: 'Booking ID', value: booking.id },
       { label: 'Service Name', value: booking.serviceName },
@@ -75,19 +65,12 @@ const Page: FC<BookingDetailsProps> = () => {
       { label: 'Phone', value: booking.phone },
       { label: 'Patients Count', value: booking.patientsCount },
       { label: 'PO Number', value: booking.poNumber },
-      // { label: 'Hospital Name', value: booking.hospitalName },
-      // { label: 'Street Name', value: booking.streetName },
-      // { label: 'Locality', value: booking.locality },
-      // { label: 'Post Town', value: booking.postTown },
-      // { label: 'Post Code', value: booking.postCode },
       { label: 'Address', value: booking.address },
       { label: 'Date', value: booking.date },
       { label: 'Time', value: booking.time },
-      // { label: 'Type', value: booking.type },
       { label: 'Status', value: booking.status },
     ];
 
-  
     return (
       <div className="booking-details-container">
         <table>
@@ -113,14 +96,14 @@ const Page: FC<BookingDetailsProps> = () => {
   const handleCancelBooking = () => {
     setCancelModalOpen(true);
   };
-  
+
   const Modal: FC<ModalProps> = ({ isOpen, onClose, onConfirm }) => {
     if (!isOpen) return null;
-  
+
     return (
       <div className="modal-overlay">
         <div className="modal">
-          <p className="confirm-text" >Are you sure you want to cancel this booking?</p>
+          <p className="confirm-text">Are you sure you want to cancel this booking?</p>
           <div className="modal-buttons">
             <button onClick={onClose}>No</button>
             <button onClick={onConfirm}>Yes</button>
@@ -130,31 +113,31 @@ const Page: FC<BookingDetailsProps> = () => {
     );
   };
 
-  const handleExplore = () =>{
-    router.push('/')
-  }
-  
+  const handleExplore = () => {
+    router.push('/');
+  };
 
   return (
     <Section className="section">
       <div className={'container'}>
         <div className={'bookingDetails'}>
-          <BookingDetails booking={bookingDetails}/>
+          <BookingDetails booking={bookingDetails} />
         </div>
 
         {/* Cancel button */}
-        {bookingDetails.status=='Cancelled' 
-        ? <SecondaryButton
+        {bookingDetails.status === 'Cancelled' ? (
+          <SecondaryButton
             onClick={handleExplore}
             coloured={false}
             className="w-full self-end success-button"
           >
-            {`Explore More`}
+            Explore More
           </SecondaryButton>
-        :<button className={'cancelButton'} onClick={handleCancelBooking}>
-         {`Cancel Booking`}
-        </button>
-        }
+        ) : (
+          <button className={'cancelButton'} onClick={handleCancelBooking}>
+            Cancel Booking
+          </button>
+        )}
 
         <Modal
           isOpen={isCancelModalOpen}
@@ -163,7 +146,6 @@ const Page: FC<BookingDetailsProps> = () => {
         />
       </div>
     </Section>
-
   );
 };
 
