@@ -5,6 +5,7 @@ import {NextUIProvider} from "@nextui-org/react";
 import 'dotenv/config';
 
 
+
 const Home: FC = () => {
   return (
     <NextUIProvider> 

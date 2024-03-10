@@ -1,12 +1,14 @@
-/* eslint no-use-before-define: 0 */  // --> OFF
+/* eslint no-use-before-define: 0 */ // --> OFF
 
 import { useEffect, useRef, useState } from "react";
 import "@styles/components/googlePlaces.scss";
 import 'dotenv/config';
 import { ENVS } from "@/constants";
 
-interface GooglePlacesProps {}
-
+interface GooglePlacesProps {
+  onSelect: (address: Address) => void;
+  isErrored: boolean,
+}
 
 let autoComplete: google.maps.places.Autocomplete;
 
@@ -14,23 +16,20 @@ const loadScript = (url: string, callback: () => void) => {
   const script = document.createElement("script");
   script.type = "text/javascript";
 
-  // if (script.readyState) {
-  //   script.onreadystatechange = function () {
-  //     if (script.readyState === "loaded" || script.readyState === "complete") {
-  //       script.onreadystatechange = null;
-  //       callback();
-  //     }
-  //   };
-  // } else {
-    script.onload = () => callback();
-  // }
+  script.onload = () => callback();
 
   script.src = url;
   document.getElementsByTagName("head")[0].appendChild(script);
 };
 
-const GooglePlaces: React.FC<GooglePlacesProps> = () => {
+interface Address {
+  [key: string]: any;
+}
+
+const GooglePlaces: React.FC<GooglePlacesProps> = ({ onSelect, isErrored }) => {
   const [query, setQuery] = useState<string>("");
+  const [selectedAddress, setSelectedAddress] = useState<Address>({});
+
   const autoCompleteRef = useRef<HTMLInputElement | null>(null);
 
   const selectedLocation: { lat: number; lng: number } = {
@@ -58,17 +57,63 @@ const GooglePlaces: React.FC<GooglePlacesProps> = () => {
   const handlePlaceSelect = async (updateQuery: (value: string) => void) => {
     const addressObject: google.maps.places.PlaceResult = await autoComplete.getPlace();
 
-    const newQuery = addressObject.formatted_address || "";
+    const newQuery = addressObject.name || "";
     updateQuery(newQuery);
-    console.log({ newQuery });
 
-    const latLng = {
-      lat: addressObject?.geometry?.location?.lat() || 0,
-      lng: addressObject?.geometry?.location?.lng() || 0,
+    const address = formatAddressDetails(addressObject as Address);
+
+    onSelect(address);
+    setSelectedAddress({ ...address });
+  };
+
+  function formatAddressDetails(addressDetails: Address) {
+    const formattedAddress = {
+      name: '',
+      locality: '',
+      street: '',
+      street_number: '',
+      postCode: '',
+      postTown: '',
+      latitude: null,
+      longitude: null,
     };
 
-    console.log(addressObject);
-  };
+    if (addressDetails.address_components) {
+      addressDetails.address_components.forEach((component: any) => {
+        const type = component.types[0];
+        const value = component.long_name;
+
+        switch (type) {
+          case 'street_number':
+            formattedAddress.street_number = value;
+            break;
+          case 'route':
+            formattedAddress.street = value;
+            break;
+          case 'postal_town':
+            formattedAddress.postTown = value;
+            break;
+          case 'administrative_area_level_1':
+            formattedAddress.locality = value;
+            break;
+          case 'postal_code':
+            formattedAddress.postCode = value;
+            break;
+          default:
+            break;
+        }
+      });
+    }
+
+    formattedAddress.name = addressDetails.name ?? addressDetails?.formatted_address ?? '';
+
+    if (addressDetails.geometry && addressDetails.geometry.location) {
+      formattedAddress.latitude = addressDetails.geometry.location.lat;
+      formattedAddress.longitude = addressDetails.geometry.location.lng;
+    }
+
+    return formattedAddress;
+  }
 
   useEffect(() => {
     loadScript(
@@ -82,7 +127,7 @@ const GooglePlaces: React.FC<GooglePlacesProps> = () => {
       <label>{"Select Hospital"}</label>
       <input
         ref={autoCompleteRef}
-        className="form-control"
+        className={`form-control ${isErrored ? 'errored' : ''}`}
         onChange={(event) => setQuery(event.target.value)}
         placeholder="Type Name or Post Code"
         value={query}

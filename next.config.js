@@ -2,9 +2,19 @@
 const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
-},
+  },
   env: {
     customKey: 'my-value',
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "http",
+        hostname: "localhost",
+        port: "3001",
+        pathname: "/**",
+      },
+    ],
   },
 }
 

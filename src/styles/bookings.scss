@@ -1,0 +1,129 @@
+/* BookingDetailsPage.module.css */
+
+@import "./theme.scss";
+
+.section{
+  justify-content: center;
+  display: flex;
+  align-items: center;
+
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+
+    .detail-label{
+      color: $color-primary;
+      border:1px solid $color-light-grey;
+      font-size: 14px;
+      font-family: "dmsans-semibold";
+      text-align: left;
+
+    }
+
+    .detail-value{
+      color: $color-primary;
+      border:1px solid $color-light-grey;
+      font-size: 14px;
+      font-family: "dmsans-regular";
+      text-align: left;
+    }
+  }
+  
+  .bookingDetails {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .cancelButton {
+    background-color: $color-danger;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+  }
+  
+  .cancelButton:hover {
+    background-color: #4e2222;
+  }
+  
+  .loading {
+    font-size: 18px;
+    color: #555;
+    margin-top: 20px;
+  }
+
+
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+  
+    .confirm-text {
+      font-size: 16px;
+      margin-bottom: 20px;
+      font-family: "dmsans-regular";
+      color: $color-primary
+    }
+  
+    .modal-buttons {
+      display: flex;
+      justify-content: center;
+  
+      button {
+        margin: 0 10px;
+        padding: 8px 16px;
+        font-size: 14px;
+        cursor: pointer;
+        border: none;
+        border-radius: 4px;
+        outline: none;
+        background-color: $color-primary;
+        color: white;
+  
+        &:hover {
+          background-color: #354c5b;
+        }
+  
+        &:first-child {
+          background-color: $color-danger;
+  
+          &:hover {
+            background-color: #832c2c;;
+          }
+        }
+      }
+    }
+  }
+
+  .success-button{
+    background-color: $color-light;
+    border: 1px solid $color-primary;
+    width: min-content;
+    align-self: center;
+    font-family: 'dmsans-regular';
+    padding: 10px 30px;
+}
+  
+  
+
+}
+

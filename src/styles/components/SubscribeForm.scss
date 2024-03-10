@@ -66,6 +66,12 @@
     .errored{
         border: 2px solid $color-danger;
     }
-    
+}
+
+.demo-form{
+    background-color: rgba(0, 0, 0, 0);
+    max-width: 100%;
+    width: 100%;
+    padding: 20px;
 }
 

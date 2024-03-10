@@ -115,8 +115,8 @@ const App: React.FC = () => {
                   >
                     {/* {"NHS\nDetails 2"} */}
                     <img
-                      className="nhs-logo"
-                      src="/images/partners/nhs-logo.png"
+                      className="private-health"
+                      src="/images/pharmacy.png"
                     />
                   </Link>
                   <Link
@@ -126,8 +126,8 @@ const App: React.FC = () => {
                   >
                     {/* {"NHS\nDetails 3"} */}
                     <img
-                      className="nhs-logo"
-                      src="/images/partners/nhs-logo.png"
+                      className="public-health"
+                      src="/images/public-health.png"
                     />
                   </Link>
                   <Link

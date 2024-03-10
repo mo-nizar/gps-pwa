@@ -8,7 +8,9 @@ import Head from "next/head";
 import { Footer } from "@/layouts/Footer";
 import { memo } from "react";
 import 'dotenv/config';
+import { ToastContainer } from 'react-toastify';
 
+import 'react-toastify/dist/ReactToastify.css';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,14 +29,24 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
 
-  console.log(process.env.API_BASE_URL) // remove this after you've confirmed it is working
-
   return (
     <html lang="en">
       <Head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </Head>
       <body className={inter.className}>
+        <ToastContainer
+          position="bottom-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+        />
         <RenderHeader />
         {children}
         <RenderFooter />

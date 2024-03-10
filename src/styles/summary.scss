@@ -22,6 +22,11 @@ main{
         padding: 100px;
         background-color: #ffff;
 
+        @media (max-width: 950px) {
+            padding: 50px;
+
+          }
+
 
         @media (max-width: 768px) {
             padding: 100px 20px;
@@ -80,6 +85,10 @@ main{
             height: 50px;
             background-color:  #f3f3f3;
         }
+
+        .errored{
+            border: 2px solid $color-danger;
+        }
       }
 
       .tabs-container{
@@ -107,6 +116,39 @@ main{
         .form-container{
             height: 100%;
 
+        }
+      }
+
+      .success-container{
+        justify-content: center;
+        align-items: center;
+        height: 80vh;
+        width: 100%;
+
+        .success-image{
+            width: 80px;
+            height: 80px;
+            margin-bottom: 28px;
+        }
+        .success-title{
+            font-size: 24px;
+            font-family: 'dmsans-semibold';
+        }
+        .success-disclaimer{
+            font-size: 16px;
+            font-family: 'dmsans-regular';
+            text-justify: auto;
+            text-align: center;
+            margin-bottom: 28px;
+
+        }
+        .success-button{
+            background-color: $color-light;
+            border: 1px solid $color-primary;
+            width: min-content;
+            align-self: center;
+            font-family: 'dmsans-regular';
+            padding: 10px 30px;
         }
       }
       

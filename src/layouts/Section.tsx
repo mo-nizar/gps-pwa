@@ -26,7 +26,7 @@ const Section: React.FC<SectionProps> = ({ children, imageUrl = '', backgroundOv
 
   return (
     <section className={`section-container ${className} ${maxContent ? 'h-max' : 'h-screen'}`} style={sectionStyle}>
-      <span className="section-title">{title}</span>
+      {title &&(<span className="title">{title}</span>)}
       {
         backgroundOverlay ?
           <div style={overlay}>

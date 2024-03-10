@@ -16,4 +16,7 @@
     border-radius: $radius-card;
     padding: 20px;
   }
+  .errored{
+    border: 2px solid $color-danger;
+}
 }

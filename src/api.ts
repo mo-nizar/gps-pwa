@@ -13,9 +13,6 @@ const instance = axios.create({
   },
 });
 
-console.log('API_BASE_URL',process.env.API_BASE_URL ) // remove this after you've confirmed it is working
-
-
 // Add a request interceptor
 instance.interceptors.request.use(
   (config) => {

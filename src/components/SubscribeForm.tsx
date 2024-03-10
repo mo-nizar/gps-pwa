@@ -3,22 +3,22 @@ import { Input, Textarea, Button } from "@nextui-org/react";
 import '@styles/components/SubscribeForm.scss';
 import { SecondaryButton } from './CustomButtons';
 import api from "@/api";
+import { toast } from 'react-toastify';
+import { COMMON_ERROR } from '@/constants';
 
 interface Inputs {
   [key: string]: null | string;
 }
 
 interface Errors {
-  email?: boolean;
-  name?: boolean;
-  message?: boolean;
+  [key: string]: null | boolean;
 }
 
 interface SubscribeFormProps {
   isDemo?: boolean;
 }
 
-export const SubscribeForm: FC<SubscribeFormProps> = ({ isDemo = false }) => {
+export const SubscribeForm: FC<SubscribeFormProps> = ({ isDemo = false, title, desc }) => {
   const [inputs, setInputs] = useState<Inputs>({ email: null, name: null, message: null });
   const [errors, setErrors] = useState<Errors>({ email: false, name: false, message: false });
 
@@ -27,10 +27,7 @@ export const SubscribeForm: FC<SubscribeFormProps> = ({ isDemo = false }) => {
   const [loading, setLoading] = useState(false);
 
   const validateInputs = ()=>{
-    let obj: Errors = {message: !inputs.message, email: !inputs.email};
-
-    console.log(obj);
-    
+    let obj: Errors = {message: !inputs.message, email: !inputs.email};    
 
     setErrors( {...errors, ...obj } );
 
@@ -72,9 +69,16 @@ export const SubscribeForm: FC<SubscribeFormProps> = ({ isDemo = false }) => {
             setIsSuccess(data?.data?.success);
             setInputs({email: null, name: null, message: null})
 
+            toast('Your query has been submitted, A member of our sales team will contact you within 24 hours.',{
+              theme: "colored",
+              })
+
         }
       } catch (err) {
-        console.error(err);
+        toast.error(COMMON_ERROR,{
+          theme: "colored",
+          })
+        
       } finally {
         setLoading(false);
       }
@@ -84,18 +88,16 @@ export const SubscribeForm: FC<SubscribeFormProps> = ({ isDemo = false }) => {
     setInputs({ ...inputs, [key]: value })
     errors[key] && setErrors({...errors, [key]: false});
   };
-
-  console.log(errors);
   
 
   return (
-    <div className='form flex w-full flex-col  flex-wrap md:flex-nowrap gap-4'>
+      <div className={`form flex w-full flex-col  flex-wrap md:flex-nowrap gap-4 ${isDemo ? 'demo-form' : ''}`}>
           <div className="titleWrapper">
             <span className='title'>
-              {'Get In Touch!'}
+              {title ?? 'Get In Touch!'}
             </span>
             <span className='desc'>
-              {'Fill up the form and our Team will get back to you within 24 hours.'}
+              {desc ?? 'Fill up the form and our Team will get back to you within 24 hours.'}
             </span>
           </div>
 
@@ -127,7 +129,9 @@ export const SubscribeForm: FC<SubscribeFormProps> = ({ isDemo = false }) => {
           onValueChange={(value) => onValueChange(value, 'message')}
         />
 
-        <SecondaryButton className='button' onClick={handleSubmit} disabled={loading}>
+        {isDemo && (<div className='flex flex-1'/>)}
+
+        <SecondaryButton className='button' onClick={handleSubmit} coloured={isDemo} disabled={loading}>
           {'Submit'}
         </SecondaryButton>
     </div>
