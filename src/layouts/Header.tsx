@@ -6,6 +6,8 @@ import CustomDropdown from "@components/CustomDropdown";
 import { PrimaryButton } from "@/components/CustomButtons";
 import "@styles/layouts/header.scss";
 import api from "@/api";
+import { Button } from "@nextui-org/react";
+import { useRouter } from "next/navigation";
 
 interface HeaderOption {
   type: "link" | "dropdown" | "button";
@@ -17,6 +19,8 @@ interface HeaderOption {
 const Header: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [count, setCount] = useState(0);
+
+  const router = useRouter();
 
   const [data, setData] = useState([
     {
@@ -64,9 +68,9 @@ const Header: React.FC = () => {
 
   return (
     <header>
-      <a href={"/"}>
+      <button onClick={()=> router.push('/')}>
         <Image src={Logo} width={150} alt={""} />
-      </a>
+      </button>
       <nav>
         <ul>
           {data?.length &&
@@ -75,7 +79,7 @@ const Header: React.FC = () => {
                 case "link":
                   return (
                     <li key={index}>
-                      <a href={obj.link}>{obj.label}</a>
+                      <button onClick={()=> router.push(obj.link)}>{obj.label}</button>
                     </li>
                   );
                 case "dropdown":

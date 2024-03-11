@@ -1,5 +1,7 @@
 import React from "react";
 import "@styles/components/CustomDropdown.scss";
+import { useRouter } from "next/navigation";
+import { Button } from "@nextui-org/react";
 
 interface Option {
   id: number | string;
@@ -20,6 +22,13 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
   link,
   optionsList,
 }) => {
+
+  const router = useRouter();
+
+  const handleNavigation = (path: string) => {
+    router.push(path);
+  };
+
   return (
     <div className="dropdown">
       <button className="dropdown-button">
@@ -32,13 +41,13 @@ const CustomDropdown: React.FC<CustomDropdownProps> = ({
       </button>
       <div className="dropdown-content">
         {optionsList.map((obj) => (
-          <a key={obj.id} href={`${obj.link}/?key=${obj.id}`}>
+          <a onClick={()=>handleNavigation(`${obj.link}/?key=${obj.id}` as string)} key={obj.id}>
             <span>{obj.label}</span>
           </a>
         ))}
 
         {viewMore && (
-          <a key={2222} href={link} className="viewAll">
+          <a key={2222} onClick={()=>handleNavigation(link as string)} className="viewAll">
             <span>
               {"View all"}
               <img src="/icons/long-arrow-right.svg" alt="long-arrow-right" />

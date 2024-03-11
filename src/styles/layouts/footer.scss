@@ -1,11 +1,18 @@
 //----------------------------footer----------------------------------
 @import "../theme.scss";
 
-.footer {
-  background-color: $color-primary;
+.section {
+  background-color: $color-light !important;
   display: flex;
   flex: 1;
   flex-direction: row;
+}
+
+  .footer {
+    background-color: $color-primary !important;
+    display: flex;
+    flex: 1;
+    flex-direction: row;
 
   @media (max-width: 768px) {
     flex-direction: column-reverse;

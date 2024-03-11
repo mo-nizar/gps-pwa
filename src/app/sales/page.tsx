@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import api from "@/api";
 import { Loader } from "@/components/Loader";
+import { Button } from "@nextui-org/react";
 
 interface PageProps {}
 
@@ -82,6 +83,11 @@ const Page: FC<PageProps> = () => {
 
   const { services } = data;
 
+  const handleNavigation = (path: string) => {
+    router.push(path);
+  };
+
+
   const renderServices = (item: Services, idx: number): JSX.Element => {
     let evenItem = idx % 2 === 0;
     if (loading) {
@@ -131,24 +137,26 @@ const Page: FC<PageProps> = () => {
                   : "justify-end"
               } relative items-end w-full mt-8`}
             >
-              {item?.linkEnabled && (
-                <Link href={`/summary?id=${item?.id}`}>
+              {item?.linkEnabled ? (
+                <button onClick={()=>handleNavigation(`/demo`)}>
                   <span className="learn-more">
                     {"Learn More"}
                     <img src="/icons/arrow-gray.svg" />
                   </span>
-                </Link>
-              )}
+                </button>
+              )
+              :null}
 
-              {item?.buttonEnabled && (
+              {item?.buttonEnabled ? (
                 <SecondaryButton
-                  onClick={() => router.push(`/summary?id=${item?.id}`)}
+                  onClick={() => router.push(`/demo`)}
                   coloured
                   className="w-full md:w-auto self-end"
                 >
                   {`BOOK NOW`} <img src="/icons/arrow-white.svg" />
                 </SecondaryButton>
-              )}
+              )
+              : null}
             </div>
           </div>
         </div>

@@ -7,6 +7,7 @@ import Section from "@/layouts/Section";
 import { toast } from "react-toastify";
 import { SecondaryButton } from "@/components/CustomButtons";
 import { Loader } from "@/components/Loader";
+import { COMMON_ERROR } from "@/constants";
 
 const Page: FC = () => {
   const [bookingDetails, setBookingDetails] = useState<any>(null);
@@ -18,14 +19,25 @@ const Page: FC = () => {
   const key = searchParams?.get("key") || null;
   const [isCancelModalOpen, setCancelModalOpen] = useState(false);
 
+  const [isLoading, setIsloading] = useState(true);
+
+
   const fetchBookingDetails = async () => {
+    setIsloading(true);
     try {
-      const res = await api.get(`/services/booking`, {
+      const {data} = await api.get(`/services/booking`, {
         params: { bookingId, key },
       });
-      setBookingDetails(res.data?.data);
+
+      if(data.status ==200){
+        setBookingDetails(data?.data);
+      }else{
+        toast.error(data.message)
+      }
     } catch (error) {
-      console.error("Error fetching booking details:", error);
+      toast.error(COMMON_ERROR)
+    } finally{
+      setIsloading(false)
     }
   };
 
@@ -51,10 +63,6 @@ const Page: FC = () => {
   useEffect(() => {
     fetchBookingDetails();
   }, []);
-
-  if (!bookingDetails) {
-    return <Loader/>;
-  }
 
   const BookingDetails: FC<{ booking: any }> = ({ booking }) => {
     const details = [
@@ -120,24 +128,32 @@ const Page: FC = () => {
   return (
     <Section className="section">
       <div className={'container'}>
-        <div className={'bookingDetails'}>
-          <BookingDetails booking={bookingDetails} />
-        </div>
+        {!bookingDetails || isLoading
+          ? <Loader/>
+          :(
+            <>
+              <div className={'bookingDetails'}>
+                <BookingDetails booking={bookingDetails} />
+              </div>
 
-        {/* Cancel button */}
-        {bookingDetails.status === 'Cancelled' ? (
-          <SecondaryButton
-            onClick={handleExplore}
-            coloured={false}
-            className="w-full self-end success-button"
-          >
-            Explore More
-          </SecondaryButton>
-        ) : (
-          <button className={'cancelButton'} onClick={handleCancelBooking}>
-            Cancel Booking
-          </button>
-        )}
+              {/* Cancel button */}
+              {bookingDetails.status === 'Cancelled' ? (
+                <SecondaryButton
+                  onClick={handleExplore}
+                  coloured={false}
+                  className="w-full self-end success-button"
+                >
+                  Explore More
+                </SecondaryButton>
+              ) : (
+                <button className={'cancelButton'} onClick={handleCancelBooking}>
+                  Cancel Booking
+                </button>
+              )}
+            </>
+          )
+        }
+
 
         <Modal
           isOpen={isCancelModalOpen}

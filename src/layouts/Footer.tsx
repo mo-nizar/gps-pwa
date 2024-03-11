@@ -10,7 +10,7 @@ import Section from "./Section";
 export const Footer = () => {
 
   return (
-    <Section title={""} maxContent className="footer">
+    <Section title={""} maxContent className="section">
     <div className="footer">
       <div className="details-container">
         <div className="about-conatiner">

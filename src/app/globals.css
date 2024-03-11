@@ -32,8 +32,15 @@
   }
 }
 
+html {
+  scroll-behavior:smooth;
+}
+
 body {
   color: rgb(var(--foreground-rgb));
+  scroll-behavior: smooth;
+  overscroll-behavior: none;
+touch-action: pan-down;
   background: linear-gradient(
       to bottom,
       transparent,

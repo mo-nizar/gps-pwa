@@ -136,9 +136,6 @@ const Page: FC<PageProps> = () => {
     } catch (err) {
       console.error(err);
     } finally {
-      toast.error(COMMON_ERROR,{
-        theme: "colored",
-        })
       setLoading(false);
     }
   };

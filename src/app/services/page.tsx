@@ -9,6 +9,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import api from "@/api";
 import { Loader } from '@/components/Loader';
+import { Button } from '@nextui-org/react';
 
 interface PageProps {}
 
@@ -81,6 +82,11 @@ const Page: FC<PageProps> = () => {
     }
   };
 
+  const handleNavigation = (path: string) => {
+    router.push(path);
+  };
+
+
   const renderServices = (item: Services, idx: number): JSX.Element => {
     let evenItem = idx % 2 === 0;
 
@@ -128,12 +134,12 @@ const Page: FC<PageProps> = () => {
               } relative items-end w-full mt-8`}
             >
               {item?.linkEnabled && (
-                <Link href={`/summary?id=${item?.id}`}>
+                <button onClick={()=>handleNavigation(`/summary?id=${item?.id}`)}>
                   <span className="learn-more">
                     {"Learn More"}
                     <img src="/icons/arrow-gray.svg" />
                   </span>
-                </Link>
+                </button>
               )}
 
               {item?.buttonEnabled && (
