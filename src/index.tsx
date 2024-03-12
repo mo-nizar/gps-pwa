@@ -173,7 +173,7 @@ const App: React.FC = () => {
                 
                 <div className="infoSection" >
 
-                {sections[2]?.info.map((item: string, idx: number)=>(
+                {sections[2]?.info?.map((item: string, idx: number)=>(
                     <div className="infoWrapper flex flex-row" key={idx} >
                       <img src={'/icons/grey-check.svg'} alt='mark' width={15} height={15}/>
                       <span className="description  info flex flex-row items-center">{item}</span>
