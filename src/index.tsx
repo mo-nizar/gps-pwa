@@ -73,23 +73,23 @@ const App: React.FC = () => {
             <span className="title">{"NHS Connect"}</span>
             <div className="cards-container">
               <div className="cards-div">
-                <Link className={`card ${hovered == 1 ? "active-card" : ""}`}>
+                <a className={`card ${hovered == 1 ? "active-card" : ""}`}>
                   <span className="title">{"NHS"}</span>
                   <span className="desc">
                     {
                       "By leveraging our 12-patient list, NHS can slash lengthy biopsy wait times, ensuring swifter diagnosis and treatment."
                     }
                   </span>
-                </Link>
+                </a>
 
-                <Link className={`card ${hovered == 2 ? "active-card" : ""}`}>
+                <a className={`card ${hovered == 2 ? "active-card" : ""}`}>
                   <span className="title">{"Private Healthcare"}</span>
                   <span className="desc">
                     {
                       "Private hospitals can fill their schedules with consistent NHS referrals through NHS Connect, putting their expertise to work for a larger population and finding fulfilment in tackling backlogs while boosting their bottom line."
                     }
                   </span>
-                </Link>
+                </a>
               </div>
 
               <div className="images-div mob-div">
@@ -102,8 +102,8 @@ const App: React.FC = () => {
                     onMouseLeave={() => setIsHovered(null)}
                   >
                     <img
-                      className="nhs-logo"
-                      src="/images/partners/nhs-logo.png"
+                      className="nhs-logo trio-logos"
+                      src="/images/home_trio/nhs-trio.svg"
                     />
 
                     {/* {"NHS"} */}
@@ -115,8 +115,8 @@ const App: React.FC = () => {
                   >
                     {/* {"NHS\nDetails 2"} */}
                     <img
-                      className="private-health"
-                      src="/images/pharmacy.png"
+                      className="private-health trio-logos"
+                      src="/images/home_trio/private-trio.svg"
                     />
                   </Link>
                   <Link
@@ -126,8 +126,8 @@ const App: React.FC = () => {
                   >
                     {/* {"NHS\nDetails 3"} */}
                     <img
-                      className="public-health"
-                      src="/images/public-health.png"
+                      className="public-health trio-logos"
+                      src="/images/home_trio/public-trio.svg"
                     />
                   </Link>
                   <Link
@@ -140,23 +140,23 @@ const App: React.FC = () => {
               </div>
 
               <div className="cards-div">
-                <Link className={`card ${hovered == 4 ? "active-card" : ""}`}>
+                <a className={`card ${hovered == 4 ? "active-card" : ""}`}>
                   <span className="title">{"GPS"}</span>
                   <span className="desc">
                     {
                       "We bridge the gap between NHS and private care hospitals, expediting prostate biopsies and slashing waiting lists for faster diagnoses and healthier futures."
                     }
                   </span>
-                </Link>
+                </a>
 
-                <Link className={`card ${hovered == 3 ? "active-card" : ""}`}>
+                <a className={`card ${hovered == 3 ? "active-card" : ""}`}>
                   <span className="title">{"Patients"}</span>
                   <span className="desc">
                     {
                       "NHS Connect guides the patient to faster prostate biopsy and diagnosis in private hospitals, all while easing your mind with streamlined support."
                     }
                   </span>
-                </Link>
+                </a>
               </div>
             </div>
           </div>
@@ -170,6 +170,17 @@ const App: React.FC = () => {
               <>
                 <span className="title">{sections[2]?.title}</span>
                 <span className="description">{sections[2]?.description}</span>
+                
+                <div className="infoSection" >
+
+                {sections[2]?.info.map((item: string, idx: number)=>(
+                    <div className="infoWrapper flex flex-row" key={idx} >
+                      <img src={'/icons/grey-check.svg'} alt='mark' width={15} height={15}/>
+                      <span className="description  info flex flex-row items-center">{item}</span>
+                    </div>
+                  ))}
+                </div>
+
               </>
               <div className="button-container">
                 <SecondaryButton coloured onClick={() => router.push(`/demo`)}>
@@ -185,14 +196,14 @@ const App: React.FC = () => {
               {sections &&
                 sections[2]?.cards?.map((item: Card, idx:number) => (
                   <div key={idx} className="imageContainer">
-                    <div className="textContainer">
+                    <Link className="textContainer" onClick={() => router.push(`/sales`)}>
                       <p className="typography">{item?.title || ""}</p>
                       <p className="desc">{item?.desc || ""}</p>
                       <Link className="link" onClick={() => router.push(`/sales`)}>
                         {item?.buttonText || ""}{" "}
                         <img src="/icons/link-arrow.svg" />
                       </Link>
-                    </div>
+                    </Link>
                     <img src={item.imageUrl} alt={""} />
                   </div>
                 ))}

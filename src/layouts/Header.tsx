@@ -8,6 +8,7 @@ import "@styles/layouts/header.scss";
 import api from "@/api";
 import { Button } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
+import HeaderCollapsible from "@/components/HeaderCollapsible";
 
 interface HeaderOption {
   type: "link" | "dropdown" | "button";

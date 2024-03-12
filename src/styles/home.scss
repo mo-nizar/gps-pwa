@@ -100,6 +100,11 @@
         padding: 100px;
 
         /* Media query for screens smaller than 768px (adjust breakpoint as needed) */
+        @media (max-width: 1180px) {
+          padding: 100px 50px;
+        }
+
+        /* Media query for screens smaller than 768px (adjust breakpoint as needed) */
         @media (max-width: 768px) {
           padding: 20px;
         }
@@ -167,8 +172,10 @@
             display: flex;
             flex-direction: column;
             box-shadow: 0 5px 16px rgba(0, 0, 0, 0.1);
-            padding: 25px;
+            padding: 20px;
             transition: 0.3s;
+            align-items: flex-start;
+            justify-content: flex-start;
 
             @media (max-width: 768px) {
               margin-bottom: 20px;
@@ -180,23 +187,23 @@
             }
 
             &:hover {
-              transform: scale(1.2);
+              transform: scale(1.1);
 
-              // background-color: $color-primary;
-              // color: $color-light;
+              background-color: $color-primary;
+              color: $color-light;
 
               .title {
-                // color: $color-light;
+                color: $color-light;
               }
               .desc {
-                // color: $color-light;
+                color: $color-light;
                 -webkit-line-clamp: 50;
               }
             }
 
             .title {
               font-size: 1.5rem;
-              line-height: 1.13em;
+              margin-bottom: 10px;
               // text-align: center;
               text-align: left;
               font-family: "DMsans-semibold";
@@ -207,7 +214,7 @@
               font-size: 14px;
               line-height: 1.13em;
               font-family: "DMsans-light";
-              color: $color-primary;
+              color: $color-grey;
               text-align: left;
               overflow: hidden;
               display: -webkit-box;
@@ -242,35 +249,65 @@
 
         .images-div {
           display: flex;
-          flex: 2;
-          width: 100%;
+          width: 500px;
           flex-direction: row;
-          position: relative;
+          align-items: center;
+          justify-content: center;
           position: relative;
 
+
+          @media (max-width: 768px) {
+            max-width: 100%;
+            width: 100%;
+
+            margin: 50px 0px;
+
+          }
+
+          /* Media query for screens smaller than 480px (adjust breakpoint as needed) */
+          @media (max-width: 480px) {
+            max-width: 100%;
+            width: 100%;
+            margin: 50px 0px;
+
+
+          }
+
           .nhs-logo {
-            height: auto;
-            max-width: 100px;
           }
           .public-health{
-            height: auto;
-            max-width: 100px;
           }
 
           .private-health{
+          }
+
+          .trio-logos{
             height: auto;
-            max-width: 80px;
+            max-width: 90px;
+            @media (max-width: 768px) {
+              max-width: 15vw;
+
+            }
           }
 
           .nhs-trio {
-            padding: 0px 15%;
+            padding: 0px 30px;
+            max-width: 500px;
+            width: 500px;
             @media (max-width: 768px) {
               margin-bottom: 20px;
+              max-width: 100%;
+              width: 100%;
+
             }
 
             /* Media query for screens smaller than 480px (adjust breakpoint as needed) */
             @media (max-width: 480px) {
               margin-bottom: 20px;
+              max-width: 100%;
+              width: 100%;
+
+
             }
           }
 
@@ -282,6 +319,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
+
           }
 
           .link-text {
@@ -290,23 +328,36 @@
             text-align: center;
             font-family: "DMsans-semibold";
             position: absolute;
-            width: 60px;
+            width: max-content;
+
             transition: 0.3s;
+
+            @media (max-width: 480px) {
+                font-size: 0.8rem;
+            }
+
+            @media (max-width: 1180px) {
+              font-size: 1rem;
+            }
+
+            @media (max-width: 768px) {
+              font-size: 1.4rem;
+            }
           }
 
           .link-one {
-            top: 20%;
-            left: 40%;
+            top: 16%;
+            left: 48%;
             color: $color-primary;
           }
           .link-two {
-            top: 55%;
-            left: 22%;
+            top: 52%;
+            left: 13%;
             color: $color-primary;
           }
           .link-three {
-            top: 62%;
-            right: 30%;
+            top: 64%;
+            right: 17%;
             color: $color-primary;
           }
           .link-four {
@@ -320,60 +371,18 @@
             transform: scale(1.2);
           }
 
-          /* Media query for screens smaller than 768px (adjust breakpoint as needed) */
-          @media (max-width: 1180px) {
-            .link-text {
-              font-size: 1rem;
-            }
-            .link-one {
-              top: 25%;
-            }
-            .link-two {
-              top: 55%;
-              left: 20%;
-            }
-            .link-three {
-              top: 60%;
-              right: 30%;
-            }
-            .link-text:hover {
-              transform: scale(1.1);
-            }
-          }
-
-          /* Media query for screens smaller than 768px (adjust breakpoint as needed) */
           @media (max-width: 768px) {
-            .link-text {
-              font-size: 1.4rem;
-            }
             .link-one {
-              top: 15%;
+              top: 11%;
+              left: 49%;
             }
             .link-two {
-              top: 55%;
-              left: 20%;
+              top: 50%;
+              left: 16%;
             }
             .link-three {
-              top: 65%;
-              right: 30%;
-            }
-          }
-
-          /* Media query for screens smaller than 480px (adjust breakpoint as needed) */
-          @media (max-width: 480px) {
-            .link-text {
-              font-size: 0.8rem;
-            }
-            .link-one {
-              top: 15%;
-            }
-            .link-two {
-              top: 55%;
-              left: 20%;
-            }
-            .link-three {
-              top: 65%;
-              right: 30%;
+              top: 63%;
+              right: 20%;
             }
           }
 
@@ -426,20 +435,40 @@
           color: $color-dark;
           // align-self: stretch;
           .title {
-            font-size: 45px;
+            font-size: 44px;
             line-height: 1.13em;
             margin-bottom: 20px;
+            text-align: left;
             font-family: "dmsans-bold";
+
+            @media (max-width: 768px) {
+              font-size: 36px;
+              text-align: center;
+            }
+          }
+
+          .infoSection{
+            margin-top: 30px;
+          }
+
+          .infoWrapper{
+            margin-top: 5px;
           }
           .description {
-            border: 0;
-            font-size: 100%;
+            font-size: 16px;
+            font-family: "dmsans-regular";
             font-style: inherit;
             font-weight: inherit;
             margin: 0;
             outline: 0;
             padding: 0;
             vertical-align: baseline;
+            color: $color-grey;
+          }
+
+          .info{
+            margin-top: 0px;
+            margin-left: 5px;
           }
 
           .button-container {
@@ -485,12 +514,13 @@
 
             .textContainer {
               background-color: $color-light;
-              opacity: 0.9;
+              // opacity: 0.9;
               border-radius: $radius-card;
               z-index: 1;
               width: 80%;
               height: 80%;
               align-self: center;
+              align-items: flex-start;
               margin-left: 50%;
               position: absolute;
               z-index: 1;
@@ -499,6 +529,9 @@
               flex-direction: column;
               padding: 15px;
               justify-content: space-between;
+              box-shadow: $shadow-secondary;
+              
+
 
               .typography {
                 color: $color-primary;
@@ -510,6 +543,7 @@
                 color: $color-grey;
                 font-family: "dmsans-light";
                 font-size: 16px;
+                text-align: left;
               }
               .link {
                 color: $color-grey;
@@ -518,6 +552,7 @@
                 display: flex;
                 flex-direction: row;
                 align-items: center;
+                
                 img {
                   height: 10px;
                   width: auto;

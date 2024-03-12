@@ -18,11 +18,7 @@ export const Footer = () => {
 
           <Image src={Logo} width={150} alt={""} />
           <span className="desc">
-            {`Backhoe is diversified construction company,
-              made up of team of people who are proven in
-              their industries. All working to desing build,
-              transport, operate, and maintain project all over
-              the USA
+            {`Global Prostate Solutions, established in 2012, is an innovative UK-based company specializing in comprehensive prostate biopsy solutions. With an experienced 24/7 team and a commitment to excellent customer service, we provide cutting-edge diagnostic services for accurate and timely prostate cancer detection.
             `}
           </span>
 
@@ -32,12 +28,12 @@ export const Footer = () => {
             <span className="desc ">
               {`Address:`}
               <br />
-              &nbsp;&nbsp;&nbsp;{`679 Grand avenu, Central Parl,`}
+              &nbsp;&nbsp;&nbsp;{`Unit 6 Cherrytree Farm Blackmore End Road`}
               <br />
-              &nbsp;&nbsp;&nbsp;{`NYC, NY`}
+              &nbsp;&nbsp;&nbsp;{`Sible Hedingham, Halstead, England, CO9 3LZ`}
               <br />
               <div className="mt-2" />
-              {`Working Time: Mon-Sat: 9 AM – 5 PM`}
+              {`Available 24x7`}
               <br />
             </span>
 
