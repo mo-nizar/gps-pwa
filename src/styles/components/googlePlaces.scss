@@ -7,14 +7,20 @@
   width: 100%;
   label{
     font-family: 'DMsans-regular';
-    font-size: 16px;
+    font-size: 14px;
   }
   input{
     margin-top: 10px;
     background-color: $color-light-grey;
     height: 50px;
     border-radius: $radius-card;
-    padding: 20px;
+    padding: 20px 10px;
+    border: 0.5px solid $color-grey;
+    font-size: 14px;
+
+    &::placeholder {
+      color: #bdbdbf; // Change placeholder color to red
+    }
   }
   .errored{
     border: 2px solid $color-danger;

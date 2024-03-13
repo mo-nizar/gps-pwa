@@ -47,7 +47,7 @@ const SearchableDropdown: React.FC<SearchableDropdownProps> = ({
     setIsOpen(!!(e && inputRef.current && e.target === inputRef.current));
   }
   
-  const getDisplayValue = (): string => {
+  const getDisplayValue = (): string => {    
     if (query) return query;
     if (selectedVal) return selectedVal as string;
     if (!isOpen) return placeholder;

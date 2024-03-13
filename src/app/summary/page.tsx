@@ -13,6 +13,8 @@ import { Input, Tab, Tabs } from "@nextui-org/react";
 import { Loader } from "@/components/Loader";
 import Image from "next/image";
 import { toast } from "react-toastify";
+import DateTimeInput from "@/components/DateTimePicker";
+import { COMMON_ERROR } from "@/constants";
 
 interface PageProps {
   params: { id: string; type?: string };
@@ -48,7 +50,7 @@ const Page: FC<PageProps> = () => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<any>({});
   const [selected, setSelected] = useState<string | null>(type || "booking");
-  const [values, setValues] = useState<{ [key: string]: number | string | Address | null}>({ id: id ? Number(id) : null });
+  const [values, setValues] = useState<{ [key: string]: number | string | Address | null | Date}>({ id: id ? Number(id) : null });
   const [successData, setSuccessData] = useState<Address>({});
   const [activeServices, setActiveServices] = useState<Option[]>([]);
   const [errored, setError] = useState<Errors>({});
@@ -75,7 +77,7 @@ const Page: FC<PageProps> = () => {
         setActiveServices(data?.data);
       }
     } catch (err) {
-      console.error(err);
+      toast.error(COMMON_ERROR);
     } finally {
       setLoading(false);
     }
@@ -83,7 +85,7 @@ const Page: FC<PageProps> = () => {
 
   const validateInputs = () => {
     const errors: Errors = {};
-    const requiredFields = ["surgeon", "email", "phone", "patientsCount", "time", "date", "address"];
+    const requiredFields = ["surgeon", "email", "phone", "patientsCount", "address", 'dateTime'];
 
     requiredFields.map((field: string) => {
       if (!values[field]) {
@@ -144,20 +146,42 @@ const Page: FC<PageProps> = () => {
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
+    let { name, value } = event.target;
+    
+    if (name === 'patientsCount' && parseInt(value, 10) <= 0) {
+      value = '1';
+    }
     setValues({ ...values, [name]: value });
 
     errored[name] && setError({ ...errored, [name]: false });
   };
 
-  const setDropownValues = (val: string, valueKey: string): void => {
+  const setDateTime = (val: any, valueKey: string): void => {
+    const dateTime = val?.$d;
+
+    const date = dateTime.toISOString().split('T')[0]; // YYYY-MM-DD format
+
+    // Get time separately
+    const hours = dateTime.getHours().toString().padStart(2, '0');
+    const minutes = dateTime.getMinutes().toString().padStart(2, '0');
+    const seconds = dateTime.getSeconds().toString().padStart(2, '0');
+    const time = `${hours}:${minutes}:${seconds}`; // HH:MM:SS format
+    setValues({ ...values, [valueKey]: val, date, time });
+  
+    errored[valueKey] && setError({ ...errored, [valueKey]: false });
+  };
+  
+
+  const setValueForKey = (val: string, valueKey: string): void => {
+   
     setValues({ ...values, [valueKey]: val });
     errored[valueKey] && setError({ ...errored, [valueKey]: false });
   };
+  
 
   const setSelectedAddress = (address: Address)=>{    
     setValues({ ...values, address });
-  }
+  }  
   
   const DropDownComponent: FC<DropDownProps> = ({
     label,
@@ -165,15 +189,15 @@ const Page: FC<PageProps> = () => {
     searchable,
     options,
     placeholder,
-  }) => {
+  }) => {    
     return (
       <SearchableDropdown
         options={options}
         labelText={label}
         label={"label"}
         id={"key"}
-        selectedVal={values[valueKey] as string}
-        handleInputChange={(val) => setDropownValues(val ?? "" , valueKey)}
+        selectedVal={options?.find((item)=> item?.key == values[valueKey])?.label ?? ""  as string}
+        handleInputChange={(val) => setValueForKey(val ?? "" , valueKey)}
         searchable={searchable}
         placeholder={placeholder}
       />
@@ -210,7 +234,7 @@ const Page: FC<PageProps> = () => {
   return (
     <main>
       <Section className="intro" maxContent={true}>
-        <div className="summary-container shadow-md flex flex-col md:flex-row  px-10 py-8 mt-8">
+        <div className="summary-container shadow-md flex flex-col md:flex-row  md:px-10 md:py-8 md:py-0 mt-8 ">
         { loading ?
             <Loader/>
            : successData.isSuccess
@@ -233,7 +257,7 @@ const Page: FC<PageProps> = () => {
                     <img src={data.image} alt="" className="w-5/6 h-auto self-center" />
                   ) : (
                     <img
-                      src={"/images/first-aid.jpeg"}
+                      src={"/images/request_booking.png.jpeg"}
                       alt=""
                       className="requestBookingImg w-5/6 h-auto self-center"
                     />
@@ -287,7 +311,7 @@ const Page: FC<PageProps> = () => {
                               label="Email"
                               placeholder="you@example.com"
                             />
-                            <div className="md:ml-2" />
+                            <div className="ml-2" />
                             <Input
                               onChange={handleInputChange}
                               value={values["phone"] as string}
@@ -312,7 +336,7 @@ const Page: FC<PageProps> = () => {
                               label="Purchase Order Number"
                             />
 
-                            <div className="md:ml-2" />
+                            <div className="ml-2" />
 
                             <Input
                               onChange={handleInputChange}
@@ -327,7 +351,16 @@ const Page: FC<PageProps> = () => {
                           </div>
 
                           <div className="flex flex-row mb-3">
-                            <Input
+                            <div className="flex flex-col w-full">
+                              <label className="label mb-2">Select Date and Time</label>
+
+                              <div className={`flex flex-col w-full ${errored['dateTime'] ? 'errored': ''}`}>
+                                <DateTimeInput value={values['dateTime'] as Date } onChange={(val)=>setDateTime(val, 'dateTime')}/>
+                              </div>
+
+                            </div>
+
+                            {/* <Input
                               onChange={handleInputChange}
                               value={values["time"] as string}
                               labelPlacement="outside"
@@ -338,7 +371,7 @@ const Page: FC<PageProps> = () => {
                               placeholder="1"
                             />
 
-                            <div className="md:ml-2" />
+                            <div className="ml-2" />
 
                             <Input
                               onChange={handleInputChange}
@@ -350,7 +383,7 @@ const Page: FC<PageProps> = () => {
                               name={"date"}
                               labelPlacement="outside"
                               placeholder="dd-mm-yyyy"
-                            />
+                            /> */}
                           </div>
                         </div>
                       </Tab>
@@ -386,7 +419,7 @@ const Page: FC<PageProps> = () => {
                               label="Email"
                               placeholder="you@example.com"
                             />
-                            <div className="md:ml-2" />
+                            <div className="ml-2" />
                             <Input
                               onChange={handleInputChange}
                               value={values["phone"] as string}
@@ -411,7 +444,7 @@ const Page: FC<PageProps> = () => {
                               label="Purchase Order Number"
                             />
 
-                            <div className="md:ml-2" />
+                            <div className="ml-2" />
                             <Input
                               onChange={handleInputChange}
                               value={values["patientsCount"] as string}
@@ -425,7 +458,15 @@ const Page: FC<PageProps> = () => {
                           </div>
 
                           <div className="flex flex-row mb-3">
-                            <Input
+
+                            <div className="flex flex-col w-full">
+                              <label className="label mb-2">Select Date and Time</label>
+
+                              <div className={`flex flex-col w-full ${errored['dateTime'] ? 'errored': ''}`}>
+                                <DateTimeInput value={values['dateTime'] as Date } onChange={(val)=>setDateTime(val as Date, 'dateTime')}/>
+                              </div>
+
+                            </div>                            {/* <Input
                               onChange={handleInputChange}
                               value={values["time"] as string}
                               labelPlacement="outside"
@@ -436,7 +477,7 @@ const Page: FC<PageProps> = () => {
                               placeholder="1"
                             />
 
-                            <div className="md:ml-2" />
+                            <div className="ml-2" />
 
                             <Input
                               onChange={handleInputChange}
@@ -448,7 +489,7 @@ const Page: FC<PageProps> = () => {
                               name={"date"}
                               labelPlacement="outside"
                               placeholder="dd-mm-yyyy"
-                            />
+                            /> */}
                           </div>
 
                           {selected === "request" && activeServices.length ? (

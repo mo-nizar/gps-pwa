@@ -254,7 +254,7 @@
           align-items: center;
           justify-content: center;
           position: relative;
-
+          height: max-content;
 
           @media (max-width: 768px) {
             max-width: 100%;
@@ -346,8 +346,8 @@
           }
 
           .link-one {
-            top: 16%;
-            left: 48%;
+            top: 12%;
+            left: 50%;
             color: $color-primary;
           }
           .link-two {
