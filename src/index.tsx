@@ -14,6 +14,7 @@ interface Card {
   desc: string;
   buttonText: string;
   imageUrl: string;
+  link: string,
 }
 
 const App: React.FC = () => {
@@ -196,10 +197,10 @@ const App: React.FC = () => {
               {sections &&
                 sections[2]?.cards?.map((item: Card, idx:number) => (
                   <div key={idx} className="imageContainer">
-                    <Link className="textContainer" onClick={() => router.push(`/sales`)}>
+                    <Link className="textContainer" onClick={() => router.push(item.link)}>
                       <p className="typography">{item?.title || ""}</p>
                       <p className="desc">{item?.desc || ""}</p>
-                      <Link className="link" onClick={() => router.push(`/sales`)}>
+                      <Link className="link" onClick={() => router.push(item.link)}>
                         {item?.buttonText || ""}{" "}
                         <img src="/icons/link-arrow.svg" />
                       </Link>

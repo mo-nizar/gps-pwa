@@ -275,7 +275,6 @@ const Page: FC<PageProps> = () => {
   
           <Section className='feature-section section flex flex-row' maxContent={true}>
             <div className="grid sm:grid-cols-3 md:grid-cols-5 gap-4 my-12">
-            <span className='prod-hint'>{product?.package.hint}</span>
 
             </div>
           </Section>
