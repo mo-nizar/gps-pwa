@@ -257,7 +257,7 @@ const Page: FC<PageProps> = () => {
                     <img src={data.image} alt="" className="w-5/6 h-auto self-center" />
                   ) : (
                     <img
-                      src={"/images/request_booking.png.jpeg"}
+                      src={"/images/request_booking.png"}
                       alt=""
                       className="requestBookingImg w-5/6 h-auto self-center"
                     />
