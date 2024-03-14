@@ -67,7 +67,7 @@ const Page: FC = () => {
   const BookingDetails: FC<{ booking: any }> = ({ booking }) => {
     const details = [
       { label: 'Booking ID', value: booking.id },
-      { label: 'Service Name', value: booking.serviceName },
+      { label: 'Service Name', value: booking.service.name },
       { label: 'Surgeon', value: booking.surgeon },
       { label: 'Email', value: booking.email },
       { label: 'Phone', value: booking.phone },
@@ -86,7 +86,7 @@ const Page: FC = () => {
             {details.map((detail, index) => (
               <tr key={index}>
                 <td className="detail-label">{`${detail.label}`}</td>
-                <td className="detail-value">{`${detail.value}`}</td>
+                <td className="detail-value">{`${detail.value ?? ''}`}</td>
               </tr>
             ))}
           </tbody>
