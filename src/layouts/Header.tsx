@@ -37,12 +37,6 @@ const Header: React.FC = () => {
       optionsList: [],
     },
     {
-      type: "link",
-      label: "Support",
-      link: "/support",
-      optionsList: null,
-    },
-    {
       type: "button",
       label: "Request a Call",
       link: "/call",
