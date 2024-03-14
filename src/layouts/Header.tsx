@@ -67,6 +67,13 @@ const Header: React.FC = () => {
     }
   };
 
+  const scrollToBottom = () => {
+    window.scrollTo({
+      top: document.documentElement.scrollHeight,
+      behavior: 'smooth' // Optionally, you can use smooth scrolling effect
+    });
+  }
+
   return (
     <header>
       <button onClick={()=> router.push('/')}>
@@ -97,7 +104,7 @@ const Header: React.FC = () => {
                 case "button":
                   return (
                     <li key={index}>
-                      <PrimaryButton label={obj.label} />
+                      <PrimaryButton label={obj.label} onClick={scrollToBottom}/>
                     </li>
                   );
                 default:

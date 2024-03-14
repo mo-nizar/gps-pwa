@@ -45,7 +45,23 @@ const App: React.FC = () => {
     }
   };
 
+  const scrollToTop= () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth' // Optionally, you can use smooth scrolling effect
+    });
+  }
+
   const { sections } = state;
+
+  useEffect(()=>{
+    if(sections.length){
+      scrollToTop();
+    }
+  },[sections])
+
+
+
 
   const router = useRouter();
 

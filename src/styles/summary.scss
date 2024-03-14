@@ -41,7 +41,18 @@ main{
         @media (max-width: 768px) {
             padding: 100px 20px;
 
-          }
+        }
+    }
+
+    .requestBookingImg{
+        max-height: 60%;
+        height: 500px;
+        width: auto;
+
+        @media (max-width: 768px) {
+            height: 300px;
+
+        }
     }
 
     .section-hint{
