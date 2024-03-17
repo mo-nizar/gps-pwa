@@ -1,7 +1,7 @@
 @import './theme.scss';
 
 
-main{
+.summary-page{
     color: $color-primary;
 
 
@@ -10,15 +10,19 @@ main{
             font-size: 40px;
             font-family: 'dmsans-semibold';
             margin-bottom: 10px;
+            line-height: 55px;
 
             @media (max-width: 1120px) {
-                font-size: 32px;
+                font-size: 28px;
+                line-height: 35px;
 
               }
 
               @media (max-width: 768px) {
                 font-size: 28px;
-    
+                line-height: 35px;
+                text-align: center;
+                margin-top: 30px;
               }
         }
         .service-desc{
@@ -140,7 +144,8 @@ main{
 
         .form-container{
             height: 100%;
-
+            width: 100% !important;
+            background-color: white;
         }
       }
 

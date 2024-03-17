@@ -6,9 +6,8 @@ import CustomDropdown from "@components/CustomDropdown";
 import { PrimaryButton } from "@/components/CustomButtons";
 import "@styles/layouts/header.scss";
 import api from "@/api";
-import { Button } from "@nextui-org/react";
-import { useRouter } from "next/navigation";
-import HeaderCollapsible from "@/components/HeaderCollapsible";
+import { usePathname, useRouter } from "next/navigation";
+
 
 interface HeaderOption {
   type: "link" | "dropdown" | "button";
@@ -21,7 +20,12 @@ const Header: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [count, setCount] = useState(0);
 
+
+
   const router = useRouter();
+
+  const isDashboardPage = usePathname().includes('admin');
+
 
   const [data, setData] = useState([
     {
@@ -66,6 +70,10 @@ const Header: React.FC = () => {
       top: document.documentElement.scrollHeight,
       behavior: 'smooth' // Optionally, you can use smooth scrolling effect
     });
+  }
+
+  if (isDashboardPage) {
+    return null;
   }
 
   return (

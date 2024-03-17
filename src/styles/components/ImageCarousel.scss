@@ -1,0 +1,52 @@
+@import '../theme.scss';
+
+.imageCarousel{
+  width: 90vw;
+  display: flex;
+  flex-direction: column;
+
+  .autoplay{
+    height: 150px;
+    box-shadow: 0 5px 16px rgba(0, 0, 0, 0) !important;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    background-color: $color-light;
+
+  }
+
+  .react-swipeable-view-container{
+    height: 100% !important;
+    width: 100% !important;
+  }
+
+  .image-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 150px;
+
+
+    img{
+      height: auto;
+      width: 150px;
+      object-fit: contain;
+    }
+  }
+
+  .progressBar{
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    width: 100%;
+    background-color: $color-light;
+    margin-top: 30px;
+
+    .MuiLinearProgress-bar{
+      background-color: $color-primary !important;
+
+    }
+  }
+
+}

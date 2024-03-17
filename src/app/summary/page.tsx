@@ -232,7 +232,7 @@ const Page: FC<PageProps> = () => {
   });
   
   return (
-    <main>
+    <main className="summary-page">
       <Section className="intro" maxContent={true}>
         <div className="summary-container shadow-md flex flex-col md:flex-row  md:px-10 md:py-8 md:py-0 mt-8 ">
         { loading ?

@@ -7,11 +7,24 @@ main {
     padding: 100px;
 
     @media (max-width: 950px) {
-      padding: 50px;
+      padding: 100px 20px 30px 20px;
     }
+  }
 
+  .desc-container{
     @media (max-width: 768px) {
-      padding: 100px 20px;
+      margin-top: 50px;
+
+      .form-container{
+        width: 100%;
+
+        .inputWrapper, .textBoxWrapper {
+          box-shadow: 0 0px 0px rgba(0, 0, 0, 0) !important;
+          border: 0.5px solid $color-grey;
+          border-radius: 5px;
+
+        }
+      }
     }
   }
 
@@ -63,10 +76,6 @@ main {
   .feature-section{
     padding-top: 0px;
 
-    .feature-container{
-      
-    }
-
     .feature-title{
       font-family: "dmsans-bold";
       margin-top: 30px;
@@ -76,7 +85,22 @@ main {
     .feature-icon{
       width: 70px;
       height: 70px;
+    }
 
+    @media (max-width: 768px) {
+      .feature-title{
+        margin-top: 0px;
+  
+      }
+  
+      .feature-icon{
+        width: 40px;
+        height: 40px;
+      }
+      .feature-container{
+        flex-direction: row !important;
+        align-self: flex-start;
+      }
     }
   }
 
@@ -140,19 +164,30 @@ main {
 
     .prod-intro{
 
+      @media (max-width: 768px) {
+        flex-direction: column;
+      }
 
       .prod-hint {
         font-size: 12px;
         font-family: "dmsans-regular";
         color: $color-grey;
+
+        @media (max-width: 870px) {
+          text-align: center;
+        }
       }
     
       .prod-title {
         font-size: 46px;
         font-family: "dmsans-bold";
+        line-height: 50px;
     
         @media (max-width: 870px) {
           font-size: 38px;
+          line-height: 35px;
+          margin-bottom: 20px;
+          text-align: center;
         }
       }
       .prod-desc {
@@ -160,6 +195,11 @@ main {
         font-family: "dmsans-regular";
         color: $color-grey;
         text-align: left;
+
+        @media (max-width: 870px) {
+          text-align: center;
+          margin-bottom: 40px;
+        }
       }
     
       @media (max-width: 1020px) {
@@ -178,10 +218,19 @@ main {
       .image-container{
         background-color: $color-light-grey;
         border-radius: $radius-card;
+        overflow: hidden;
+        @media (max-width: 870px) {
+          width: 100%;
+        }
 
         .prodImage{
           width: 100%;
           height: auto;
+
+          @media (max-width: 870px) {
+            width: 100%;
+            height: auto;
+          }
         }
       }
     }
@@ -193,8 +242,16 @@ main {
     background-color: $color-primary !important;
     
 
+
+    .text-container {
+
+      @media (max-width: 768px) {
+        width: 100%;
+      }
+      
+    }
     .prod-hint {
-      font-size: 12px;
+      font-size: 14px !important;
       font-family: "dmsans-regular";
       color: $color-light;
     }
@@ -207,6 +264,7 @@ main {
   
       @media (max-width: 870px) {
         font-size: 38px;
+
       }
     }
     .prod-desc {
@@ -214,18 +272,15 @@ main {
       font-family: "dmsans-regular";
       color: $color-light;
       text-align: left;
+
+      @media (max-width: 768px) {
+        font-size: 14px !important;
+      }
     }
-  
-    @media (max-width: 1020px) {
-      .prod-hint {
-        font-size: 10px;
-      }
-  
-      .prod-title {
-        font-size: 32px;
-      }
-      .prod-desc {
-        font-size: 10px;
+
+    @media (max-width: 768px) {
+      .prod-desc, .prod-hint, .prod-title{
+        text-align: center;
       }
     }
 
@@ -317,9 +372,15 @@ main {
       
   
       .grid-container{
-        display: flex;
-        align-self: flex-end;
-        justify-content: flex-start !important;
+        @media (min-width: 768px) {
+          display: flex;
+          align-self: flex-end;
+          justify-content: flex-start !important;
+        }
+
+        @media (max-width: 768px) {
+          margin-top: 30px;
+        }
 
 
         .keypoints-container {

@@ -20,7 +20,7 @@ instance.interceptors.request.use(
       method,
       url,
       params,
-      headers: { jwt_token, security_token, user_id },
+      headers: { authorization, security_token, user_id },
     } = config;
 
     const req_timestamp = Date.now();
@@ -39,9 +39,9 @@ instance.interceptors.request.use(
     //   CryptoJS.SHA512(req_timestamp + Config.REQUEST_TOKEN_KEY),
     // );
 
-    // if (jwt_token) {
-    //   config.headers['AUTH-TOKEN'] = `${jwt_token}:${req_hash}`;
-    // }
+    if (authorization) {
+      config.headers['authorization'] = `Bearer ${authorization}`;
+    }
 
     // Include necessary headers
     config.headers["REQUEST-TIMESTAMP"] = req_timestamp;

@@ -40,7 +40,7 @@ const Page: FC<PageProps> = () => {
     image:  '/images/stepper.svg',
     product: {
         hint: 'stepper stabilizer',
-        title: "Perfect workstation where a stable platform is required.",
+        title: "Our innovative Stepper Stabilizer.",
         info: "Perfect workstation where a stable platform is required. Stable platform ensures seamless workflow for precise prostate mapping",
         image: '/images/stepper-stabilizer.svg',
         description: [
@@ -69,23 +69,23 @@ const Page: FC<PageProps> = () => {
         features:[
           {
             "title": "Fiducial Marker Placement",
-            "icon": "/icons/key_1.svg"
+            "icon": "/icons/demo-points.svg"
           },
           {
             "title": "Mapping Biopsy",
-            "icon": "/icons/key_2.svg"
+            "icon": "/icons/demo-points.svg"
           },
           {
             "title": "Saturation Biopsy",
-            "icon": "/icons/key_3.svg"
+            "icon": "/icons/demo-points.svg"
           },
           {
             "title": "Targeted Biopsy",
-            "icon": "/icons/key_4.svg"
+            "icon": "/icons/demo-points.svg"
           },
           {
             "title": "AND other template-guided procedures.",
-            "icon": "/icons/key_5.svg"
+            "icon": "/icons/demo-points.svg"
           }
         ],
 
@@ -143,7 +143,7 @@ const Page: FC<PageProps> = () => {
   const { product } = data;
 
 
-  const renderServices = (): JSX.Element => {
+  const renderImageAndForm = (): JSX.Element => {
     return (
       <div>
         <div className={`service-container flex flex-col md:flex-row justify-between md:mt-24 my-6`}>
@@ -180,11 +180,11 @@ const Page: FC<PageProps> = () => {
             <span className="section-hint self-center">{data.hint || ""}</span>
             <span className="title self-center">{data.title || ""}</span>
             <span className="desc self-center">{data.desc}</span>
-            {renderServices()}
+            {renderImageAndForm()}
           </Section>
   
           <Section className='feature-section section flex flex-row' maxContent={true}>
-            <div className="grid sm:grid-cols-3 md:grid-cols-5 gap-4 my-12">
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-4  my-8 md:my-12">
               {product?.features.map((item, idx)=>(
                 <div className='feature-container flex flex-1 flex-col justify-center items-center' key={idx}>
                   <Image className='feature-icon' alt='feature-title' width={50} height={50} src={item.icon} />
@@ -210,7 +210,7 @@ const Page: FC<PageProps> = () => {
               </div>
   
   
-            <div className="grid sm:grid-cols-3 md:grid-cols-5 gap-4 my-12">
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-4 my-12">
               {product?.description.map((item, idx)=>(
                 <div className='description-container flex flex-1 flex-col justify-center items-center' key={idx}>
                   <span className='description-index my-2 text-center'>{`0${idx+1}.`}</span>                
@@ -224,7 +224,7 @@ const Page: FC<PageProps> = () => {
   
           <Section className='package-section  section flex flex-row' maxContent={true}>
   
-            <div  className='prod-intro flex flex-row flex-1 justify-center items-center'>
+            <div  className='prod-intro flex flex-col md:flex-row flex-1 justify-center items-center'>
               <div className='text-container flex flex-1 prod-intro flex flex-col'>
               
                 <span className='prod-hint'>{product?.package.hint}</span>
@@ -243,9 +243,9 @@ const Page: FC<PageProps> = () => {
   
   
             <div className='image-container flex flex-row  my-12'>
-              <Image src={product?.package.image} alt='package-image' className='package-image' width={300} height={300}/>
+              <Image src={product?.package.image} alt='package-image' className='package-image hidden md:block' width={300} height={300}/>
   
-              <div className="grid grid-container sm:grid-cols-1 md:grid-cols-5 gap-6 absolute self-center">
+              <div className="grid grid-container grid-cols-1 md:grid-cols-5 gap-6 md:absolute self-center">
   
               {product?.package.keysPoints.map((item, idx)=>(
                        <div className="flip-card keypoints-container flex flex-1 flex-row justify-center items-center" key={idx}>
@@ -273,10 +273,8 @@ const Page: FC<PageProps> = () => {
           </Section>
   
   
-          <Section className='feature-section section flex flex-row' maxContent={true}>
-            <div className="grid sm:grid-cols-3 md:grid-cols-5 gap-4 my-12">
-
-            </div>
+          <Section maxContent={true}>
+              <img src={'/images/new_section.jpg'}/>
           </Section>
   
         </>

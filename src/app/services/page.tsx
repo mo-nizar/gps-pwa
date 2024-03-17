@@ -116,7 +116,7 @@ const Page: FC<PageProps> = () => {
               {item?.description?.map((obj: any, idx: number) => (
                 <div key={idx} className="desc-sec flex flex-row mt-8">
                   <img
-                    src="/icons/checkpoint.svg"
+                    src="/icons/tick-mark-point.svg"
                     className="mr-2 markIcon"
                   />
                   <div className="desc-sec flex flex-col">

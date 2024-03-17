@@ -6,8 +6,16 @@ import "@styles/layouts/footer.scss";
 import Logo from "@images/gps-logo-white.png";
 import Link from "next/link";
 import Section from "./Section";
+import { usePathname } from "next/navigation";
 
 export const Footer = () => {
+
+
+  const isDashboardPage = usePathname().includes('admin');
+
+  if(isDashboardPage){
+    return null
+  }
 
   return (
     <Section title={""} maxContent className="section">

@@ -27,7 +27,7 @@
     position: relative;
 
     @media (max-width: 768px) {
-      padding: 20px;
+      padding: 100px 20px 100px 20px;
       padding-right: 20px;
     }
 
@@ -46,6 +46,11 @@
 
     .about-conatiner {
       margin-top: 50px;
+
+      @media (max-width: 768px) {
+        margin-top: 0px;
+
+      }
 
       .title {
         color: $color-light;
@@ -70,7 +75,7 @@
     align-items: flex-end;
 
     @media (max-width: 768px) {
-      padding: 20px;
+      padding: 100px 20px 0px 20px;
       padding-left: 20px;
     }
 

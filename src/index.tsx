@@ -8,6 +8,8 @@ import Partners from "@/components/Partners";
 import { useRouter } from "next/navigation";
 import api from "@/api";
 import { Loader } from "./components/Loader";
+import Carousel from "./components/Carousel";
+import ImageCarousel from "./components/ImageCarousel";
 
 interface Card {
   title: string;
@@ -59,10 +61,7 @@ const App: React.FC = () => {
       scrollToTop();
     }
   },[sections])
-
-
-
-
+  
   const router = useRouter();
 
   const handleButtonClick = () => {
@@ -78,19 +77,79 @@ const App: React.FC = () => {
           <SecondaryButton onClick={handleButtonClick}>
             <div className="buttonContents">
               <p>{"BOOK NOW"}</p>
-              <img src="/icons/long-arrow-right.svg" alt="arrow" />
-            </div>
+                <img src="/icons/long-arrow-right.svg" alt="arrow" />
+              </div>
           </SecondaryButton>
+        </div>
+      </Section>
+
+      <Section backgroundOverlay={true} maxContent>
+        <div className="nhs">
+          <div className="content-container">
+            <div className="textWrapper">
+              <>
+                <span className="title">{sections[2]?.title}</span>
+                <span className="description">{sections[2]?.description}</span>
+                
+                <div className="infoSection" >
+
+                  {sections[2]?.info?.map((item: string, idx: number)=>(
+                    <div className="infoWrapper flex flex-row" key={idx} >
+                      <img src={'/icons/grey-check.svg'} alt='mark' width={15} height={15}/>
+                      <span className="description  info flex flex-row items-center">{item}</span>
+                    </div>
+                  ))}
+                </div>
+
+              </>
+              <div className="button-container">
+                <SecondaryButton coloured onClick={() => router.push(`/demo`)}>
+                  <div className="buttonContents">
+                    <p>{"BOOK FREE DEMO"}</p>
+                    <img src="/icons/arrow-white.svg" alt="arrow" />
+                  </div>
+                </SecondaryButton>
+              </div>
+            </div>
+
+            <div className="imagesWrapper">
+              {sections &&
+                sections[2]?.cards?.map((item: Card, idx:number) => (
+                  <div key={idx} className="imageContainer">
+                    <Link className="textContainer" onClick={() => router.push(item.link)}>
+                      <p className="typography">{item?.title || ""}</p>
+                      <p className="desc">{item?.desc || ""}</p>
+                      <Link className="link" onClick={() => router.push(item.link)}>
+                        {item?.buttonText || ""}{" "}
+                        <img src="/icons/link-arrow.svg" />
+                      </Link>
+                    </Link>
+                    <img src={item.imageUrl} alt={""} />
+                  </div>
+                ))}
+            </div>
+
+            <div className="button-container mob-button-container">
+              <SecondaryButton coloured onClick={() => router.push(`/demo`)}>
+                <div className="buttonContents">
+                  <p>{"BOOK FREE DEMO"}</p>
+                  <img src="/icons/arrow-white.svg" alt="arrow" />
+                </div>
+              </SecondaryButton>
+            </div>
+
+          </div>
         </div>
       </Section>
 
       <Section backgroundOverlay={true}>
         <div className="service">
           <div className="content-container">
-            <span className="title">{"NHS Connect"}</span>
+            <span className="title">{sections[3]?.title}</span>
+
             <div className="cards-container">
               <div className="cards-div">
-                <a className={`card ${hovered == 1 ? "active-card" : ""}`}>
+                <a className={`card ${hovered == 1 ? "active-card" : ""} desktop-card`}>
                   <span className="title">{"NHS"}</span>
                   <span className="desc">
                     {
@@ -99,7 +158,7 @@ const App: React.FC = () => {
                   </span>
                 </a>
 
-                <a className={`card ${hovered == 2 ? "active-card" : ""}`}>
+                <a className={`card ${hovered == 2 ? "active-card" : ""} desktop-card`}>
                   <span className="title">{"Private Healthcare"}</span>
                   <span className="desc">
                     {
@@ -157,7 +216,7 @@ const App: React.FC = () => {
               </div>
 
               <div className="cards-div">
-                <a className={`card ${hovered == 4 ? "active-card" : ""}`}>
+                <a className={`card ${hovered == 4 ? "active-card" : ""} desktop-card`}>
                   <span className="title">{"GPS"}</span>
                   <span className="desc">
                     {
@@ -166,7 +225,7 @@ const App: React.FC = () => {
                   </span>
                 </a>
 
-                <a className={`card ${hovered == 3 ? "active-card" : ""}`}>
+                <a className={`card ${hovered == 3 ? "active-card" : ""} desktop-card`}>
                   <span className="title">{"Patients"}</span>
                   <span className="desc">
                     {
@@ -176,65 +235,28 @@ const App: React.FC = () => {
                 </a>
               </div>
             </div>
-          </div>
-        </div>
-      </Section>
 
-      <Section backgroundOverlay={true}>
-        <div className="nhs">
-          <div className="content-container">
-            <div className="textWrapper">
-              <>
-                <span className="title">{sections[2]?.title}</span>
-                <span className="description">{sections[2]?.description}</span>
-                
-                <div className="infoSection" >
-
-                {sections[2]?.info?.map((item: string, idx: number)=>(
-                    <div className="infoWrapper flex flex-row" key={idx} >
-                      <img src={'/icons/grey-check.svg'} alt='mark' width={15} height={15}/>
-                      <span className="description  info flex flex-row items-center">{item}</span>
-                    </div>
-                  ))}
-                </div>
-
-              </>
-              <div className="button-container">
-                <SecondaryButton coloured onClick={() => router.push(`/demo`)}>
-                  <div className="buttonContents">
-                    <p>{"BOOK DEMO"}</p>
-                    <img src="/icons/arrow-white.svg" alt="arrow" />
-                  </div>
-                </SecondaryButton>
-              </div>
+            <div className="mobile-card">
+              <Carousel cards={sections[3].cards}/>
             </div>
 
-            <div className="imagesWrapper">
-              {sections &&
-                sections[2]?.cards?.map((item: Card, idx:number) => (
-                  <div key={idx} className="imageContainer">
-                    <Link className="textContainer" onClick={() => router.push(item.link)}>
-                      <p className="typography">{item?.title || ""}</p>
-                      <p className="desc">{item?.desc || ""}</p>
-                      <Link className="link" onClick={() => router.push(item.link)}>
-                        {item?.buttonText || ""}{" "}
-                        <img src="/icons/link-arrow.svg" />
-                      </Link>
-                    </Link>
-                    <img src={item.imageUrl} alt={""} />
-                  </div>
-                ))}
-            </div>
           </div>
         </div>
       </Section>
 
       <Section
         title={"Join Our Growing Hospital List"}
-        className="partnerSection border-1"
+        className="partnerSection"
         maxContent
       >
-        <Partners partners={(sections && sections[4]?.banners) || []} />
+        
+        <div className="web-partners">
+          <Partners partners={(sections && sections[4]?.banners) || []} />
+        </div>
+
+        <div className="mobile-partners">
+          <ImageCarousel images={sections[4]?.banners}/>
+        </div>
       </Section>
     </>
   );

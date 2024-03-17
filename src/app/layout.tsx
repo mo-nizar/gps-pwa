@@ -47,9 +47,9 @@ export default function RootLayout({
           pauseOnHover
           theme="colored"
         />
-        <RenderHeader />
-        {children}
-        <RenderFooter />
+          <RenderHeader />
+            {children}
+          <RenderFooter />
       </body>
     </html>
   );

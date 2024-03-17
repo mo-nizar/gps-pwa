@@ -5,6 +5,7 @@
   height: max-content;
   background-color: $color-light;
   color: $color-dark;
+
   .buttonContents {
     display: flex;
     flex-direction: "column";
@@ -32,22 +33,9 @@
   }
 
   Section {
-    //----------------------------landing----------------------------------
-    @media (max-width: 768px) {
-      .landing {
-        padding: 100px 0px;
-      }
-    }
 
-    /* Media query for screens smaller than 480px (adjust breakpoint as needed) */
-    @media (max-width: 480px) {
-      .landing {
-        padding: 100px 0px;
-        .tagline {
-          font-size: 38px;
-        }
-      }
-    }
+    
+    //----------------------------landing----------------------------------
     .landing {
       background-color: $overlay-dark;
       display: flex;
@@ -71,326 +59,27 @@
 
       .description {
         color: $color-light;
-
+        font-size: 18px;
         max-width: 80%;
         text-align: center;
-        margin: 25px 0;
-        font-family: "DMSans-regular";
+        margin: 25px 0px;
+        font-family: "DMSans-light";
       }
     }
 
-    //----------------------------service----------------------------------
-    .service {
-      background-color: $color-light;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      // padding: 20px 0px;
-
-      .content-container {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        // justify-content: center;
-        flex-direction: column;
-        color: $color-primary;
-        padding: 100px;
-
-        /* Media query for screens smaller than 768px (adjust breakpoint as needed) */
-        @media (max-width: 1180px) {
-          padding: 100px 50px;
+    @media (max-width: 768px) {
+      .landing {
+        padding: 100px 0px;
+        height: 100vh !important;
+        .tagline {
+          font-size: 52px !important;
+          line-height: 60px !important;
         }
 
-        /* Media query for screens smaller than 768px (adjust breakpoint as needed) */
-        @media (max-width: 768px) {
-          padding: 20px;
+        .description{
+          font-size: 16px;
         }
 
-        /* Media query for screens smaller than 480px (adjust breakpoint as needed) */
-        @media (max-width: 480px) {
-          padding: 20px;
-        }
-
-        .title {
-          font-size: 40px;
-          line-height: 1.13em;
-          margin-bottom: 60px;
-          text-align: center;
-          font-family: "DMsans-bold";
-      
-          @media (max-width: 768px) {
-            font-size: 32px;
-            margin-bottom: 30px;
-      
-          }
-        }
-
-        .button-container {
-          margin-top: 50px;
-          position: relative;
-          bottom: 0px;
-          // flex:1;
-          // display: flex;
-          // align-items: flex-end;
-        }
-
-        .cards-container {
-          display: flex;
-          flex: 1;
-          width: 100%;
-          flex-direction: row;
-          // padding: 100px 100px;
-
-          /* Media query for screens smaller than 768px (adjust breakpoint as needed) */
-          @media (max-width: 768px) {
-            flex-direction: column;
-            // padding: 20px;
-          }
-
-          /* Media query for screens smaller than 480px (adjust breakpoint as needed) */
-          @media (max-width: 480px) {
-            flex-direction: column;
-            // padding: 20px;
-          }
-        }
-
-        .cards-div {
-          display: flex;
-          flex: 1;
-          width: 100%;
-          flex-direction: row;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-
-          .card {
-            width: 100%;
-            border-radius: $radius-card;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 5px 16px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            transition: 0.3s;
-            align-items: flex-start;
-            justify-content: flex-start;
-
-            @media (max-width: 768px) {
-              margin-bottom: 20px;
-            }
-
-            /* Media query for screens smaller than 480px (adjust breakpoint as needed) */
-            @media (max-width: 480px) {
-              margin-bottom: 20px;
-            }
-
-            &:hover {
-              transform: scale(1.1);
-
-              background-color: $color-primary;
-              color: $color-light;
-
-              .title {
-                color: $color-light;
-              }
-              .desc {
-                color: $color-light;
-                -webkit-line-clamp: 50;
-              }
-            }
-
-            .title {
-              font-size: 1.5rem;
-              margin-bottom: 10px;
-              // text-align: center;
-              text-align: left;
-              font-family: "DMsans-semibold";
-              color: $color-primary;
-            }
-
-            .desc {
-              font-size: 14px;
-              line-height: 1.13em;
-              font-family: "DMsans-light";
-              color: $color-grey;
-              text-align: left;
-              overflow: hidden;
-              display: -webkit-box;
-              -webkit-line-clamp: 2;
-              -webkit-box-orient: vertical;
-              text-overflow: ellipsis;
-            }
-          }
-        }
-
-        .active-card {
-          // background-color:$color-primary;
-          // color: $color-light;
-          transform: scale(1.2);
-          .desc {
-            // color: $color-light;
-            -webkit-line-clamp: 50 !important;
-          }
-        }
-
-        .link-one:hover {
-          font-size: 25px;
-        }
-
-        /* Media query for screens smaller than 768px (adjust breakpoint as needed) */
-        @media (max-width: 768px) {
-        }
-
-        /* Media query for screens smaller than 480px (adjust breakpoint as needed) */
-        @media (max-width: 480px) {
-        }
-
-        .images-div {
-          display: flex;
-          width: 500px;
-          flex-direction: row;
-          align-items: center;
-          justify-content: center;
-          position: relative;
-          height: max-content;
-
-          @media (max-width: 768px) {
-            max-width: 100%;
-            width: 100%;
-
-            margin: 50px 0px;
-
-          }
-
-          /* Media query for screens smaller than 480px (adjust breakpoint as needed) */
-          @media (max-width: 480px) {
-            max-width: 100%;
-            width: 100%;
-            margin: 50px 0px;
-
-
-          }
-
-          .nhs-logo {
-          }
-          .public-health{
-          }
-
-          .private-health{
-          }
-
-          .trio-logos{
-            height: auto;
-            max-width: 90px;
-            @media (max-width: 768px) {
-              max-width: 15vw;
-
-            }
-          }
-
-          .nhs-trio {
-            padding: 0px 30px;
-            max-width: 500px;
-            width: 500px;
-            @media (max-width: 768px) {
-              margin-bottom: 20px;
-              max-width: 100%;
-              width: 100%;
-
-            }
-
-            /* Media query for screens smaller than 480px (adjust breakpoint as needed) */
-            @media (max-width: 480px) {
-              margin-bottom: 20px;
-              max-width: 100%;
-              width: 100%;
-
-
-            }
-          }
-
-          .logo-container {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-
-          }
-
-          .link-text {
-            font-size: 1.5rem;
-            line-height: 1.13em;
-            text-align: center;
-            font-family: "DMsans-semibold";
-            position: absolute;
-            width: max-content;
-
-            transition: 0.3s;
-
-            @media (max-width: 480px) {
-                font-size: 0.8rem;
-            }
-
-            @media (max-width: 1180px) {
-              font-size: 1rem;
-            }
-
-            @media (max-width: 768px) {
-              font-size: 1.4rem;
-            }
-          }
-
-          .link-one {
-            top: 12%;
-            left: 50%;
-            color: $color-primary;
-          }
-          .link-two {
-            top: 52%;
-            left: 13%;
-            color: $color-primary;
-          }
-          .link-three {
-            top: 64%;
-            right: 17%;
-            color: $color-primary;
-          }
-          .link-four {
-            margin-top: 40px;
-            width: 75px;
-            height: 75px;
-            transition: 0.3s;
-          }
-
-          .link-text:hover {
-            transform: scale(1.2);
-          }
-
-          @media (max-width: 768px) {
-            .link-one {
-              top: 11%;
-              left: 49%;
-            }
-            .link-two {
-              top: 50%;
-              left: 16%;
-            }
-            .link-three {
-              top: 63%;
-              right: 20%;
-            }
-          }
-
-          .white-logo {
-            width: 50px;
-            // padding-top: 20px;
-          }
-        }
       }
     }
 
@@ -401,6 +90,7 @@
       width: 100%;
       height: 100%;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
 
@@ -414,17 +104,7 @@
 
         /* Media query for screens smaller than 768px (adjust breakpoint as needed) */
         @media (max-width: 1020px) {
-          padding: 50px;
-        }
-
-        /* Media query for screens smaller than 768px (adjust breakpoint as needed) */
-        @media (max-width: 768px) {
-          padding: 20px;
-        }
-
-        /* Media query for screens smaller than 480px (adjust breakpoint as needed) */
-        @media (max-width: 480px) {
-          padding: 20px;
+          padding: 100px 20px 0px 20px;
         }
 
         .textWrapper {
@@ -435,25 +115,13 @@
           color: $color-dark;
           // align-self: stretch;
           .title {
-            font-size: 44px;
+            font-size: 38px;
             line-height: 1.13em;
             margin-bottom: 20px;
             text-align: left;
-            font-family: "dmsans-bold";
-
-            @media (max-width: 768px) {
-              font-size: 36px;
-              text-align: center;
-            }
+            font-family: "DMsans-bold";
           }
 
-          .infoSection{
-            margin-top: 30px;
-          }
-
-          .infoWrapper{
-            margin-top: 5px;
-          }
           .description {
             font-size: 16px;
             font-family: "dmsans-regular";
@@ -466,19 +134,56 @@
             color: $color-grey;
           }
 
+
+          .infoSection{
+            margin-top: 30px;
+          }
+
+          .infoWrapper{
+            margin-top: 18px;
+          }
+
           .info{
             margin-top: 0px;
             margin-left: 5px;
+            font-family: "dmsans-semibold";
+
           }
 
-          .button-container {
-            margin-top: 50px;
-            position: relative;
-            bottom: 0px;
-            // flex:1;
-            // display: flex;
-            // align-items: flex-end;
+          @media (max-width: 768px) {
+            .title{
+              font-size: 32px;
+            }
           }
+        }
+
+        .button-container {
+          margin-top: 50px;
+          position: relative;
+          bottom: 0px;
+        }
+
+        .mob-button-container{
+          display: none;
+        }
+
+        @media (max-width: 768px) {
+          .button-container {
+            display: none;
+            margin-top: 30px;
+            margin-bottom: 30px;
+
+
+            button{
+              width: 100%;
+            }
+          }
+
+          .mob-button-container{
+            display: block !important;
+            width: 100%;
+          }
+          
         }
 
         .imagesWrapper {
@@ -637,6 +342,328 @@
       }
     }
 
+        //----------------------------service----------------------------------
+        .service {
+          background-color: $color-light;
+          width: 100%;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          // padding: 20px 0px;
+    
+          .content-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            // justify-content: center;
+            flex-direction: column;
+            color: $color-primary;
+            padding: 100px;
+    
+            /* Media query for screens smaller than 768px (adjust breakpoint as needed) */
+            @media (max-width: 1180px) {
+              padding: 100px 20px 100px 20px;
+            }
+
+               /* Media query for screens smaller than 768px (adjust breakpoint as needed) */
+               @media (max-width: 768px) {
+                padding: 100px 20px 30px 20px;
+              }
+    
+            .title {
+              font-size: 40px;
+              line-height: 1.13em;
+              margin-bottom: 60px;
+              text-align: center;
+              font-family: "DMsans-bold";
+          
+              @media (max-width: 768px) {
+                font-size: 32px;
+                margin-bottom: 30px;
+          
+              }
+            }
+    
+            .button-container {
+              margin-top: 50px;
+              position: relative;
+              bottom: 0px;
+              // flex:1;
+              // display: flex;
+              // align-items: flex-end;
+            }
+
+            .mobile-card{
+              display: none;
+
+              @media (max-width: 768px) {
+                display: block;
+
+              }
+
+
+            }
+    
+            .cards-container {
+              display: flex;
+              flex: 1;
+              width: 100%;
+              flex-direction: row;
+              // padding: 100px 100px;
+    
+              /* Media query for screens smaller than 768px (adjust breakpoint as needed) */
+              @media (max-width: 768px) {
+                flex-direction: column;
+                // padding: 20px;
+              }
+    
+              /* Media query for screens smaller than 480px (adjust breakpoint as needed) */
+              @media (max-width: 480px) {
+                flex-direction: column;
+                // padding: 20px;
+              }
+            }
+    
+            .cards-div {
+              display: flex;
+              flex: 1;
+              width: 100%;
+              flex-direction: row;
+              display: flex;
+              flex-direction: column;
+              justify-content: space-between;
+    
+              .card {
+                width: 100%;
+                border-radius: $radius-card;
+                display: flex;
+                flex-direction: column;
+                box-shadow: 0 5px 16px rgba(0, 0, 0, 0.1);
+                padding: 20px;
+                transition: 0.3s;
+                align-items: flex-start;
+                justify-content: flex-start;
+    
+                @media (max-width: 768px) {
+                  margin-bottom: 20px;
+                  display: none;
+                }
+    
+                /* Media query for screens smaller than 480px (adjust breakpoint as needed) */
+                @media (max-width: 480px) {
+                  margin-bottom: 20px;
+                }
+    
+                &:hover {
+                  transform: scale(1.1);
+    
+                  background-color: $color-primary;
+                  color: $color-light;
+    
+                  .title {
+                    color: $color-light;
+                  }
+                  .desc {
+                    color: $color-light;
+                    -webkit-line-clamp: 50;
+                  }
+                }
+    
+                .title {
+                  font-size: 1.5rem;
+                  margin-bottom: 10px;
+                  // text-align: center;
+                  text-align: left;
+                  font-family: "DMsans-semibold";
+                  color: $color-primary;
+                }
+    
+                .desc {
+                  font-size: 14px;
+                  line-height: 1.13em;
+                  font-family: "DMsans-light";
+                  color: $color-grey;
+                  text-align: left;
+                  overflow: hidden;
+                  display: -webkit-box;
+                  -webkit-line-clamp: 2;
+                  -webkit-box-orient: vertical;
+                  text-overflow: ellipsis;
+                }
+              }
+            }
+    
+            .active-card {
+              // background-color:$color-primary;
+              // color: $color-light;
+              transform: scale(1.2);
+              .desc {
+                // color: $color-light;
+                -webkit-line-clamp: 50 !important;
+              }
+            }
+    
+            .link-one:hover {
+              font-size: 25px;
+            }
+    
+            /* Media query for screens smaller than 768px (adjust breakpoint as needed) */
+            @media (max-width: 768px) {
+            }
+    
+            /* Media query for screens smaller than 480px (adjust breakpoint as needed) */
+            @media (max-width: 480px) {
+            }
+    
+            .images-div {
+              display: flex;
+              width: 500px;
+              flex-direction: row;
+              align-items: center;
+              justify-content: center;
+              position: relative;
+              height: max-content;
+    
+              @media (max-width: 768px) {
+                max-width: 100%;
+                width: 100%;
+    
+                margin: 50px 0px;
+    
+              }
+    
+              /* Media query for screens smaller than 480px (adjust breakpoint as needed) */
+              @media (max-width: 480px) {
+                max-width: 100%;
+                width: 100%;
+                margin: 50px 0px;
+    
+    
+              }
+    
+              .nhs-logo {
+              }
+              .public-health{
+              }
+    
+              .private-health{
+              }
+    
+              .trio-logos{
+                height: auto;
+                max-width: 90px;
+                @media (max-width: 768px) {
+                  max-width: 15vw;
+    
+                }
+              }
+    
+              .nhs-trio {
+                padding: 0px 30px;
+                max-width: 500px;
+                width: 500px;
+                @media (max-width: 768px) {
+                  margin-bottom: 20px;
+                  max-width: 100%;
+                  width: 100%;
+    
+                }
+    
+                /* Media query for screens smaller than 480px (adjust breakpoint as needed) */
+                @media (max-width: 480px) {
+                  margin-bottom: 20px;
+                  max-width: 100%;
+                  width: 100%;
+    
+    
+                }
+              }
+    
+              .logo-container {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+    
+              }
+    
+              .link-text {
+                font-size: 1.5rem;
+                line-height: 1.13em;
+                text-align: center;
+                font-family: "DMsans-semibold";
+                position: absolute;
+                width: max-content;
+    
+                transition: 0.3s;
+    
+                @media (max-width: 480px) {
+                    font-size: 0.8rem;
+                }
+    
+                @media (max-width: 1180px) {
+                  font-size: 1rem;
+                }
+    
+                @media (max-width: 768px) {
+                  font-size: 1.4rem;
+                }
+              }
+    
+              .link-one {
+                top: 12%;
+                left: 50%;
+                color: $color-primary;
+              }
+              .link-two {
+                top: 52%;
+                left: 13%;
+                color: $color-primary;
+              }
+              .link-three {
+                top: 64%;
+                right: 17%;
+                color: $color-primary;
+              }
+              .link-four {
+                margin-top: 40px;
+                width: 75px;
+                height: 75px;
+                transition: 0.3s;
+              }
+    
+              .link-text:hover {
+                transform: scale(1.2);
+              }
+    
+              @media (max-width: 768px) {
+                .link-one {
+                  top: 11%;
+                  left: 49%;
+                }
+                .link-two {
+                  top: 50%;
+                  left: 16%;
+                }
+                .link-three {
+                  top: 63%;
+                  right: 20%;
+                }
+              }
+    
+              .white-logo {
+                width: 50px;
+                // padding-top: 20px;
+              }
+            }
+          }
+        }
+
     @media (max-width: 768px) {
       .footer {
         flex-direction: column-reverse;
@@ -663,26 +690,29 @@
 .partnerSection {
   padding: 100px;
   background-color: $color-light;
-}
 
-@media (max-width: 768px) {
-  .partnerSection {
-    padding: 20px;
+  .web-partners{
+    display: block
   }
-}
 
-/* Media query for screens smaller than 480px (adjust breakpoint as needed) */
-@media (max-width: 480px) {
-  .partnerSection {
-    padding: 20px;
+  .mobile-partners{
+    display: none;
   }
-}
 
-/* ImageBanner.scss */
+  @media (max-width: 768px) {
+    .web-partners{
+      display: none !important;
+    }
+  
+    .mobile-partners{
+      display: block !important;
+    }
+  
+  }
 
-.image-banner {
-  width: 100%;
-  height: 100vh; /* 100% of the viewport height */
-  background-size: cover; /* Adjust the image to cover the entire container */
-  background-position: center; /* Center the image */
+  @media (max-width: 768px) {
+
+    padding: 100px 20px 30px 20px;
+  }
+  
 }

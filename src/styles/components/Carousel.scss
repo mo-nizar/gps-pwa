@@ -1,0 +1,60 @@
+@import '../theme.scss';
+
+.carousel{
+  width: 90vw;
+  display: flex;
+  flex-direction: column;
+
+  .autoplay{
+    background-color: $color-light;
+    height: 210px;
+    box-shadow: 0 5px 16px rgba(0, 0, 0, 0.1);
+    background-color: $color-primary;
+    border-radius: $radius-card;
+
+  }
+
+  .react-swipeable-view-container{
+    height: 100% !important;
+    width: 100% !important;
+  }
+
+  .card {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 210px;
+    
+    background-color: $color-primary;
+    color: $color-light;
+
+  
+    .title {
+      font-size: 24px !important;
+      margin-bottom: 10px !important;
+      text-align: left !important;
+      font-family: "DMsans-semibold";
+    }
+  
+    .desc {
+      font-size: 14px;
+      font-family: "DMsans-light";
+      text-align: left !important;
+      overflow: hidden;
+    }
+  }
+
+  .progressBar{
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    width: 100%;
+    background-color: $color-light;
+    .MuiLinearProgress-bar{
+      background-color: $color-primary !important;
+
+    }
+  }
+
+}

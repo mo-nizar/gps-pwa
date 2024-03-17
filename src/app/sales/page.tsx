@@ -121,7 +121,7 @@ const Page: FC<PageProps> = () => {
             <div className="desc-wrapper">
               {item?.description?.map((obj: any, idx: number) => (
                 <div key={idx} className="desc-sec flex flex-row mt-8">
-                  <img src="/icons/checkpoint.svg" className="mr-2" />
+                  <img src="/icons/tick-mark-point.svg" className="mr-2" />
                   <div className="desc-sec flex flex-col">
                     <span className="desc-title">{obj?.title || ""}</span>
                     <span className="desc-info">{obj?.info || ""}</span>
