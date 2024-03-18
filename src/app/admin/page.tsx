@@ -1,6 +1,6 @@
 // Page.tsx
 "use client";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, use } from 'react';
 import api from '../../api';
 import { toast } from 'react-toastify';
 import "@styles/dashboard.scss";
@@ -59,6 +59,9 @@ const Page: React.FC = () => {
     const [statusAvailable, setStatusAvailable] = useState<updatedBooking>({});
     const [selectedDate, setSelectedDate] = useState<string>('');
     const [isEditing, setIsEditing] = useState<boolean>(false);
+    const [permissions, setPermissions] = useState<string[]>([]);
+    const [isValidUser, setIsValidUser] = useState<boolean>(false);
+
 
     const searchParams = useSearchParams();
     const key = searchParams?.get("key") || null;
@@ -76,15 +79,56 @@ const Page: React.FC = () => {
             }            
         }
     }, [selectedDate]);
+
+
+    useEffect(()=>{
+        validateUser()
+    },[])
     
 
     useEffect(() => {
-        fetchBookingDetails();
-    }, [page]);
+        isValidUser && fetchBookingDetails();
+    }, [page,isValidUser]);
 
     useEffect(()=>{
         isAccessRestricted && logout();
     },[isAccessRestricted])
+
+
+    const validateUser = async () => {
+        setIsLoading(true);
+        try {
+            const { data } = await api.get(`/user/validate`, {
+                headers:{
+                    authorization: key,
+                }
+            } );
+            if (data && data.status === 200) {
+                setIsValidUser(true);
+                console.log('response', data);
+                
+                setPermissions(data.data?.permissions)
+                updateCurrentDate(page);
+            } else if (data.status == 401 || status) { // Handle 401 status
+                setIsAccessRestricted(true);
+            } else {
+                throw new Error(data.message || 'Failed to fetch bookings');
+            }
+        } catch (error: any) {
+            if (error.response && error.response.status === 401) {
+                // Handle 401 status code
+                setIsAccessRestricted(true);
+            } else if (error.message && error.message.includes('unauthorized')) {
+                setIsAccessRestricted(true);
+            } else if (error.response && error.response.data && error.response.data.message.includes('unauthorized')) {
+                setIsAccessRestricted(true);
+            } else {
+                toast.error(error.response?.data?.message || error.message || 'Error fetching booking details');
+            }
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     const fetchBookingDetails = async () => {
         setIsLoading(true);
@@ -259,7 +303,7 @@ const Page: React.FC = () => {
         // Reset the updatedValues state if needed
     };
 
-    if(isAccessRestricted){
+    if(isAccessRestricted || !isValidUser){
         return (<AccessRestricted />);
     }    
 
@@ -405,7 +449,7 @@ const Page: React.FC = () => {
                                         }
                                     })}
                                     <div className="edit-buttons">
-                                        <button className={`${isLoading} ? 'disabled' : '' `} disabled={isLoading} onClick={toggleEditMode}>Update</button>
+                                        {permissions?.includes('UPDATE') && (<button className={`${isLoading} ? 'disabled' : '' `} disabled={isLoading} onClick={toggleEditMode}>Update</button>)}
                                         <button className={`${isLoading} ? 'disabled' : '' `} disabled={isLoading} onClick={closeModal}>Close</button>
                                     </div>
                                 </>
