@@ -50,7 +50,7 @@ const Page: FC<PageProps> = () => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<any>({});
   const [selected, setSelected] = useState<string | null>(type || "booking");
-  const [values, setValues] = useState<{ [key: string]: number | string | Address | null | Date}>({ id: id ? Number(id) : null });
+  const [values, setValues] = useState<{ [key: string]: Date | number | string | Address | null }>({ id: id ? Number(id) : null });
   const [successData, setSuccessData] = useState<Address>({});
   const [activeServices, setActiveServices] = useState<Option[]>([]);
   const [errored, setError] = useState<Errors>({});
@@ -86,20 +86,36 @@ const Page: FC<PageProps> = () => {
   const validateInputs = () => {
     const errors: Errors = {};
     const requiredFields = ["surgeon", "email", "phone", "patientsCount", "address", 'dateTime'];
-
-    requiredFields.map((field: string) => {
+  
+    const currentTime = new Date(); // Get current date time
+    let toastMessage = null;
+    
+    requiredFields.forEach((field: string) => {
       if (!values[field]) {
         errors[field] = true;
+        toastMessage = "please provide mandatory details";
       } else {
         errors[field] = false;
       }
     });
+  
+    // Validate dateTime field
+    if (values.dateTime) {
+      const selectedDateTime = new Date(values.dateTime as string);
+      if (selectedDateTime <= currentTime) {
+        errors['dateTime'] = true;
+        toastMessage = toastMessage ?? 'Date and time should be greater than the current date and time.';
+      } else {
+        errors['dateTime'] = false;
+      }
+    }
 
+      toast.error(toastMessage,{ theme: "colored" })
+  
     setError(errors);
-
-    return !Object.values(errors).some((error) => error); // Returns true if all fields are non-empty
+  
+    return !Object.values(errors).some((error) => error); // Returns true if all fields are non-empty and dateTime is valid
   };  
-
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -132,10 +148,6 @@ const Page: FC<PageProps> = () => {
             theme: "colored",
             })
         }
-      } else {
-        toast.error("please provide mandatory details",{
-          theme: "colored",
-          })
       }
 
     } catch (err) {
