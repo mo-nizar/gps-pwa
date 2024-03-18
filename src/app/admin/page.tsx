@@ -101,7 +101,7 @@ const Page: React.FC = () => {
                 setBookings(response.data.data?.bookings);
                 setStatusAvailable(response.data.data?.statusAvailable)
                 updateCurrentDate(page);
-            } else if (response.status === 401) { // Handle 401 status
+            } else if (response.data.status == 401 || response.status) { // Handle 401 status
                 setIsAccessRestricted(true);
             } else {
                 throw new Error(response.data.message || 'Failed to fetch bookings');
@@ -109,10 +109,13 @@ const Page: React.FC = () => {
         } catch (error: any) {
             if (error.response && error.response.status === 401) {
                 // Handle 401 status code
-                // For example, set state to show access restricted message
+                setIsAccessRestricted(true);
+            } else if (error.message && error.message.includes('unauthorized')) {
+                setIsAccessRestricted(true);
+            } else if (error.response && error.response.data && error.response.data.message.includes('unauthorized')) {
                 setIsAccessRestricted(true);
             } else {
-                toast.error(error.message || 'Error fetching booking details');
+                toast.error(error.response?.data?.message || error.message || 'Error fetching booking details');
             }
         } finally {
             setIsLoading(false);

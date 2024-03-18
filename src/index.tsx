@@ -88,7 +88,14 @@ const App: React.FC = () => {
           <div className="content-container">
             <div className="textWrapper">
               <>
-                <span className="title">{sections[2]?.title}</span>
+                <span className="title">
+                  {sections[2]?.title?.split('\n').map((line: string, index: number) => (
+                    <React.Fragment key={index}>
+                      {line}
+                      <br />
+                    </React.Fragment>
+                  ))}
+                </span>
                 <span className="description">{sections[2]?.description}</span>
                 
                 <div className="infoSection" >
