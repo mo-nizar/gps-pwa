@@ -7,6 +7,7 @@ import { PrimaryButton } from "@/components/CustomButtons";
 import "@styles/layouts/header.scss";
 import api from "@/api";
 import { usePathname, useRouter } from "next/navigation";
+import CustomDrawer from "@/components/CustomDrawer";
 
 
 interface HeaderOption {
@@ -78,6 +79,12 @@ const Header: React.FC = () => {
 
   return (
     <header>
+      
+      <div className="md:hidden"> 
+        <CustomDrawer options={data}/>
+
+      </div>
+
       <button onClick={()=> router.push('/')}>
         <Image src={Logo} width={150} alt={""} />
       </button>

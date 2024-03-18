@@ -47,4 +47,9 @@ touch-action: pan-down;
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+
+
+    main{
+      overflow: auto;
+    }
 }

@@ -4,10 +4,7 @@ import App from '..';
 import {NextUIProvider} from "@nextui-org/react";
 import 'dotenv/config';
 
-const Home: FC = () => {
-
-  console.log('home rendered');
-  
+const Home: FC = () => {  
   return (
     <NextUIProvider> 
       <App/>

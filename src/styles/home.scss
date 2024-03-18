@@ -5,6 +5,7 @@
   height: max-content;
   background-color: $color-light;
   color: $color-dark;
+  overflow: auto;
 
   .buttonContents {
     display: flex;

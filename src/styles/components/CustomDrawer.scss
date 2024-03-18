@@ -1,0 +1,38 @@
+@import '../theme.scss';
+
+.CustomDrawer{
+
+
+}
+
+.accordion{
+  margin: 0px !important;
+
+  .accordionSummary{
+    font-size: 14px;
+  }
+  .accordionDetails{
+    font-size: 14px;
+    padding: 10px;
+    background-color: $color-light-grey;
+  }
+  .accordionButton{
+    border-bottom: 1px solid rgb(221 221 221) !important;
+  }
+}
+
+.drawer-button{
+  position: absolute;
+  bottom: 40px;
+  width: 100%;
+  border-radius: 0px !important;
+}
+
+.viewAll-accordion{
+  display: flex;
+  flex-direction: row;
+  color: black;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
