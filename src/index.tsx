@@ -237,7 +237,7 @@ const App: React.FC = () => {
             </div>
 
             <div className="mobile-card">
-              <Carousel cards={sections[3].cards}/>
+              <Carousel cards={sections[3]?.cards ?? []}/>
             </div>
 
           </div>
@@ -255,7 +255,7 @@ const App: React.FC = () => {
         </div>
 
         <div className="mobile-partners">
-          <ImageCarousel images={sections[4]?.banners}/>
+          <ImageCarousel images={sections[4]?.banners ?? []}/>
         </div>
       </Section>
     </>

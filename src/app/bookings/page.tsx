@@ -7,7 +7,11 @@ import Section from "@/layouts/Section";
 import { toast } from "react-toastify";
 import { SecondaryButton } from "@/components/CustomButtons";
 import { Loader } from "@/components/Loader";
-import { COMMON_ERROR } from "@/constants";
+import { COMMON_ERROR, EXCLUDE_EDIT, EXCLUDE_USER_EDIT, FORMATTED_KEYS, FormattedKeys } from "@/constants";
+
+interface updatedBooking {
+  [key: string]: string
+}
 
 const Page: FC = () => {
   const [bookingDetails, setBookingDetails] = useState<any>(null);
@@ -18,6 +22,9 @@ const Page: FC = () => {
   const bookingId = searchParams?.get("bookingId") || null;
   const key = searchParams?.get("key") || null;
   const [isCancelModalOpen, setCancelModalOpen] = useState(false);
+  const [updatedValues, setUpdatedValues] = useState<updatedBooking>({});
+  const [statusAvailable, setStatusAvailable] = useState<updatedBooking>({});
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const [isLoading, setIsloading] = useState(true);
 
@@ -30,7 +37,9 @@ const Page: FC = () => {
       });
 
       if(data.status ==200){
-        setBookingDetails(data?.data);
+        setBookingDetails(data?.data?.booking);
+
+        setStatusAvailable(data?.data?.statusAvailable);
       }else{
         toast.error(data.message)
       }
@@ -56,6 +65,38 @@ const Page: FC = () => {
       }
     } catch (error) {
       console.error("Error cancelling booking:", error);
+    }
+  };  
+
+  const updateBooking = async () => {
+    try {
+        const { data } = await api.post(`/services/bookings/user-update`, null , {
+            params: {
+                id: bookingDetails?.id,
+
+                booking:{
+                    ...updatedValues
+                },
+            },
+            headers:{
+              security_token: key,
+            }
+        });
+        if (data && data.status === 200) {
+            // Handle success
+            toast.success('Booking updated successfully');
+            // Reload booking details after updating status
+            fetchBookingDetails();
+            setIsModalOpen(false);
+        } else if(data.status == 202){
+          toast.error(data.message || 'No changes on existing details');
+        }else{
+          throw new Error(data.message || 'Failed to update booking details');
+        }
+      
+    } catch (error: any) {
+      
+        toast.error(error.message || COMMON_ERROR);
     }
   };
 
@@ -110,7 +151,7 @@ const Page: FC = () => {
 
     return (
       <div className="modal-overlay">
-        <div className="modal">
+        <div className="cancel-modal">
           <p className="confirm-text">Are you sure you want to cancel this booking?</p>
           <div className="modal-buttons">
             <button onClick={onClose}>No</button>
@@ -125,6 +166,14 @@ const Page: FC = () => {
     router.push('/');
   };
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, key: string) => {
+      setUpdatedValues(prevState => ({
+          ...prevState,
+          [key]: e.target.value,
+      }));
+  };
+
+
   return (
     <Section className="section">
       <div className={'container'}>
@@ -132,24 +181,39 @@ const Page: FC = () => {
           ? <Loader/>
           :(
             <>
+            <p className="bookings-title">Booking Details</p>
               <div className={'bookingDetails'}>
                 <BookingDetails booking={bookingDetails} />
+                
+                <div className="buttons-wrapper">
+
+                  {bookingDetails.status === 'Cancelled' ? (
+                    <SecondaryButton
+                      onClick={handleExplore}
+                      coloured={false}
+                      className="w-full self-end success-button"
+                    >
+                      Explore More
+                    </SecondaryButton>
+                  ) : (
+
+                    <div className="button-container flex flex-row justify-between">
+                      <button className={'cancelButton update-button'} onClick={()=>setIsModalOpen(true)}>
+                        Modify
+                      </button>
+                      <button className={'cancelButton'} onClick={handleCancelBooking}>
+                        Cancel
+                      </button>
+                    </div>
+                  )}
+
+                </div>
+
               </div>
 
-              {/* Cancel button */}
-              {bookingDetails.status === 'Cancelled' ? (
-                <SecondaryButton
-                  onClick={handleExplore}
-                  coloured={false}
-                  className="w-full self-end success-button"
-                >
-                  Explore More
-                </SecondaryButton>
-              ) : (
-                <button className={'cancelButton'} onClick={handleCancelBooking}>
-                  Cancel Booking
-                </button>
-              )}
+
+
+
             </>
           )
         }
@@ -160,6 +224,36 @@ const Page: FC = () => {
           onClose={() => setCancelModalOpen(false)}
           onConfirm={confirmCancelBooking}
         />
+
+        {isModalOpen && (
+            <div className="modal">
+                <div className="modal-content">
+                    <h2>Update Details</h2>
+                        {Object.entries(bookingDetails).map(([key, value]) => {
+                            if (!EXCLUDE_USER_EDIT.includes(key)) {
+                                return (
+                                    <div key={key} className="edit-field">
+                                        <label className="text-left" htmlFor={key}>{FORMATTED_KEYS[key as keyof FormattedKeys] ?? key}:</label>
+                                        <input
+                                            id={key}
+                                            type="text"
+
+                                            className="input-field"
+
+                                            value={updatedValues[key] ?? value}
+                                            onChange={(e) => handleInputChange(e, key)}
+                                        />
+                                    </div>
+                                );
+                            }
+                        })}
+                        <div className="edit-buttons">
+                            <button className={`${isLoading} ? 'disabled' : '' `} disabled={isLoading} onClick={()=>setIsModalOpen(false)}>Close</button>
+                            <button className={`${isLoading} ? 'disabled' : '' `} disabled={isLoading} onClick={updateBooking}>Submit</button>
+                        </div>
+                </div>
+            </div>
+        )}
       </div>
     </Section>
   );

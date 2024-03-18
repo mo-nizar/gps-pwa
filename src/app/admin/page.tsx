@@ -5,7 +5,7 @@ import api from '../../api';
 import { toast } from 'react-toastify';
 import "@styles/dashboard.scss";
 import { useRouter, useSearchParams } from 'next/navigation';
-import { ENVS } from '../../constants';
+import { ENVS, EXCLUDE_EDIT, EXCLUDE_SHOW } from '../../constants';
 
 interface Booking {
     id: number;
@@ -15,8 +15,20 @@ interface Booking {
     date: string;
     time: string;
     day: string;
-    status: string;
+    status?: string;
+    surgeon?: string;
+    hospitalName?: string;
+    poNumber?: string;
+    
 }
+
+interface Bookings {
+    day: string;
+    time: string;
+    bookings: Booking[]
+}
+
+
 
 interface updatedBooking {
     [key: string]: string
@@ -24,8 +36,6 @@ interface updatedBooking {
 
 const daysOfWeek: string[] = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-const EXCLUDE_EDIT = ['service', 'createdDate', 'updatedDate', 'previousStatus', 'key', 'user', 'address', 'id', 'date', 'time', 'status'];
-const EXCLUDE_SHOW =['service', 'createdDate', 'updatedDate', 'previousStatus', 'key', 'user'];
 
 const AccessRestricted: React.FC = () => {
     return (
@@ -37,12 +47,12 @@ const AccessRestricted: React.FC = () => {
   
 
 const Page: React.FC = () => {
-    const [bookings, setBookings] = useState<Booking[]>([]);
+    const [bookings, setBookings] = useState<Bookings[]>([]);
     const [page, setPage] = useState<number>(0);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [currentDate, setCurrentDate] = useState<Date>(new Date());
     const [searchInput, setSearchInput] = useState<string>('');
-    const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
+    const [selectedBooking, setSelectedBooking] = useState<Booking | null>();
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [isAccessRestricted, setIsAccessRestricted] = useState<boolean>(false); // State for access restriction
     const [updatedValues, setUpdatedValues] = useState<updatedBooking>({});
@@ -57,13 +67,13 @@ const Page: React.FC = () => {
     useEffect(() => {
         if (!selectedDate) {
             // If no date is selected, select the current day
-            const today = new Date().toLocaleDateString('en-US', { weekday: 'long' }).toLowerCase();
+            const today = new Date().toLocaleDateString('en-US', { weekday: 'long' });
             if (!daysOfWeek.includes(today)) {
                 // If current day is not present in the list, select the first day of the week
                 setSelectedDate(daysOfWeek[0].toLowerCase());
             } else {
-                setSelectedDate(today);
-            }
+                setSelectedDate(today.toLowerCase());
+            }            
         }
     }, [selectedDate]);
     
@@ -96,7 +106,7 @@ const Page: React.FC = () => {
             } else {
                 throw new Error(response.data.message || 'Failed to fetch bookings');
             }
-        } catch (error) {
+        } catch (error: any) {
             if (error.response && error.response.status === 401) {
                 // Handle 401 status code
                 // For example, set state to show access restricted message
@@ -128,6 +138,7 @@ const Page: React.FC = () => {
                 toast.success('Booking status updated successfully');
                 // Reload booking details after updating status
                 fetchBookingDetails();
+                setIsEditing(false);
             } else {
                 throw new Error(response.data.message || 'Failed to update booking status');
             }
@@ -233,7 +244,7 @@ const Page: React.FC = () => {
         setIsEditing(!isEditing);
     };
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, key: string) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>, key: string) => {
         setUpdatedValues(prevState => ({
             ...prevState,
             [key]: e.target.value,
@@ -283,11 +294,9 @@ const Page: React.FC = () => {
                 </div>
             );
         });
-    };
+    };    
 
     const renderMobileDays = () =>{
-
-
         const startIndex: number = currentDate.getDay();
         let hasSelectedDate = false; // Flag to check if selected date exists in the list
         return daysOfWeek.map((day, index) => {
@@ -297,9 +306,7 @@ const Page: React.FC = () => {
             const dayLowerCase = day.toLowerCase();
             if (dayLowerCase === selectedDate) {
                 hasSelectedDate = true; // Set flag to true if selected date exists in the list
-            }
-
-
+            };
             return (
 
                 <div key={day} onClick={() => handleDateSelect(day.toLowerCase())} className={`date column col-${columnIndex}`}>
@@ -312,11 +319,22 @@ const Page: React.FC = () => {
         })
     }
 
+    const renderMobileBookings = (bookings: any) =>{
+        const selectedDaysBookings = bookings.filter((booking: any) => booking.day.toLowerCase() === selectedDate)
+        if(selectedDaysBookings.length){
+            return selectedDaysBookings.map((booking: any) => renderBookingCards(booking.bookings))
+        }else{
+            return <p>No bookings</p>
+        }
+        
+
+    }
+
     return (
         <main className='screen'>
-            <header className="header">
+            <header className="header header-nav">
                 <div className="header-left">
-                    <button disabled={isLoading} className={`${isLoading} ? 'disabled' : '' `} onClick={() => router.push('/admin')}>
+                    <button disabled={isLoading} className={`${isLoading} ? 'disabled' : '' `} onClick={() => router.push('https://admin.globalprostatesolutions.com/admin')}>
                         <img className='back-icon' src="/images/back-arrow.svg" alt="Back" />
                     </button>
                     <h1>Bookings</h1>
@@ -350,19 +368,13 @@ const Page: React.FC = () => {
                         <div className="mobile-booking-container">
 
                             <div className="date-column">
-                                {/* <div className='flex flex-row align-center'>
-                                    <button className={`${isLoading} ? 'disabled' : '' `} disabled={isLoading} onClick={handlePrevDay}>&#8249;</button>
-                                    <button className={`${isLoading} ? 'disabled' : '' `} disabled={isLoading} onClick={handleNextDay}>&#8250;</button>
-                                </div> */}
-
                                 {renderMobileDays()}
                             </div>
 
                             <div className="booking-column">
                                 <div className="booking-container">
-                                    {bookings
-                                        .filter(booking => booking.day.toLowerCase() === selectedDate)
-                                        .map(booking => renderBookingCards(booking.bookings))}
+
+                                    {renderMobileBookings(bookings)}
                                 </div>
                             </div>
 
@@ -390,7 +402,7 @@ const Page: React.FC = () => {
                                         }
                                     })}
                                     <div className="edit-buttons">
-                                        <button className={`${isLoading} ? 'disabled' : '' `} disabled={isLoading} onClick={toggleEditMode}>Edit</button>
+                                        <button className={`${isLoading} ? 'disabled' : '' `} disabled={isLoading} onClick={toggleEditMode}>Update</button>
                                         <button className={`${isLoading} ? 'disabled' : '' `} disabled={isLoading} onClick={closeModal}>Close</button>
                                     </div>
                                 </>
@@ -422,7 +434,7 @@ const Page: React.FC = () => {
                                     </select>
                                 </div>
                                 <div className="edit-buttons">
-                                    <button className={`${isLoading} ? 'disabled' : '' `} disabled={isLoading} onClick={updateBooking}>Update</button>
+                                    <button className={`${isLoading} ? 'disabled' : '' `} disabled={isLoading} onClick={updateBooking}>Submit</button>
                                     <button className={`${isLoading} ? 'disabled' : '' `} disabled={isLoading} onClick={cancelEdit}>Cancel</button>
                                     <button className={`${isLoading} ? 'disabled' : '' `} disabled={isLoading} onClick={closeModal}>Close</button>
                                 </div>

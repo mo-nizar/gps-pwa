@@ -43,12 +43,13 @@ instance.interceptors.request.use(
       config.headers['authorization'] = `Bearer ${authorization}`;
     }
 
+    if(security_token){
+      config.headers['security_token'] = `${security_token}`;
+    }
+
     // Include necessary headers
     config.headers["REQUEST-TIMESTAMP"] = req_timestamp;
-    config.headers["SECURITY-TOKEN"] =
-      security_token || "default_security_token";
-    config.headers["USER-ID"] = user_id || "default_user_id";
-    config.headers["DEVICE-ID"] = "default_device_id";
+    config.headers["USER-ID"] = user_id;
 
     return config;
   },

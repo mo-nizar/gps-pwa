@@ -26,8 +26,8 @@ interface Option {
   link?: string;
 }
 
-interface CustomDrawerProps {
-  options?: {
+export interface CustomDrawerProps {
+  options: {
     type: string;
     label: string;
     link?: string;

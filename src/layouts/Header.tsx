@@ -9,26 +9,20 @@ import api from "@/api";
 import { usePathname, useRouter } from "next/navigation";
 import CustomDrawer from "@/components/CustomDrawer";
 
-
 interface HeaderOption {
   type: "link" | "dropdown" | "button";
   label: string;
   link: string;
-  optionsList: Array<{ label: string; key: string; link: string }> | null;
+  id?: string;
+  optionsList: Array<{ label: string; key: string; link: string, id: string }>;
 }
 
 const Header: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [count, setCount] = useState(0);
-
-
-
   const router = useRouter();
-
   const isDashboardPage = usePathname().includes('admin');
-
-
-  const [data, setData] = useState([
+  const [data, setData] = useState<HeaderOption[]>([
     {
       type: "dropdown",
       label: "Sales",
@@ -45,7 +39,7 @@ const Header: React.FC = () => {
       type: "button",
       label: "Request a Call",
       link: "/call",
-      optionsList: null,
+      optionsList: [],
     },
   ]);
 
@@ -58,7 +52,14 @@ const Header: React.FC = () => {
     try {
       const res = await api.get("/header");
       const { data } = res;
-      setData(data?.data);
+      // Transform data to match the structure of HeaderOption[]
+      const transformedData: HeaderOption[] = data?.data.map((item: any) => ({
+        type: item.type,
+        label: item.label,
+        link: item.link,
+        optionsList: item.optionsList,
+      }));
+      setData(transformedData);
     } catch (err) {
       console.error(err);
     } finally {
@@ -69,7 +70,7 @@ const Header: React.FC = () => {
   const scrollToBottom = () => {
     window.scrollTo({
       top: document.documentElement.scrollHeight,
-      behavior: 'smooth' // Optionally, you can use smooth scrolling effect
+      behavior: 'smooth'
     });
   }
 
@@ -79,12 +80,9 @@ const Header: React.FC = () => {
 
   return (
     <header>
-      
       <div className="md:hidden"> 
-        <CustomDrawer options={data}/>
-
+        <CustomDrawer options={data} />
       </div>
-
       <button onClick={()=> router.push('/')}>
         <Image src={Logo} width={150} alt={""} />
       </button>
