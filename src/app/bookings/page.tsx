@@ -79,7 +79,7 @@ const Page: FC = () => {
                 },
             },
             headers:{
-              security_token: key,
+              'security-token': key,
             }
         });
         if (data && data.status === 200) {

@@ -20,7 +20,7 @@ instance.interceptors.request.use(
       method,
       url,
       params,
-      headers: { authorization, security_token, user_id },
+      headers: { authorization, user_id },
     } = config;
 
     const req_timestamp = Date.now();
@@ -42,11 +42,6 @@ instance.interceptors.request.use(
     if (authorization) {
       config.headers['authorization'] = `Bearer ${authorization}`;
     }
-
-    if(security_token){
-      config.headers['security_token'] = `${security_token}`;
-    }
-
     // Include necessary headers
     config.headers["REQUEST-TIMESTAMP"] = req_timestamp;
     config.headers["USER-ID"] = user_id;
