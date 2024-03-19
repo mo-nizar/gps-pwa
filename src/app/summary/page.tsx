@@ -390,7 +390,7 @@ const Page: FC<PageProps> = () => {
 
                           <div className="flex flex-row mb-3">
                             <div className="flex flex-col w-full">
-                              <label className="label mb-2 flex">Select Date and Time<p className="asterick">*</p></label>
+                              <label className="label flex">Select Date and Time<p className="asterick">*</p></label>
 
                               <div className={`flex flex-col w-full ${errored[DATE_TIME] ? 'errored': ''}`}>
                                 <DateTimeInput isRequired={requiredFields.includes(DATE_TIME)} value={values[DATE_TIME] as Date } onChange={(val)=>setDateTime(val, DATE_TIME)}/>
@@ -410,20 +410,7 @@ const Page: FC<PageProps> = () => {
                           </div>
 
                           <div className="flex flex-row mb-3">
-                            <Input
-                              isRequired={requiredFields.includes(SURGEON)}
-                              onChange={handleInputChange}
-                              value={values[SURGEON] as string}
-                              labelPlacement="outside"
-                              classNames={{...inputClassNames(SURGEON)}}
-                              name={SURGEON}
-                              placeholder="E.g. Ben"
-                              label="Name of surgeon"
-                            />
-                          </div>
-
-                          <div className="flex flex-row mb-3">
-                            <Input
+                          <Input
                               isRequired={requiredFields.includes(EMAIL)}
                               onChange={handleInputChange}
                               value={values[EMAIL] as string}
@@ -435,6 +422,20 @@ const Page: FC<PageProps> = () => {
                               description={EMAIL_DESC}
                               placeholder="you@example.com"
                             />
+                          </div>
+
+                          <div className="flex flex-row mb-3">
+                            <Input
+                              isRequired={requiredFields.includes(SURGEON)}
+                              onChange={handleInputChange}
+                              value={values[SURGEON] as string}
+                              labelPlacement="outside"
+                              classNames={{...inputClassNames(SURGEON)}}
+                              name={SURGEON}
+                              placeholder="E.g. Ben"
+                              label="Name of surgeon"
+                            />
+                  
                             <div className="ml-2" />
                             <Input
                               isRequired={requiredFields.includes(PHONE)}
@@ -479,7 +480,7 @@ const Page: FC<PageProps> = () => {
                           <div className="flex flex-row mb-3">
 
                             <div className="flex flex-col w-full">
-                              <label className="label mb-2 flex">Select Date and Time <p className="asterick">*</p></label>
+                              <label className="label flex">Select Date and Time <p className="asterick">*</p></label>
 
                               <div className={`flex flex-col w-full ${errored[DATE_TIME] ? 'errored': ''}`}>
                                 <DateTimeInput isRequired={requiredFields.includes(DATE_TIME)} value={values[DATE_TIME] as Date } onChange={(val)=>setDateTime(val as Date, DATE_TIME)}/>
