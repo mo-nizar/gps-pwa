@@ -13,6 +13,7 @@ interface SearchableDropdownProps {
   searchable: boolean;
   labelText: string;
   placeholder: string,
+  isRequired?: boolean,
   
   handleInputChange: (value: string | null) => void;
 }
@@ -25,6 +26,7 @@ const SearchableDropdown: React.FC<SearchableDropdownProps> = ({
   searchable,
   labelText,
   placeholder,
+  isRequired,
   handleInputChange,
 }) => {
   const [query, setQuery] = useState<string>("");
@@ -63,7 +65,7 @@ const SearchableDropdown: React.FC<SearchableDropdownProps> = ({
 
   return (
   <div className="searchable">
-    <span className='label'>{labelText}</span>
+    <span className='label flex'>{labelText}{isRequired && (<p className="asterick">*</p>)}</span>
     <div className="dropdown w-full">
       <div className="control">
         <div className={`selected-value ${getDisplayValue() == placeholder ? 'placeholder' : ''}`}>

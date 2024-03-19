@@ -29,6 +29,7 @@ interface Address {
 const GooglePlaces: React.FC<GooglePlacesProps> = ({ onSelect, isErrored }) => {
   const [query, setQuery] = useState<string>("");
   const [selectedAddress, setSelectedAddress] = useState<Address>({});
+  const [address, setAddress] = useState<string | null>(null);
 
   const autoCompleteRef = useRef<HTMLInputElement | null>(null);
 
@@ -61,6 +62,26 @@ const GooglePlaces: React.FC<GooglePlacesProps> = ({ onSelect, isErrored }) => {
     updateQuery(newQuery);
 
     const address = formatAddressDetails(addressObject as Address);
+
+    const {
+      name,
+      locality,
+      street,
+      street_number,
+      postCode,
+      postTown,
+    }=address;
+
+    let formatedAddress = "";
+    if (name) formatedAddress += `${name}, `;
+    if (locality) formatedAddress += `${locality}, `;
+    if (street) formatedAddress += `${street}, `;
+    if (street_number) formatedAddress += `${street_number}, `;
+    if (postTown) formatedAddress += `${postTown}, `;
+    if (postCode) formatedAddress += `${postCode}.`;
+
+    formatedAddress = formatedAddress.replace(/,\s*$/, '');
+    setAddress(formatedAddress);
 
     onSelect(address);
     setSelectedAddress({ ...address });
@@ -124,7 +145,7 @@ const GooglePlaces: React.FC<GooglePlacesProps> = ({ onSelect, isErrored }) => {
 
   return (
     <div className="search-location-input">
-      <label>{"Select Hospital"}</label>
+      <label className="flex">{"Select Hospital"}<p className="asterick">*</p></label>
       <input
         ref={autoCompleteRef}
         className={`form-control ${isErrored ? 'errored' : ''}`}
@@ -132,6 +153,7 @@ const GooglePlaces: React.FC<GooglePlacesProps> = ({ onSelect, isErrored }) => {
         placeholder="Type Name or Post Code"
         value={query}
       />
+      {(address&& query) && (<p className="input-info">{address}</p>)}
     </div>
   );
 };

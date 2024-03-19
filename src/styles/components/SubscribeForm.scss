@@ -39,7 +39,7 @@
         }
     }
     .inputWrapper{
-        border-radius: $radius-card;
+        border-radius: $radius-input;
         width: 100%;
         height: 50px;
         box-shadow: 0 5px 16px rgba(0, 0, 0, 0.1);
@@ -50,7 +50,7 @@
 
     }
     .textBoxWrapper{
-        border-radius: $radius-card;
+        border-radius: $radius-input;
         width: 100%;
         // height: 200px;
         box-shadow: 0 5px 16px rgba(0, 0, 0, 0.1);

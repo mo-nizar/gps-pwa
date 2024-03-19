@@ -13,7 +13,7 @@
     position: relative;
     color: #333;
     cursor: default;
-    border-radius: $radius-card;
+    border-radius: $radius-input;
 
   
   }
@@ -43,7 +43,7 @@
     background-color: #f3f3f3;
     height: 50px;
     // border: 1px solid #ccc;
-    border-radius: $radius-card;
+    border-radius: $radius-input;
     box-sizing: border-box;
     cursor: default;
     outline: none;

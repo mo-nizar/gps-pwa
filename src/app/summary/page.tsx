@@ -38,7 +38,26 @@ interface DropDownProps {
   valueKey: string;
   options: Option[];
   placeholder: string;
+  isRequired?: boolean,
 }
+
+const inputKeys = {
+  ADDRESS: 'address',
+  SURGEON:'surgeon',
+  NAME: 'name',
+  EMAIL: 'email',
+  PHONE: 'phone',
+  PO_NUMBER: 'poNumber',
+  PATIENTS_COUNT: 'patientsCount',
+  DATE_TIME: 'dateTime',
+  SERVICE: 'service'
+
+};
+
+const { ADDRESS, SURGEON, EMAIL, PHONE, PO_NUMBER, PATIENTS_COUNT, DATE_TIME, SERVICE } = inputKeys;
+const requiredFields = [SURGEON, EMAIL, PATIENTS_COUNT, ADDRESS, DATE_TIME];
+
+const EMAIL_DESC = 'We will be sending a booking confirmation to this email address';
 
 const Page: FC<PageProps> = () => {
   const searchParams = useSearchParams();
@@ -85,7 +104,6 @@ const Page: FC<PageProps> = () => {
 
   const validateInputs = () => {
     const errors: Errors = {};
-    const requiredFields = ["surgeon", "email", "phone", "patientsCount", "address", 'dateTime'];
   
     const currentTime = new Date(); // Get current date time
     let toastMessage = null;
@@ -191,7 +209,7 @@ const Page: FC<PageProps> = () => {
   };
   
 
-  const setSelectedAddress = (address: Address)=>{    
+  const setSelectedAddress = (address: Address)=>{
     setValues({ ...values, address });
   }  
   
@@ -201,9 +219,11 @@ const Page: FC<PageProps> = () => {
     searchable,
     options,
     placeholder,
+    isRequired,
   }) => {    
     return (
       <SearchableDropdown
+        isRequired={isRequired}
         options={options}
         labelText={label}
         label={"label"}
@@ -297,53 +317,58 @@ const Page: FC<PageProps> = () => {
                           className={`form-container flex flex-col h-full ml-0 ml-0 mt-6 md:mt-0 w-full`}
                         >
                           <div className="mb-2 relative">
-                          {selected =='booking' && (<GooglePlaces isErrored= {errored['address']} onSelect={setSelectedAddress}/>)}
+                            {selected =='booking' && (<GooglePlaces isErrored= {errored[ADDRESS]} onSelect={setSelectedAddress}/>)}
                           </div>
 
                           <div className="flex flex-row mb-3">
                             <Input
+                              isRequired={requiredFields.includes(EMAIL)}
                               onChange={handleInputChange}
-                              value={values["surgeon"] as string}
+                              value={values[EMAIL] as string}
                               labelPlacement="outside"
-                              classNames={{...inputClassNames('surgeon')}}
-                              name={"surgeon"}
+                              classNames={{...inputClassNames(EMAIL)}}
+                              name={EMAIL}
+                              type={EMAIL}
+                              label="Email"
+                              description={EMAIL_DESC}
+                              placeholder="you@example.com"
+                            />
+                          </div>
+
+                          <div className="flex flex-row mb-3">
+                            <Input
+                              isRequired={requiredFields.includes(SURGEON)}
+                              onChange={handleInputChange}
+                              value={values[SURGEON] as string}
+                              labelPlacement="outside"
+                              classNames={{...inputClassNames(SURGEON)}}
+                              name={SURGEON}
                               placeholder="E.g. Ben"
                               label="Name of surgeon"
                             />
-                          </div>
-
-                          <div className="flex flex-row mb-3">
-                            <Input
-                              onChange={handleInputChange}
-                              value={values["email"] as string}
-                              labelPlacement="outside"
-                              classNames={{...inputClassNames('email')}}
-                              name={"email"}
-                              type="email"
-                              label="Email"
-                              placeholder="you@example.com"
-                            />
                             <div className="ml-2" />
                             <Input
+                              isRequired={requiredFields.includes(PHONE)}
                               onChange={handleInputChange}
-                              value={values["phone"] as string}
+                              value={values[PHONE] as string}
                               labelPlacement="outside"
-                              classNames={{...inputClassNames('phone')}}
-                              name={"phone"}
+                              classNames={{...inputClassNames(PHONE)}}
+                              name={PHONE}
                               type="tel"
                               placeholder="+44 1234567890"
                               label="Phone"
                             />
                           </div>
 
-                          <div className="flex flex-row mb-3">
+                          <div className="flex flex-row mb-3 po-wrapper">
 
                             <Input
+                              isRequired={requiredFields.includes(PO_NUMBER)}
                               onChange={handleInputChange}
-                              value={values["poNumber"] as string}
+                              value={values[PO_NUMBER] as string}
                               labelPlacement="outside"
-                              classNames={{...inputClassNames('poNumber')}}
-                              name={"poNumber"}
+                              classNames={{...inputClassNames(PO_NUMBER)}}
+                              name={PO_NUMBER}
                               placeholder="XQWRDTDDGGSWF"
                               label="Purchase Order Number"
                             />
@@ -351,11 +376,12 @@ const Page: FC<PageProps> = () => {
                             <div className="ml-2" />
 
                             <Input
+                              isRequired={requiredFields.includes(PATIENTS_COUNT)}
                               onChange={handleInputChange}
-                              value={values["patientsCount"] as string}
+                              value={values[PATIENTS_COUNT] as string}
                               labelPlacement="outside"
-                              classNames={{...inputClassNames('patientsCount')}}
-                              name={"patientsCount"}
+                              classNames={{...inputClassNames(PATIENTS_COUNT)}}
+                              name={PATIENTS_COUNT}
                               type="number"
                               label="No. of patients"
                               placeholder="1"
@@ -364,38 +390,13 @@ const Page: FC<PageProps> = () => {
 
                           <div className="flex flex-row mb-3">
                             <div className="flex flex-col w-full">
-                              <label className="label mb-2">Select Date and Time</label>
+                              <label className="label mb-2 flex">Select Date and Time<p className="asterick">*</p></label>
 
-                              <div className={`flex flex-col w-full ${errored['dateTime'] ? 'errored': ''}`}>
-                                <DateTimeInput value={values['dateTime'] as Date } onChange={(val)=>setDateTime(val, 'dateTime')}/>
+                              <div className={`flex flex-col w-full ${errored[DATE_TIME] ? 'errored': ''}`}>
+                                <DateTimeInput isRequired={requiredFields.includes(DATE_TIME)} value={values[DATE_TIME] as Date } onChange={(val)=>setDateTime(val, DATE_TIME)}/>
                               </div>
 
                             </div>
-
-                            {/* <Input
-                              onChange={handleInputChange}
-                              value={values["time"] as string}
-                              labelPlacement="outside"
-                              classNames={{...inputClassNames('time')}}
-                              name={"time"}
-                              type="time"
-                              label="Time"
-                              placeholder="1"
-                            />
-
-                            <div className="ml-2" />
-
-                            <Input
-                              onChange={handleInputChange}
-                              classNames={{...inputClassNames('date'),
-                              inputWrapper: ["inputWrapper mb-2", errored['date'] && 'errored'],
-                              }}
-                              type="date"
-                              label="Date"
-                              name={"date"}
-                              labelPlacement="outside"
-                              placeholder="dd-mm-yyyy"
-                            /> */}
                           </div>
                         </div>
                       </Tab>
@@ -405,16 +406,17 @@ const Page: FC<PageProps> = () => {
                           className={`form-container flex flex-col h-full ml-0 ml-0 mt-6 md:mt-0 w-full`}
                         >
                           <div className="mb-2 relative">
-                            {selected =='request' && (<GooglePlaces isErrored= {errored['address']} onSelect={setSelectedAddress}/>)}
+                            {selected =='request' && (<GooglePlaces isErrored= {errored[ADDRESS]} onSelect={setSelectedAddress}/>)}
                           </div>
 
                           <div className="flex flex-row mb-3">
                             <Input
+                              isRequired={requiredFields.includes(SURGEON)}
                               onChange={handleInputChange}
-                              value={values["surgeon"] as string}
+                              value={values[SURGEON] as string}
                               labelPlacement="outside"
-                              classNames={{...inputClassNames('surgeon')}}
-                              name={"surgeon"}
+                              classNames={{...inputClassNames(SURGEON)}}
+                              name={SURGEON}
                               placeholder="E.g. Ben"
                               label="Name of surgeon"
                             />
@@ -422,47 +424,52 @@ const Page: FC<PageProps> = () => {
 
                           <div className="flex flex-row mb-3">
                             <Input
+                              isRequired={requiredFields.includes(EMAIL)}
                               onChange={handleInputChange}
-                              value={values["email"] as string}
+                              value={values[EMAIL] as string}
                               labelPlacement="outside"
-                              classNames={{...inputClassNames('email')}}
-                              name={"email"}
-                              type="email"
+                              classNames={{...inputClassNames(EMAIL)}}
+                              name={EMAIL}
+                              type={EMAIL}
                               label="Email"
+                              description={EMAIL_DESC}
                               placeholder="you@example.com"
                             />
                             <div className="ml-2" />
                             <Input
+                              isRequired={requiredFields.includes(PHONE)}
                               onChange={handleInputChange}
-                              value={values["phone"] as string}
+                              value={values[PHONE] as string}
                               labelPlacement="outside"
-                              classNames={{...inputClassNames('phone')}}
-                              name={"phone"}
+                              classNames={{...inputClassNames(PHONE)}}
+                              name={PHONE}
                               type="tel"
                               placeholder="+44 1234567890"
                               label="Phone"
                             />
                           </div>
 
-                          <div className="flex flex-row mb-3">
+                          <div className="flex flex-row mb-3 po-wrapper">
 
                           <Input
+                              isRequired={requiredFields.includes(PO_NUMBER)}
                               onChange={handleInputChange}
-                              value={values["poNumber"] as string}
+                              value={values[PO_NUMBER] as string}
                               labelPlacement="outside"
-                              classNames={{...inputClassNames('poNumber')}}
-                              name={"poNumber"}
+                              classNames={{...inputClassNames(PO_NUMBER)}}
+                              name={PO_NUMBER}
                               placeholder="XQWRDTDDGGSWF"
                               label="Purchase Order Number"
                             />
 
                             <div className="ml-2" />
                             <Input
+                              isRequired={requiredFields.includes(PATIENTS_COUNT)}
                               onChange={handleInputChange}
-                              value={values["patientsCount"] as string}
+                              value={values[PATIENTS_COUNT] as string}
                               labelPlacement="outside"
-                              classNames={{...inputClassNames('patientsCount')}}
-                              name={"patientsCount"}
+                              classNames={{...inputClassNames(PATIENTS_COUNT)}}
+                              name={PATIENTS_COUNT}
                               type="number"
                               label="No. of patients"
                               placeholder="1"
@@ -472,43 +479,22 @@ const Page: FC<PageProps> = () => {
                           <div className="flex flex-row mb-3">
 
                             <div className="flex flex-col w-full">
-                              <label className="label mb-2">Select Date and Time</label>
+                              <label className="label mb-2 flex">Select Date and Time <p className="asterick">*</p></label>
 
-                              <div className={`flex flex-col w-full ${errored['dateTime'] ? 'errored': ''}`}>
-                                <DateTimeInput value={values['dateTime'] as Date } onChange={(val)=>setDateTime(val as Date, 'dateTime')}/>
+                              <div className={`flex flex-col w-full ${errored[DATE_TIME] ? 'errored': ''}`}>
+                                <DateTimeInput isRequired={requiredFields.includes(DATE_TIME)} value={values[DATE_TIME] as Date } onChange={(val)=>setDateTime(val as Date, DATE_TIME)}/>
                               </div>
 
-                            </div>                            {/* <Input
-                              onChange={handleInputChange}
-                              value={values["time"] as string}
-                              labelPlacement="outside"
-                              classNames={{...inputClassNames('time')}}
-                              name={"time"}
-                              type="time"
-                              label="Time"
-                              placeholder="1"
-                            />
+                            </div>
 
-                            <div className="ml-2" />
-
-                            <Input
-                              onChange={handleInputChange}
-                              classNames={{...inputClassNames('date'),
-                                inputWrapper: ["inputWrapper mb-2", errored['date'] && 'errored'],
-                              }}
-                              type="date"
-                              label="Date"
-                              name={"date"}
-                              labelPlacement="outside"
-                              placeholder="dd-mm-yyyy"
-                            /> */}
                           </div>
 
                           {selected === "request" && activeServices.length ? (
                             <div className="mb-2 relative">
                               <DropDownComponent
+                                isRequired={requiredFields.includes(SERVICE)} 
                                 label="Services"
-                                valueKey="service"
+                                valueKey={SERVICE}
                                 searchable={true}
                                 options={activeServices}
                                 placeholder={"Select a service"}
@@ -519,9 +505,7 @@ const Page: FC<PageProps> = () => {
                       </Tab>
                     </Tabs>
 
-                    <div
-                      className={`flex flex-row items-end w-full mt-8`}
-                    >
+                    <div className={`flex flex-row items-end w-full mt-8`}>
                       <SecondaryButton
                         onClick={handleSubmit}
                         coloured

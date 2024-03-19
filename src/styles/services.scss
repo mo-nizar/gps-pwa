@@ -4,7 +4,7 @@ main {
   color: $color-primary;
   background-color: $color-light;
   .intro {
-    padding: 100px;
+    padding: 140px 100px 100px 100px;
 
     @media (max-width: 870px) {
       padding: 100px 40px 30px 40px;
@@ -20,16 +20,22 @@ main {
   .title {
     font-size: 46px;
     font-family: "dmsans-bold";
+    margin-bottom: 40px !important;
 
     @media (max-width: 870px) {
       font-size: 38px;
     }
   }
   .desc {
-    font-size: 12px;
+    font-size: 14px;
     font-family: "dmsans-regular";
     color: $color-grey;
     text-align: center;
+    max-width: 60%;
+    text-wrap:wrap;
+    @media (max-width: 870px) {
+      max-width: 100%;
+    }
   }
 
   @media (max-width: 1020px) {
