@@ -8,7 +8,7 @@ export const ENVS = {
 
 
 export const COMMON_ERROR = 'Something went wrong, Please try again later.'
-export const EXCLUDE_EDIT = ['service', 'createdDate', 'updatedDate', 'previousStatus', 'key', 'user', 'address', 'id', 'date', 'time', 'status'];
+export const EXCLUDE_EDIT = ['service', 'createdDate', 'updatedDate', 'previousStatus', 'key', 'user', 'address', 'id', 'date', 'time', "email", 'status'];
 export const EXCLUDE_SHOW =['service', 'createdDate', 'updatedDate', 'previousStatus', 'key', 'user'];
 
 export const EXCLUDE_USER_EDIT = [...EXCLUDE_EDIT ,'type'];

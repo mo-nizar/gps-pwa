@@ -5,7 +5,7 @@ import api from '../../api';
 import { toast } from 'react-toastify';
 import "@styles/dashboard.scss";
 import { useRouter, useSearchParams } from 'next/navigation';
-import { ENVS, EXCLUDE_EDIT, EXCLUDE_SHOW } from '../../constants';
+import { ENVS, EXCLUDE_EDIT, EXCLUDE_SHOW, FORMATTED_KEYS, FormattedKeys } from '../../constants';
 
 interface Booking {
     id: number;
@@ -104,9 +104,7 @@ const Page: React.FC = () => {
                 }
             } );
             if (data && data.status === 200) {
-                setIsValidUser(true);
-                console.log('response', data);
-                
+                setIsValidUser(true);                
                 setPermissions(data.data?.permissions)
                 updateCurrentDate(page);
             } else if (data.status == 401 || status) { // Handle 401 status
@@ -317,8 +315,8 @@ const Page: React.FC = () => {
         return (
             <div key={booking.id} className={`booking-card ${highlight ? 'highlight' : ''} ${!booking.poNumber ? 'no-po' : ''}`} onClick={() => handleCardClick(booking)}>
                 <p className='service-name'>{booking.id}</p>
-                <p className='service-name'>{booking.surgeon}</p>
-                <p className='service-name'>{booking.hospitalName}</p>
+                <p className='service-name'>{booking.surgeon ?? '-'}</p>
+                <p className='service-name'>{booking.hospitalName ?? '-'}</p>
                 <p className='details-data'>Date: {formatFullDate(booking.date)}</p>
                 <p className='details-data'>Time: {formatTime(booking.time)}</p>
             </div>
@@ -442,8 +440,8 @@ const Page: React.FC = () => {
                                         if (!EXCLUDE_SHOW.includes(key)) {
                                             return (
                                                 <div key={key} className="view-field">
-                                                    <p className="field-label">{key}:</p>
-                                                    <p className="field-value">{typeof value === 'object' ? JSON.stringify(value) : value}</p>
+                                                    <p className="field-label">{FORMATTED_KEYS[key as keyof FormattedKeys] }:</p>
+                                                    <p className="field-value">{value ? typeof value === 'object' ? JSON.stringify(value) : value : '-'}</p>
                                                 </div>
                                             );
                                         }

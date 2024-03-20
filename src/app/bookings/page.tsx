@@ -107,17 +107,17 @@ const Page: FC = () => {
 
   const BookingDetails: FC<{ booking: any }> = ({ booking }) => {
     const details = [
-      { label: 'Booking ID', value: booking.id },
-      { label: 'Service Name', value: booking.service.name },
-      { label: 'Surgeon', value: booking.surgeon },
-      { label: 'Email', value: booking.email },
-      { label: 'Phone', value: booking.phone },
-      { label: 'Patients Count', value: booking.patientsCount },
-      { label: 'PO Number', value: booking.poNumber },
-      { label: 'Address', value: booking.address },
-      { label: 'Date', value: booking.date },
-      { label: 'Time', value: booking.time },
-      { label: 'Status', value: booking.status },
+      { label: 'Booking ID', value: booking?.id },
+      { label: 'Service Name', value: booking?.service?.name ?? ""  },
+      { label: 'Surgeon', value: booking?.surgeon },
+      { label: 'Email', value: booking?.email },
+      { label: 'Phone', value: booking?.phone },
+      { label: 'Patients Count', value: booking?.patientsCount },
+      { label: 'PO Number', value: booking?.poNumber },
+      { label: 'Address', value: booking?.address },
+      { label: 'Date', value: booking?.date },
+      { label: 'Time', value: booking?.time },
+      { label: 'Status', value: booking?.status },
     ];
 
     return (
