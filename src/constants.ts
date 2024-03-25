@@ -8,8 +8,8 @@ export const ENVS = {
 
 
 export const COMMON_ERROR = 'Something went wrong, Please try again later.'
-export const EXCLUDE_EDIT = ['service', 'createdDate', 'updatedDate', 'previousStatus', 'key', 'user', 'address', 'id', 'date', 'time', "email", 'status'];
-export const EXCLUDE_SHOW =['service', 'createdDate', 'updatedDate', 'previousStatus', 'key', 'user'];
+export const EXCLUDE_EDIT = ['service', 'createdDate', 'updatedDate', 'previousStatus', 'key', 'user', 'address', 'id', 'date', 'time', "email", 'status', 'dateTime'];
+export const EXCLUDE_SHOW =['service', 'createdDate', 'updatedDate', 'previousStatus', 'key', 'user', 'dateTime'];
 
 export const EXCLUDE_USER_EDIT = [...EXCLUDE_EDIT ,'type'];
 
@@ -64,3 +64,16 @@ export const FORMATTED_KEYS: FormattedKeys = {
   "updatedDate": "Updated Date",
   "previousStatus": "Previous Status"
 }
+
+
+export const inputKeys = {
+  ADDRESS: 'address',
+  SURGEON:'surgeon',
+  NAME: 'name',
+  EMAIL: 'email',
+  PHONE: 'phone',
+  PO_NUMBER: 'poNumber',
+  PATIENTS_COUNT: 'patientsCount',
+  DATE_TIME: 'dateTime',
+  SERVICE: 'service'
+};

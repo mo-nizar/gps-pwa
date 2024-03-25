@@ -11,14 +11,15 @@ interface BasicDateTimePickerProps {
   onChange: (newValue: Date | null) => void;
   label?: string;
   isRequired?: boolean;
+  className?: string,
 }
 
-const DateTimeInput: React.FC<BasicDateTimePickerProps> = ({ value, isRequired, label, onChange }) => {
+const DateTimeInput: React.FC<BasicDateTimePickerProps> = ({ value, isRequired, label, onChange, className }) => {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DemoContainer components={['DateTimePicker']}>
         <DateTimePicker
-          className='container'
+          className={`${className} container`}
           label={label || ''}
           value={value ?? null}
           onChange={onChange}

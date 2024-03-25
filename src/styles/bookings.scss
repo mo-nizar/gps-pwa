@@ -10,6 +10,13 @@
     padding-top: 100px !important;
   }
 
+  .datetime-container{
+    flex: 1; // Allow input/select to take remaining space
+    padding: 0px !important;
+    border: 1px solid #ccc !important;
+    font-size: 16px !important;
+  }
+
 
   .container {
     display: flex;
@@ -160,6 +167,15 @@
   z-index: 1000;
 
 
+  @media (max-width: 950px) {
+    padding: 50px !important;
+  }
+
+  @media (max-width: 768px) {
+    padding: 20px !important;
+  }
+
+
   .modal-content {
     background-color: #fff;
     color: black;
@@ -173,6 +189,9 @@
     max-height: 95vh; // Set a maximum height for the modal content
     overflow-y: auto; // Enable vertical scrolling if content exceeds the height
 
+    @media (max-width: 950px) {
+      min-width: 100% !important;
+    }
 
     h2 {
         margin-bottom: 20px;
@@ -203,10 +222,25 @@
       flex-direction: row;
       align-items: center;
       margin-bottom: 5px;
+
+      .date-field{
+        flex: 1; // Allow input/select to take remaining space
+        font-size: 16px;
+        margin-top: 5px;
+        background-color: #ffff !important;
+
+        input{
+          margin-top: 0px !important;
+          background-color: #ffff !important;
+
+          padding: 12px !important;
+          font-size: 16px !important;
+        }
+      }
   
       label {
           margin-right: 10px;
-          width: 120px; // Set a fixed width for the label column
+          width: 120px !important; // Set a fixed width for the label column
           font-weight: bold;
           color: #333;
       }

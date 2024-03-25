@@ -14,7 +14,7 @@ import { Loader } from "@/components/Loader";
 import Image from "next/image";
 import { toast } from "react-toastify";
 import DateTimeInput from "@/components/DateTimePicker";
-import { COMMON_ERROR } from "@/constants";
+import { COMMON_ERROR, inputKeys } from "@/constants";
 
 interface PageProps {
   params: { id: string; type?: string };
@@ -40,19 +40,6 @@ interface DropDownProps {
   placeholder: string;
   isRequired?: boolean,
 }
-
-const inputKeys = {
-  ADDRESS: 'address',
-  SURGEON:'surgeon',
-  NAME: 'name',
-  EMAIL: 'email',
-  PHONE: 'phone',
-  PO_NUMBER: 'poNumber',
-  PATIENTS_COUNT: 'patientsCount',
-  DATE_TIME: 'dateTime',
-  SERVICE: 'service'
-
-};
 
 const { ADDRESS, SURGEON, EMAIL, PHONE, PO_NUMBER, PATIENTS_COUNT, DATE_TIME, SERVICE } = inputKeys;
 const requiredFields = [SURGEON, EMAIL, PATIENTS_COUNT, ADDRESS, DATE_TIME];
