@@ -142,6 +142,7 @@ const Page: FC<PageProps> = () => {
           params: {
             id,
             ...values,
+            timeZone: dayjs.tz.guess(),
             dateTime: values?.convertedTime,
           },
         });
