@@ -16,6 +16,15 @@ import { toast } from "react-toastify";
 import DateTimeInput from "@/components/DateTimePicker";
 import { COMMON_ERROR, inputKeys } from "@/constants";
 
+import dayjs from 'dayjs';
+import "@styles/components/DateTimeInput.scss";
+
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
 interface PageProps {
   params: { id: string; type?: string };
 }
@@ -133,6 +142,7 @@ const Page: FC<PageProps> = () => {
           params: {
             id,
             ...values,
+            dateTime: values?.convertedTime,
           },
         });
         const { data } = res;      
@@ -178,12 +188,15 @@ const Page: FC<PageProps> = () => {
 
     const date = dateTime.toISOString().split('T')[0]; // YYYY-MM-DD format
 
+    const currentTimezone = dayjs.tz.guess();
+    const convertedTime = dayjs(dateTime).tz(currentTimezone).format();
+
     // Get time separately
     const hours = dateTime.getHours().toString().padStart(2, '0');
     const minutes = dateTime.getMinutes().toString().padStart(2, '0');
     const seconds = dateTime.getSeconds().toString().padStart(2, '0');
     const time = `${hours}:${minutes}:${seconds}`; // HH:MM:SS format
-    setValues({ ...values, [valueKey]: val, date, time });
+    setValues({ ...values, [valueKey]: val, date, time, convertedTime });
   
     errored[valueKey] && setError({ ...errored, [valueKey]: false });
   };
