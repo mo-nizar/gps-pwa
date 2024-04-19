@@ -96,6 +96,14 @@ const App: React.FC = () => {
                     </React.Fragment>
                   ))}
                 </span>
+                <span className="sub-title">
+                  {sections[2]?.subTitle?.split('\n').map((line: string, index: number) => (
+                    <React.Fragment key={index}>
+                      {line}
+                      <br />
+                    </React.Fragment>
+                  ))}
+                </span>
                 <span className="description">{sections[2]?.description}</span>
                 
                 <div className="infoSection" >

@@ -23,6 +23,10 @@ const DateTimeInput: React.FC<BasicDateTimePickerProps> = ({ value, isRequired, 
           label={label || ''}
           value={value ?? null}
           onChange={onChange}
+          ampm={false}    
+          disablePast={true}
+          closeOnSelect={true}
+          timeSteps={{hours:1, minutes:30, seconds: 0}}
         />
       </DemoContainer>
     </LocalizationProvider>

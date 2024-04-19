@@ -123,6 +123,18 @@
             font-family: "DMsans-bold";
           }
 
+          .sub-title{
+            font-size: 26px;
+            line-height: 1.5em;
+            margin-bottom: 20px;
+            text-align: left;
+            font-family: "DMsans-bold";
+
+            @media (max-width: 768px) {
+              font-size: 16px;
+            }
+          }
+
           .description {
             font-size: 16px;
             font-family: "dmsans-regular";

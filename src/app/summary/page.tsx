@@ -21,6 +21,7 @@ import "@styles/components/DateTimeInput.scss";
 
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
+import MobileDateTimePicker from "@/components/MobileDateTimePicker";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -184,20 +185,16 @@ const Page: FC<PageProps> = () => {
     errored[name] && setError({ ...errored, [name]: false });
   };
 
-  const setDateTime = (val: any, valueKey: string): void => {
-    const dateTime = val?.$d;
+  const setDateTime = (val: any, valueKey: string, isMobile: boolean): void => {
+    const dateTime = isMobile ? new Date(val) : val?.$d;       
 
     const date = dateTime.toISOString().split('T')[0]; // YYYY-MM-DD format
-
-    const currentTimezone = dayjs.tz.guess();
-    const convertedTime = dayjs(dateTime).tz(currentTimezone).format();
-
     // Get time separately
     const hours = dateTime.getHours().toString().padStart(2, '0');
     const minutes = dateTime.getMinutes().toString().padStart(2, '0');
     const seconds = dateTime.getSeconds().toString().padStart(2, '0');
-    const time = `${hours}:${minutes}:${seconds}`; // HH:MM:SS format
-    setValues({ ...values, [valueKey]: val, date, time, convertedTime });
+    const time = `${hours}:${minutes}:${seconds}`; // HH:MM:SS format    
+    setValues({ ...values, [valueKey]: dayjs(val), date, time, convertedTime: dateTime });
   
     errored[valueKey] && setError({ ...errored, [valueKey]: false });
   };
@@ -393,8 +390,12 @@ const Page: FC<PageProps> = () => {
                             <div className="flex flex-col w-full">
                               <label className="label flex">Select Date and Time<p className="asterick">*</p></label>
 
-                              <div className={`flex flex-col w-full ${errored[DATE_TIME] ? 'errored': ''}`}>
-                                <DateTimeInput isRequired={requiredFields.includes(DATE_TIME)} value={values[DATE_TIME] as Date } onChange={(val)=>setDateTime(val, DATE_TIME)}/>
+                              <div className={`flex flex-col w-full hidden md:block ${errored[DATE_TIME] ? 'errored': ''}`}>
+                                <DateTimeInput isRequired={requiredFields.includes(DATE_TIME)} value={values[DATE_TIME] as Date } onChange={(val)=>setDateTime(val, DATE_TIME, false)}/>
+                              </div>
+
+                              <div className={`flex flex-col w-full block md:hidden ${errored[DATE_TIME] ? 'errored': ''}`}>
+                                <MobileDateTimePicker isRequired={requiredFields.includes(DATE_TIME)} value={values[DATE_TIME] as Date } onChange={(val)=>setDateTime(val as Date, DATE_TIME, true)}/>
                               </div>
 
                             </div>
@@ -483,8 +484,12 @@ const Page: FC<PageProps> = () => {
                             <div className="flex flex-col w-full">
                               <label className="label flex">Select Date and Time <p className="asterick">*</p></label>
 
-                              <div className={`flex flex-col w-full ${errored[DATE_TIME] ? 'errored': ''}`}>
-                                <DateTimeInput isRequired={requiredFields.includes(DATE_TIME)} value={values[DATE_TIME] as Date } onChange={(val)=>setDateTime(val as Date, DATE_TIME)}/>
+                              <div className={`flex flex-col w-full hidden md:block ${errored[DATE_TIME] ? 'errored': ''}`}>
+                                <DateTimeInput isRequired={requiredFields.includes(DATE_TIME)} value={values[DATE_TIME] as Date } onChange={(val)=>setDateTime(val as Date, DATE_TIME, false)}/>
+                              </div>
+
+                              <div className={`flex flex-col w-full block md:hidden ${errored[DATE_TIME] ? 'errored': ''}`}>
+                                <MobileDateTimePicker isRequired={requiredFields.includes(DATE_TIME)} value={values[DATE_TIME] as Date } onChange={(val)=>setDateTime(val as Date, DATE_TIME, true)}/>
                               </div>
 
                             </div>
