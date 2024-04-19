@@ -37,6 +37,7 @@ const MobileDateTimePicker: React.FC<BasicDateTimePickerProps> = ({ value, onCha
       }
     } else {
       setDateTime({ ...dateTime, time: value });
+      
       if (dateTime.date && value) {
         const dateObject = new Date(dateTime.date.toDate());
         const timeObject = new Date(value.toDate());
